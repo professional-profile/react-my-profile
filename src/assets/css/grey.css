@@ -65,6 +65,7 @@
 
 .grey body,
 .grey article,
+.grey .editor,
 .grey .data-list dd,
 .grey .table > thead > tr,
 .grey .btn-group,
@@ -273,6 +274,7 @@
   color: #657181;
 }
 
+.grey .chip-input-container > input:focus,
 .grey .form-group .form-control:focus,
 .grey label.inline-input > input:focus,
 .grey label > input:not([type="checkbox"]):not([type="radio"]):focus,
@@ -290,6 +292,7 @@
   box-shadow: 0 1px 0 0 #657181;
 }
 
+.grey .chip-input-container > input,
 .grey .form-group .form-control,
 .grey .form-textarea,
 .grey textarea,
