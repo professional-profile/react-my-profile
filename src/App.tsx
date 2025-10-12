@@ -76,7 +76,7 @@ export function init() {
   resources.config = {
     list: "list",
   }
-  storage.home = "/home"
+  storage.home = "/news"
   // storage.token = getToken;
   // storage.moment = true;
   storage.setResources(locales)
@@ -118,9 +118,9 @@ function App() {
         <Route path="" element={<LayoutPage />}>
           <Route path="/home" element={<HomePage />} />
           <Route path="/settings" element={<SettingsForm />} />
-          <Route path="users/*" element={<UsersRoute />} />
-          <Route path="articles/*" element={<ArticlesRoute />} />
-          <Route path="jobs/*" element={<JobsRoute />} />
+          <Route path="profiles/*" element={<UsersRoute />} />
+          <Route path="news/*" element={<ArticlesRoute />} />
+          <Route path="careers/*" element={<JobsRoute />} />
         </Route>
       </Routes>
     </BrowserRouter>

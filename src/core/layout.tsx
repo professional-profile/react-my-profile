@@ -9,6 +9,10 @@ import { getPrivileges, getUsername, getUserType, hasClass, options, parentHasCl
 import logo from "../assets/images/logo.png"
 import "./layout.css"
 
+export interface Config {
+  privilege_url: string
+}
+
 interface InternalState {
   isToggleSearch?: boolean
   isToggleMenu?: boolean
@@ -129,9 +133,19 @@ export const LayoutPage = () => {
           items[i].sequence = i + 1
         }
       }
+      setState({ items })
+    } else {
+      const consig: Config = storage.config()
+      fetch(consig.privilege_url).then((response) => {
+        if (response.ok) {
+          response.json().then((privileges) => {
+            if (Array.isArray(privileges)) {
+              setState({ items: privileges })
+            }
+          })
+        }
+      })
     }
-    setState({ items })
-
     const username = getUsername()
     const userType = getUserType()
     if (username || userType) {
