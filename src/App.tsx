@@ -21,6 +21,7 @@ import HomePage from "./core/home"
 import LayoutPage from "./core/layout"
 import { resources as locales } from "./core/resources"
 import JobsRoute from "./job"
+import MyArticlesRoute from "./my-articles"
 import { SettingsForm } from "./settings"
 import UsersRoute from "./user"
 
@@ -121,6 +122,7 @@ function App() {
           <Route path="profiles/*" element={<UsersRoute />} />
           <Route path="news/*" element={<ArticlesRoute />} />
           <Route path="careers/*" element={<JobsRoute />} />
+          <Route path="my-articles/*" element={<MyArticlesRoute />} />
         </Route>
       </Routes>
     </BrowserRouter>
