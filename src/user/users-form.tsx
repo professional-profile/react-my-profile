@@ -14,7 +14,7 @@ interface UserSearch extends SearchComponentState<User, UserFilter> {
 }
 const userFilter: UserFilter = {
   limit: 24,
-  userId: "",
+  id: "",
   username: "",
   displayName: "",
   email: "",
@@ -172,19 +172,19 @@ export const UsersForm = () => {
                   list.length > 0 &&
                   list.map((user, i) => {
                     return (
-                      <tr key={i} onClick={(e) => edit(e, user.userId)}>
+                      <tr key={i} onClick={(e) => edit(e, user.id)}>
                         <td className="text-right">{(user as any).sequenceNo}</td>
-                        <td>{user.userId}</td>
+                        <td>{user.id}</td>
                         <td>
-                          <Link to={`${user.userId}`}>{user.username}</Link>
+                          <Link to={`${user.id}`}>{user.username}</Link>
                         </td>
                         <td>{user.email}</td>
                         <td>{user.displayName}</td>
                         <td>{getStatusName(user.status, resource)}</td>
                         <td>
                           <div className="btn-group">
-                            <button type="button" className="btn-edit" onClick={(e) => edit(e, user.userId)}></button>
-                            <button type="button" className="btn-history" onClick={(e) => view(e, user.userId)}></button>
+                            <button type="button" className="btn-edit" onClick={(e) => edit(e, user.id)}></button>
+                            <button type="button" className="btn-history" onClick={(e) => view(e, user.id)}></button>
                           </div>
                         </td>
                       </tr>
@@ -200,13 +200,13 @@ export const UsersForm = () => {
               list.length > 0 &&
               list.map((user, i) => {
                 return (
-                  <li key={i} className="col s12 m6 l4 xl3 img-item" onClick={(e) => edit(e, user.userId)}>
+                  <li key={i} className="col s12 m6 l4 xl3 img-item" onClick={(e) => edit(e, user.id)}>
                     <img
                       src={user.imageURL && user.imageURL.length > 0 ? user.imageURL : user.gender === "F" ? femaleIcon : maleIcon}
                       alt="user"
                       className="round-border"
                     />
-                    <Link to={`${user.userId}`}>{user.displayName}</Link>
+                    <Link to={`${user.id}`}>{user.displayName}</Link>
                     <button className="btn-detail" />
                     <p>{user.email}</p>
                   </li>

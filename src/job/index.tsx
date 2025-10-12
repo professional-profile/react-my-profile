@@ -6,7 +6,6 @@ export default function JobsRoute() {
   return (
     <Routes>
       <Route path="" element={<JobsForm />} />
-      <Route path="/new" element={<JobForm />} />
       <Route path="/:id" element={<JobForm />} />
     </Routes>
   )

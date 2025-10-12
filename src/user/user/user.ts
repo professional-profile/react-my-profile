@@ -1,14 +1,14 @@
 import { Attributes, Filter, Result, SearchResult, Tracking } from "onecore"
 
 export interface UserFilter extends Filter {
-  userId: string
+  id: string
   username: string
   email: string
   displayName: string
   status: string[]
 }
 export interface User extends Tracking {
-  userId: string
+  id: string
   username: string
   email: string
   displayName: string
@@ -28,12 +28,10 @@ export interface UserService {
   update(user: User): Promise<Result<User>>
   patch(user: Partial<User>): Promise<Result<User>>
   delete(id: string): Promise<number>
-  getUsersByRole(roleId: string): Promise<User[]>
 }
 
 export const userModel: Attributes = {
-  userId: {
-    column: "user_id",
+  id: {
     length: 40,
     required: true,
     key: true,
