@@ -100,7 +100,7 @@ export interface UserService extends Service<User, string, UserFilter> {}
 export interface MyProfileService {
   getMyProfile(): Promise<User | null>
   getMySettings(): Promise<UserSettings | null>
-  saveMySettings(id: string, settings: UserSettings): Promise<number>
+  saveMySettings(settings: UserSettings): Promise<number>
   saveMyProfile(user: User): Promise<number>
 }
 

@@ -17,7 +17,6 @@ export const MySettingsForm = () => {
   const { state, setState, updateState } = useUpdate<InternalState>(data, "settings")
 
   useEffect(() => {
-    const userId = "77c35c38c3554ea6906730dbcfeca0f2"
     service.getMySettings().then((settings) => {
       if (settings) {
         setState({ settings })
@@ -29,9 +28,8 @@ export const MySettingsForm = () => {
   const save = (e: OnClick) => {
     e.preventDefault()
     confirm(resource.msg_confirm_save, () => {
-      const userId = "77c35c38c3554ea6906730dbcfeca0f2"
       service
-        .saveMySettings(userId, state.settings)
+        .saveMySettings(state.settings)
         .then((res: number) => {
           const msg = res > 0 ? resource.success_save_my_settings : resource.fail_save_my_settings
           message(msg)
@@ -46,8 +44,8 @@ export const MySettingsForm = () => {
         <h2>{resource.my_settings}</h2>
       </header>
       <div>
-        <h4>{resource.user_settings_member_profile_preferences}</h4>
-        <section className="row">
+        <section className="row section">
+          <h4>{resource.user_settings_member_profile_preferences}</h4>
           <label className="col s12 m12 l6 switch-container">
             <input
               type="checkbox"
@@ -69,8 +67,8 @@ export const MySettingsForm = () => {
             {resource.user_settings_search_engines_links_to_my_profile}
           </label>
         </section>
-        <h4>{resource.user_settings_around_me_references}</h4>
-        <section className="row">
+        <section className="row section">
+          <h4>{resource.user_settings_around_me_references}</h4>
           <label className="col s12 m12 l6 switch-container">
             <input
               type="checkbox"
@@ -92,8 +90,8 @@ export const MySettingsForm = () => {
             {resource.user_settings_show_around_me_results_in_member_feed}
           </label>
         </section>
-        <h4>{resource.user_settings_notification_preferences}</h4>
-        <section className="row">
+        <section className="row section">
+          <h4>{resource.user_settings_notification_preferences}</h4>
           <label className="col s12 switch-container">
             <input type="checkbox" id="notification" name="notification" checked={state.settings.notification} onChange={updateState} />
             {resource.user_settings_notifications}
