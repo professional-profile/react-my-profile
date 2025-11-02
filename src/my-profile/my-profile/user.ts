@@ -1,118 +1,117 @@
-import { Attributes, DateRange, Filter, Repository, Service } from 'onecore';
+import { Attributes, DateRange, Filter, Repository, Service } from "onecore"
 
 export interface User {
-  userId: string;
-  username: string;
-  displayName: string;
-  email?: string;
-  phone?: string;
-  dateOfBirth?: Date;
-  interests: string[];
-  skills: Skill[];
-  achievements: Achievement[];
-  settings: UserSettings;
+  userId: string
+  username: string
+  displayName: string
+  email?: string
+  phone?: string
+  dateOfBirth?: Date
+  interests: string[]
+  skills: Skill[]
+  achievements: Achievement[]
+  settings: UserSettings
 
-  title?: string;
-  image?: string;
-  coverImage?: string;
-  nationality?: string;
-  alternativeEmail?: string;
-  address?: string;
-  bio?: string;
-  website?: string;
-  occupation?: string;
-  company?: string;
-  lookingFor: string[];
+  title?: string
+  image?: string
+  coverImage?: string
+  nationality?: string
+  alternativeEmail?: string
+  address?: string
+  bio?: string
+  website?: string
+  occupation?: string
+  company?: string
+  lookingFor: string[]
 
-  dribbbleLink: string;
-  skypeLink: string;
-  twitterLink: string;
-  linkedinLink: string;
-  googleLink: string;
-  instagramLink: string;
-  facebookLink: string;
-  lastName: string;
-  firstName: string;
-  customLink01: string;
-  customLink02: string;
-  customLink03: string;
-  customLink04: string;
-  customLink05: string;
-  customLink06: string;
-  customLink07: string;
-  customLink08: string;
+  dribbbleLink: string
+  skypeLink: string
+  twitterLink: string
+  linkedinLink: string
+  googleLink: string
+  instagramLink: string
+  facebookLink: string
+  lastName: string
+  firstName: string
+  customLink01: string
+  customLink02: string
+  customLink03: string
+  customLink04: string
+  customLink05: string
+  customLink06: string
+  customLink07: string
+  customLink08: string
 }
 export interface Skill {
-  skill: string;
-  hirable: boolean;
+  skill: string
+  hirable: boolean
 }
 export interface UserSettings {
-  userId: string;
-  language: string;
-  dateFormat: string;
-  dateTimeFormat: string;
-  timeFormat: string;
-  notification: boolean;
+  userId: string
+  language: string
+  dateFormat: string
+  dateTimeFormat: string
+  timeFormat: string
+  notification: boolean
 
-  searchEnginesLinksToMyProfile: boolean;
-  emailFeedUpdates: boolean;
-  notifyFeedUpdates: boolean;
-  emailPostMentions: boolean;
-  notifyPostMentions: boolean;
-  emailCommentsOfYourPosts: boolean;
-  notifyCommentsOfYourPosts: boolean;
-  emailEventInvitations: boolean;
-  notifyEventInvitations: boolean;
-  emailWhenNewEventsAround: boolean;
-  notifyWhenNewEventsAround: boolean;
-  followingListPublicOnMyProfile: boolean;
-  showMyProfileInSpacesAroundMe: boolean;
-  showAroundMeResultsInMemberFeed: boolean;
+  searchEnginesLinksToMyProfile: boolean
+  emailFeedUpdates: boolean
+  notifyFeedUpdates: boolean
+  emailPostMentions: boolean
+  notifyPostMentions: boolean
+  emailCommentsOfYourPosts: boolean
+  notifyCommentsOfYourPosts: boolean
+  emailEventInvitations: boolean
+  notifyEventInvitations: boolean
+  emailWhenNewEventsAround: boolean
+  notifyWhenNewEventsAround: boolean
+  followingListPublicOnMyProfile: boolean
+  showMyProfileInSpacesAroundMe: boolean
+  showAroundMeResultsInMemberFeed: boolean
 }
 export interface Achievement {
-  subject: string;
-  description: string;
-  highlight?: boolean;
+  subject: string
+  description: string
+  highlight?: boolean
 }
 export interface Appreciation {
-  id: string;
-  userId: string;
-  appreciator: string;
-  appreciatedAt: string;
-  subject: string;
-  description: string;
+  id: string
+  userId: string
+  appreciator: string
+  appreciatedAt: string
+  subject: string
+  description: string
 }
 
 export interface UserFilter extends Filter {
-  id: string;
-  username: string;
-  email?: string;
-  phone?: string;
-  dateOfBirth?: DateRange;
-  interests: string[];
-  skills: Skill[];
-  achievements: Achievement[];
-  settings: UserSettings;
+  id: string
+  username: string
+  email?: string
+  phone?: string
+  dateOfBirth?: DateRange
+  interests: string[]
+  skills: Skill[]
+  achievements: Achievement[]
+  settings: UserSettings
 }
-export interface UserRepository extends Repository<User, string> {
-}
-export interface UserService extends Service<User, string, UserFilter> {
-}
+export interface UserRepository extends Repository<User, string> {}
+export interface UserService extends Service<User, string, UserFilter> {}
+
 export interface MyProfileService {
-  getMyProfile(id: string): Promise<User | null>;
-  getMySettings(id: string): Promise<UserSettings | null>;
-  saveMySettings(id: string, settings: UserSettings): Promise<number>;
-  saveMyProfile(user: User): Promise<number>;
+  getMyProfile(): Promise<User | null>
+  getMySettings(): Promise<UserSettings | null>
+  saveMySettings(id: string, settings: UserSettings): Promise<number>
+  saveMyProfile(user: User): Promise<number>
 }
 
 export const skillsModel: Attributes = {
   skill: {
-    required: true
+    required: true,
   },
   hirable: {
-    type: 'boolean',
-  }
-};
+    type: "boolean",
+  },
+}
 export const userSettingsModel: Attributes = {
   userId: {},
   language: {},
@@ -120,45 +119,45 @@ export const userSettingsModel: Attributes = {
   dateTimeFormat: {},
   timeFormat: {},
   notification: {
-    type: 'boolean',
-  }
-};
+    type: "boolean",
+  },
+}
 export const achievements: Attributes = {
   subject: {},
-  description: {}
-};
+  description: {},
+}
 export const userModel: Attributes = {
   userId: {
     key: true,
-    match: 'equal'
+    match: "equal",
   },
   username: {},
   email: {
-    format: 'email',
+    format: "email",
     required: true,
-    match: 'prefix'
+    match: "prefix",
   },
   phone: {
-    format: 'phone',
-    required: true
+    format: "phone",
+    required: true,
   },
   dateOfBirth: {
-    type: 'datetime',
-    field: 'date_of_birth'
+    type: "datetime",
+    field: "date_of_birth",
   },
   interests: {
-    type: 'primitives',
+    type: "primitives",
   },
   skills: {
-    type: 'primitives',
+    type: "primitives",
     typeof: skillsModel,
   },
   achievements: {
-    type: 'primitives',
+    type: "primitives",
     typeof: achievements,
   },
   settings: {
-    type: 'object',
+    type: "object",
     typeof: userSettingsModel,
-  }
-};
+  },
+}

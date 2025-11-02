@@ -5,7 +5,8 @@ import { alertError } from "ui-alert"
 import { message, useResource } from "uione"
 import imageOnline from "../assets/images/online.svg"
 import GeneralInfo from "./general-info"
-import { Achievement, Skill, useGetMyProfileService, User } from "./my-profile"
+import { Achievement, Skill, User } from "./my-profile"
+import { getMyProfileService } from "./service"
 
 interface Edit {
   edit: {
@@ -30,7 +31,7 @@ const data: Edit = {
   },
 }
 export const MyProfileForm = () => {
-  const service = useGetMyProfileService()
+  const service = getMyProfileService()
   const { state, setState, updateState } = useUpdate<Edit>(data, "edit")
 
   const resource = useResource()
@@ -47,7 +48,7 @@ export const MyProfileForm = () => {
 
   useEffect(() => {
     const id = "77c35c38c3554ea6906730dbcfeca0f2"
-    service.getMyProfile(id).then((usr) => {
+    service.getMyProfile().then((usr) => {
       if (usr) {
         setUser(usr)
         setBio(usr.bio || "")

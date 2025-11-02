@@ -4,17 +4,21 @@ import { vi as adminVI } from "./admin/vi"
 import { en as authenticationEN } from "./authentication/en"
 import { vi as authenticationVI } from "./authentication/vi"
 import { en as commonEN } from "./en"
+import { en as myprofileEN } from "./my-profile/en"
+import { vi as myprofileVI } from "./my-profile/vi"
 import { vi as commonVI } from "./vi"
 
 const en: StringMap = {
   ...commonEN,
   ...authenticationEN,
   ...adminEN,
+  ...myprofileEN,
 }
 const vi: StringMap = {
   ...commonVI,
   ...authenticationVI,
   ...adminVI,
+  ...myprofileVI,
 }
 
 export const resources: Resources = {

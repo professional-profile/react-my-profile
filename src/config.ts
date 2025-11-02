@@ -6,6 +6,7 @@ export const config = {
 
   my_articles_url: "http://localhost:8083/my-articles",
   my_profile_url: "http://localhost:8083/my-profile",
+  my_settings_url: "http://localhost:8083/my-settings",
 
   master_data_url: "http://localhost:8083/code",
   user_url: "http://localhost:8083/users",

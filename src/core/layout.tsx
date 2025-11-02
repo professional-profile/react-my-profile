@@ -384,7 +384,7 @@ export const LayoutPage = () => {
                       </li>
                       <li>
                         <i className="material-icons">account_circle</i>
-                        <Link to={"settings"}>Settings</Link>
+                        <Link to={"my-profile/settings"}>Settings</Link>
                       </li>
                       {/*<li><i className='material-icons'>settings</i><Link to={'my-profile/settings'}>{resource.my_settings}</Link></li>*/}
                       <hr style={{ margin: 0 }} />

@@ -1,7 +1,8 @@
 import { useEffect } from "react"
 import { OnClick, useUpdate } from "react-hook-core"
 import { confirm, handleError, message, useResource } from "uione"
-import { useGetMyProfileService, UserSettings } from "./my-profile"
+import { UserSettings } from "./my-profile"
+import { getMyProfileService } from "./service"
 
 interface InternalState {
   settings: UserSettings
@@ -11,13 +12,13 @@ const data: InternalState = {
   settings: {} as any,
 }
 export const MySettingsForm = () => {
-  const service = useGetMyProfileService()
+  const service = getMyProfileService()
   const resource = useResource()
   const { state, setState, updateState } = useUpdate<InternalState>(data, "settings")
 
   useEffect(() => {
     const userId = "77c35c38c3554ea6906730dbcfeca0f2"
-    service.getMySettings(userId).then((settings) => {
+    service.getMySettings().then((settings) => {
       if (settings) {
         setState({ settings })
       }

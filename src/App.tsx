@@ -22,6 +22,7 @@ import LayoutPage from "./core/layout"
 import { resources as locales } from "./core/resources"
 import JobsRoute from "./job"
 import MyArticlesRoute from "./my-articles"
+import MyProfileRoute from "./my-profile"
 import { SettingsForm } from "./settings"
 import UsersRoute from "./user"
 
@@ -53,6 +54,7 @@ import "./assets/css/theme.css"
 import "./assets/css/dark.css"
 import "./assets/css/grey.css"
 import "./assets/css/badge.css"
+import "./assets/css/profile.css"
 
 axios.defaults.withCredentials = true
 
@@ -122,6 +124,7 @@ function App() {
           <Route path="profiles/*" element={<UsersRoute />} />
           <Route path="news/*" element={<ArticlesRoute />} />
           <Route path="careers/*" element={<JobsRoute />} />
+          <Route path="my-profile/*" element={<MyProfileRoute />} />
           <Route path="my-articles/*" element={<MyArticlesRoute />} />
         </Route>
       </Routes>
