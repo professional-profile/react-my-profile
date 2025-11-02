@@ -8,14 +8,14 @@ export * from "./article"
 
 const httpRequest = new HttpRequest(axios, options)
 export interface Config {
-  article_url: string
+  my_articles_url: string
 }
 let articleService: ArticleService | undefined
 
 export function getArticleService(): ArticleService {
   if (!articleService) {
     const c = storage.config()
-    articleService = new ArticleClient(httpRequest, c.article_url)
+    articleService = new ArticleClient(httpRequest, c.my_articles_url)
   }
   return articleService
 }
