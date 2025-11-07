@@ -47,7 +47,6 @@ export const MyProfileForm = () => {
   const [modalConfirmIsOpen, setModalConfirmIsOpen] = useState<boolean>(false)
 
   useEffect(() => {
-    const id = "77c35c38c3554ea6906730dbcfeca0f2"
     service.getMyProfile().then((usr) => {
       if (usr) {
         setUser(usr)
@@ -373,8 +372,8 @@ export const MyProfileForm = () => {
             <img className="profile-status" src={imageOnline} alt="status" />
           </div>
           <div className="profile-title">
-            <h4>{user.displayName} Nguyen Minh Duc</h4>
-            <p>{user.website} https://github.com/minhduc140583</p>
+            <h4>{user.displayName}</h4>
+            <p>{user.website}</p>
           </div>
           <div className="profile-followers">
             <p>
@@ -393,8 +392,22 @@ export const MyProfileForm = () => {
                 {resource.user_profile_basic_info}
                 <button type="button" id="btnBasicInfo" name="btnBasicInfo" hidden={isEditing} className="btn-edit" onClick={showPopup} />
               </header>
-              <p>{user.occupation} Programmer</p>
-              <p>{user.company} TMA</p>
+              <p className="icon-text">
+                <i className="material-icons">local_mall</i>
+                {user.occupation}
+              </p>
+              <p className="icon-text">
+                <i className="material-icons">location_city</i>
+                {user.company}
+              </p>
+              <p className="icon-text">
+                <i className="material-icons">location_on</i>
+                {user.location}
+              </p>
+              <p className="icon-text">
+                <i className="material-icons">bookmark</i>
+                {user.website}
+              </p>
             </div>
             {!isEditingSkill && (
               <div className="card">
@@ -403,19 +416,20 @@ export const MyProfileForm = () => {
                   {resource.skills}
                   <button type="button" id="btnSkill" name="btnSkill" hidden={isEditing} className="btn-edit" onClick={toggleSkill} />
                 </header>
-                <section>
+                <section className="chip-list">
                   {user.skills &&
                     user.skills.map((item: Skill, index: number) => {
                       return (
-                        <p key={index}>
+                        <div key={index} className="chip">
                           {item.skill}
-                          <i hidden={!item.hirable} className="star highlight" />
-                        </p>
+                          {item.hirable === true && <i className="star highlight" />}
+                        </div>
                       )
                     })}
                   <hr />
                   <p className="description">
                     <i className="star highlight" />
+                    Hirable skill
                     {resource.user_profile_hirable_skill}
                   </p>
                 </section>
@@ -428,18 +442,17 @@ export const MyProfileForm = () => {
                   {resource.skills}
                   <button type="button" id="btnSkill" name="btnSkill" className="btn-close" onClick={toggleSkill} />
                 </header>
-                <section>
+                <section className="chip-list">
                   {user.skills &&
                     user.skills.map((item: Skill, index: number) => {
                       return (
                         <div key={index} className="chip">
                           {item.skill}
                           {item.hirable === true && <i className="star highlight" />}
-                          <button type="button" name="btnRemoveSkill" className="close" onClick={(e) => removeSkill(e, item.skill)} />
+                          <span className="close" onClick={(e) => removeSkill(e, item.skill)} />
                         </div>
                       )
                     })}
-
                   <section>
                     <div className="form-group">
                       <input
@@ -465,6 +478,7 @@ export const MyProfileForm = () => {
                   <hr />
                   <p className="description">
                     <i className="star highlight" />
+                    Hirable skill
                     {resource.user_profile_hirable_skill}
                   </p>
                 </section>
@@ -489,10 +503,14 @@ export const MyProfileForm = () => {
                     onClick={toggleLookingFor}
                   />
                 </header>
-                <section>
+                <section className="chip-list">
                   {user.lookingFor &&
                     user.lookingFor.map((item: string, index: number) => {
-                      return <p key={index}>{item}</p>
+                      return (
+                        <div key={index} className="chip" tabIndex={index}>
+                          {item}
+                        </div>
+                      )
                     })}
                 </section>
               </div>
@@ -504,13 +522,13 @@ export const MyProfileForm = () => {
                   {resource.user_profile_looking_for}
                   <button type="button" id="btnLookingFor" name="btnLookingFor" className="btn-close" onClick={toggleLookingFor} />
                 </header>
-                <section>
+                <section className="chip-list">
                   {user.lookingFor &&
                     user.lookingFor.map((item: string, index: number) => {
                       return (
                         <div key={index} className="chip" tabIndex={index}>
                           {item}
-                          <button type="button" name="btnRemoveLookingFor" className="close" onClick={(e) => removeLookingFor(e, item)} />
+                          <span className="close" onClick={(e) => removeLookingFor(e, item)} />
                         </div>
                       )
                     })}
@@ -672,25 +690,25 @@ export const MyProfileForm = () => {
                 />
               </header>
               {!isEditingInterest && (
-                <section className="row">
-                  {user.interests &&
-                    user.interests.map((item: string, index: number) => {
-                      return (
-                        <span key={index} className="col s4">
-                          {item}
-                        </span>
-                      )
-                    })}
-                </section>
-              )}
-              {isEditingInterest && (
-                <section className="row">
+                <section className="chip-list">
                   {user.interests &&
                     user.interests.map((item: string, index: number) => {
                       return (
                         <div key={index} className="chip" tabIndex={index}>
                           {item}
-                          <button type="button" name="btnRemoveInterest" className="close" onClick={(e) => removeInterest(e, item)} />
+                        </div>
+                      )
+                    })}
+                </section>
+              )}
+              {isEditingInterest && (
+                <section className="chip-list">
+                  {user.interests &&
+                    user.interests.map((item: string, index: number) => {
+                      return (
+                        <div key={index} className="chip" tabIndex={index}>
+                          {item}
+                          <span className="close" onClick={(e) => removeInterest(e, item)} />
                         </div>
                       )
                     })}

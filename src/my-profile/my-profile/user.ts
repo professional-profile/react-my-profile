@@ -22,6 +22,7 @@ export interface User {
   website?: string
   occupation?: string
   company?: string
+  location?: string
   lookingFor: string[]
 
   dribbbleLink: string
