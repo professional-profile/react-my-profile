@@ -44,7 +44,7 @@ interface ArticleSearch extends Sortable {
 const now = new Date()
 const articleFilter: ArticleFilter = {
   limit: 24,
-  status: ["A"],
+  status: [],
   q: "",
   publishedAt: {
     max: addSeconds(now, 300),
@@ -150,7 +150,7 @@ export const ArticlesForm = () => {
       <div>
         <form id="articlesForm" name="articlesForm" className="form" noValidate={true} ref={refForm as any}>
           <section className="row search-group section">
-            <label className="col s12 m6 search-input">
+            <label className="col s12 m6 l4 search-input">
               <select id="limit" name="limit" onChange={pageSizeChanged} defaultValue={filter.limit}>
                 {sizes.map((item, i) => {
                   return (
@@ -191,10 +191,10 @@ export const ArticlesForm = () => {
               />
               <button type="submit" className="btn-search" onClick={searchOnClick} />
             </label>
-            <Pagination className="col s12 m6" total={state.total} size={state.filter.limit} max={7} page={state.filter.page} onChange={pageChanged} />
+            <Pagination className="col s12 m6 l4" total={state.total} size={state.filter.limit} max={7} page={state.filter.page} onChange={pageChanged} />
           </section>
           <section className="row search-group inline" hidden={state.hideFilter}>
-            <label className="col s12 m6">
+            <label className="col s12 m6 l4">
               {resource.published_at_from}
               <input
                 type="datetime-local"
@@ -209,7 +209,7 @@ export const ArticlesForm = () => {
                 }}
               />
             </label>
-            <label className="col s12 m6">
+            <label className="col s12 m6 l4">
               {resource.published_at_to}
               <input
                 type="datetime-local"
@@ -224,46 +224,16 @@ export const ArticlesForm = () => {
                 }}
               />
             </label>
-            <label className="col s12 m4 l4">
-              {resource.title}
-              <input
-                type="text"
-                id="title"
-                name="title"
-                value={filter.title || ""}
-                onChange={(e) => {
-                  filter.title = e.target.value
-                  setState({ ...state, filter })
-                }}
-                maxLength={255}
-                placeholder={resource.title}
-              />
-            </label>
-            <label className="col s12 m4 l4">
-              {resource.description}
-              <input
-                type="text"
-                id="description"
-                name="description"
-                value={filter.description || ""}
-                onChange={(e) => {
-                  filter.description = e.target.value
-                  setState({ ...state, filter })
-                }}
-                maxLength={255}
-                placeholder={resource.description}
-              />
-            </label>
-            <label className="col s12 m4 l4 checkbox-section">
+            <label className="col s12 m12 l4 checkbox-section">
               {resource.status}
               <section className="checkbox-group">
                 <label>
-                  <input type="checkbox" id="A" name="status" value="A" checked={checked(filter.status, "A")} onChange={checkboxOnChange} />
-                  {resource.active}
+                  <input type="checkbox" id="status_published" name="status" value="P" checked={checked(filter.status, "P")} onChange={checkboxOnChange} />
+                  {resource.published}
                 </label>
                 <label>
-                  <input type="checkbox" id="I" name="status" value="I" checked={checked(filter.status, "I")} onChange={checkboxOnChange} />
-                  {resource.inactive}
+                  <input type="checkbox" id="status_draft" name="status" value="D" checked={checked(filter.status, "D")} onChange={checkboxOnChange} />
+                  {resource.draft}
                 </label>
               </section>
             </label>

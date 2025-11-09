@@ -184,6 +184,8 @@ export const en = {
   status: "Status",
   active: "Active",
   inactive: "Inactive",
+  published: "Published",
+  draft: "Draft",
 
   please_select: "Please Select",
 

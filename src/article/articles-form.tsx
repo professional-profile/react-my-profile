@@ -44,7 +44,7 @@ interface ArticleSearch extends Sortable {
 const now = new Date()
 const articleFilter: ArticleFilter = {
   limit: 24,
-  status: ["A"],
+  status: [],
   q: "",
   publishedAt: {
     max: addSeconds(now, 300),
