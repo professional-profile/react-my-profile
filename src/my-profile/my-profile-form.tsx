@@ -447,7 +447,7 @@ export const MyProfileForm = () => {
                       )
                     })}
                   <hr />
-                  <p className="description">
+                  <p className="icon-text">
                     <i className="star highlight" />
                     Hirable skill
                     {resource.user_profile_hirable_skill}
@@ -496,7 +496,7 @@ export const MyProfileForm = () => {
                     {resource.user_profile_hirable_skill}
                   </label>
                   <hr />
-                  <p className="description">
+                  <p className="icon-text">
                     <i className="star highlight" />
                     Hirable skill
                     {resource.user_profile_hirable_skill}

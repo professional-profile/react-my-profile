@@ -279,12 +279,7 @@ header.nav > .profile-followers {
 }
 
 .profile.view-container > form > .row > .col > div.card:last-child {
-  margin-bottom: 0;
-}
-
-.profile.view-container > form > .row > .col > div.card p.description {
-  color: #aeb4b2;
-  line-height: 20px;
+  margin-bottom: 4px;
 }
 
 .profile .row span.col {
@@ -380,11 +375,6 @@ header.nav > .profile-followers {
   border: 1px solid;
   border-radius: 50%;
   color: #0dcfb0;
-}
-.profile.view-container > form > .row > .col > div.card > div > a > span {
-  display: none;
-  margin-left: 7px;
-  margin-right: 9px;
 }
 
 @media screen and (max-width: 600px) {
