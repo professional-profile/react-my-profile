@@ -357,7 +357,7 @@ export const MyProfileForm = () => {
       <form id="userForm" name="userForm">
         <header className="border-bottom-highlight">
           <div className="cover-image">
-            <img src="https://pre00.deviantart.net/6ecb/th/pre/f/2013/086/3/d/facebook_cover_1_by_alphacid-d5zfrww.jpg" alt="cover" />
+            <img src={user.coverURL} alt="cover" />
             <div className="contact-group">
               <button id="btnPhone" name="btnPhone" className="btn-phone" />
               <button id="btnEmail" name="btnEmail" className="btn-email" />
@@ -368,12 +368,12 @@ export const MyProfileForm = () => {
           </div>
           <button id="btnCamera" name="btnCamera" className="btn-camera" />
           <div className="avatar-wrapper">
-            <img className="avatar" src={user.image || "https://avatars.githubusercontent.com/u/37324393?v=4"} alt="avatar" />
+            <img className="avatar" src={user.imageURL || "https://avatars.githubusercontent.com/u/37324393?v=4"} alt="avatar" />
             <img className="profile-status" src={imageOnline} alt="status" />
           </div>
           <div className="profile-title">
             <h4>{user.displayName}</h4>
-            <p>{user.website}</p>
+            <p>{user.headline}</p>
           </div>
           <div className="profile-followers">
             <p>
@@ -392,22 +392,42 @@ export const MyProfileForm = () => {
                 {resource.user_profile_basic_info}
                 <button type="button" id="btnBasicInfo" name="btnBasicInfo" hidden={isEditing} className="btn-edit" onClick={showPopup} />
               </header>
-              <p className="icon-text">
-                <i className="material-icons">local_mall</i>
-                {user.occupation}
-              </p>
-              <p className="icon-text">
-                <i className="material-icons">location_city</i>
-                {user.company}
-              </p>
-              <p className="icon-text">
-                <i className="material-icons">location_on</i>
-                {user.location}
-              </p>
-              <p className="icon-text">
-                <i className="material-icons">bookmark</i>
-                {user.website}
-              </p>
+              {user.occupation && (
+                <p className="icon-text">
+                  <i className="material-icons">local_mall</i>
+                  {user.occupation}
+                </p>
+              )}
+              {user.company && (
+                <p className="icon-text">
+                  <i className="material-icons">location_city</i>
+                  {user.company}
+                </p>
+              )}
+              {user.location && (
+                <p className="icon-text">
+                  <i className="material-icons">location_on</i>
+                  {user.location}
+                </p>
+              )}
+              {user.website && (
+                <p className="icon-text">
+                  <i className="material-icons">bookmark</i>
+                  {user.website}
+                </p>
+              )}
+              {user.email && (
+                <p className="icon-text">
+                  <i className="material-icons">email</i>
+                  {user.email}
+                </p>
+              )}
+              {user.phone && (
+                <p className="icon-text">
+                  <i className="material-icons">phone</i>
+                  {user.phone}
+                </p>
+              )}
             </div>
             {!isEditingSkill && (
               <div className="card">

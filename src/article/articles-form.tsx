@@ -5,7 +5,6 @@ import {
   buildFromUrl,
   buildMessage,
   buildSortFilter,
-  checked,
   datetimeToString,
   getFields,
   getNumber,
@@ -28,7 +27,7 @@ import { Pagination } from "reactx-pagination"
 import { hideLoading, showLoading } from "ui-loading"
 import { addSeconds, createDate, formatDateTime } from "ui-plus"
 import { toast } from "ui-toast"
-import { getDateFormat, handleError, hasPermission, Permission, useResource } from "uione"
+import { getDateFormat, handleError, hasPermission, Permission, user, useResource } from "uione"
 import { Article, ArticleFilter, getArticleService } from "./service"
 
 interface ArticleSearch extends Sortable {
@@ -44,7 +43,6 @@ interface ArticleSearch extends Sortable {
 const now = new Date()
 const articleFilter: ArticleFilter = {
   limit: 24,
-  status: [],
   q: "",
   publishedAt: {
     max: addSeconds(now, 300),
@@ -114,25 +112,15 @@ export const ArticlesForm = () => {
       .catch(handleError)
       .finally(hideLoading)
   }
-  const edit = (e: OnClick, id: string) => {
+  const view = (e: OnClick, id: string) => {
     e.preventDefault()
     navigate(`${id}`)
-  }
-  const checkboxOnChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const { filter } = state
-    const value = event.target.value
-    if (event.target.checked) {
-      filter.status.push(value)
-    } else {
-      filter.status = filter.status.filter((i) => i !== value)
-    }
-    filter.page = 1
-    setState({ ...state, filter })
-    search()
   }
   const { list } = state
   const filter = value(state.filter)
   const offset = getOffset(limit, page)
+  const account = user()
+
   return (
     <div>
       <header>
@@ -254,19 +242,6 @@ export const ArticlesForm = () => {
                 placeholder={resource.description}
               />
             </label>
-            <label className="col s12 m4 l4 checkbox-section">
-              {resource.status}
-              <section className="checkbox-group">
-                <label>
-                  <input type="checkbox" id="A" name="status" value="A" checked={checked(filter.status, "A")} onChange={checkboxOnChange} />
-                  {resource.active}
-                </label>
-                <label>
-                  <input type="checkbox" id="I" name="status" value="I" checked={checked(filter.status, "I")} onChange={checkboxOnChange} />
-                  {resource.inactive}
-                </label>
-              </section>
-            </label>
           </section>
         </form>
         {state.view === "table" && (
@@ -303,18 +278,18 @@ export const ArticlesForm = () => {
                   list.length > 0 &&
                   list.map((item, i) => {
                     return (
-                      <tr key={i} onClick={(e) => edit(e, item.id)}>
+                      <tr key={i} onClick={(e) => view(e, item.id)}>
                         <td className="text-right">{offset + i + 1}</td>
                         <td>{item.id}</td>
                         <td>
-                          <Link to={`${item.id}`}>{item.title}</Link>
+                          <Link to={`${item.slug}`}>{item.title}</Link>
                         </td>
                         <td>{formatDateTime(item.publishedAt, dateFormat)}</td>
                         <td>{item.description}</td>
                         <td>
                           <div className="btn-group">
-                            <button type="button" className="btn-edit" onClick={(e) => edit(e, item.id)}></button>
-                            <button type="button" className="btn-history" onClick={(e) => edit(e, item.id)}></button>
+                            <button type="button" className="btn-edit" onClick={(e) => view(e, item.slug)}></button>
+                            <button type="button" className="btn-history" onClick={(e) => view(e, item.id)}></button>
                           </div>
                         </td>
                       </tr>
@@ -330,11 +305,15 @@ export const ArticlesForm = () => {
               state.list.length > 0 &&
               state.list.map((item, i) => {
                 return (
-                  <li key={i} className="col s12 m6 l4 xl3 card" onClick={(e) => edit(e, item.id)}>
+                  <li key={i} className="col s12 m6 l4 xl3 card" onClick={(e) => view(e, item.slug)}>
                     <section>
                       <div className="cover" style={{ backgroundImage: `url('${item.thumbnail}')` }}></div>
-                      <Link to={`${item.id}`}>{item.title}</Link>
-                      <p>{formatDateTime(item.publishedAt, dateFormat)}</p>
+                      <Link to={`${item.slug}`}>{item.title}</Link>
+                      <p className="article-meta">
+                        {formatDateTime(item.publishedAt, dateFormat)}
+                        {account && item.savedAt && <i className="material-icons">bookmark</i>}
+                        {account && !item.savedAt && <i className="material-icons">bookmark_border</i>}
+                      </p>
                       <p>{item.description}</p>
                     </section>
                   </li>

@@ -13,12 +13,13 @@ export interface User {
   settings: UserSettings
 
   title?: string
-  image?: string
-  coverImage?: string
+  imageURL?: string
+  coverURL?: string
+  headline?: string
+  bio?: string
   nationality?: string
   alternativeEmail?: string
   address?: string
-  bio?: string
   website?: string
   occupation?: string
   company?: string

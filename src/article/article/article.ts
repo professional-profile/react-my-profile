@@ -1,34 +1,36 @@
-import { Attributes, Filter, Result, SearchResult, Service, TimeRange } from "onecore"
+import { Attributes, Filter, SearchResult, TimeRange } from "onecore"
 
 export interface Article {
   id: string
+  slug: string
   title: string
   description?: string
   content: string
-  thumbnail?: string
   publishedAt?: Date
   tags?: string[]
-  type?: string
-  authorId?: string
+  thumbnail?: string
+  highThumbnail?: string
   status?: string
+  createdAt?: Date
+  authorId?: string
+  savedAt?: Date
 }
-
 export interface ArticleFilter extends Filter {
   id?: string
+  slug?: string
   title?: string
   description?: string
+  status?: string
   publishedAt: TimeRange
   tags?: string[]
-  status: string[]
+  authorId?: string
 }
 
-export interface ArticleService extends Service<Article, string, ArticleFilter> {
+export interface ArticleService {
   search(filter: ArticleFilter, limit: number, page?: number, fields?: string[]): Promise<SearchResult<Article>>
-  load(id: string): Promise<Article | null>
-  create(article: Article): Promise<Result<Article>>
-  update(article: Article): Promise<Result<Article>>
-  patch(article: Partial<Article>): Promise<Result<Article>>
-  delete(id: string): Promise<number>
+  load(id: string, userId?: string): Promise<Article | null>
+  save(id: string): Promise<number>
+  remove(id: string): Promise<number>
 }
 
 export const articleModel: Attributes = {
@@ -52,21 +54,33 @@ export const articleModel: Attributes = {
     type: "datetime",
   },
   content: {
-    length: 9000,
+    length: 9500,
     required: true,
-  },
-  thumbnail: {},
-  highThumbnail: {
-    column: "high_thumbnail",
   },
   tags: {
     type: "strings",
   },
-  /*
-  author: {
-    length: 40,
+  thumbnail: {
+    length: 400,
   },
-  */
-  type: {},
-  status: {},
+  highThumbnail: {
+    column: "high_thumbnail",
+    length: 400,
+  },
+  authorId: {
+    column: "author_id",
+    length: 400,
+    noupdate: true,
+  },
+  createdAt: {
+    column: "created_at",
+    type: "datetime",
+    noupdate: true,
+  },
+  savedAt: {
+    column: "saved_at",
+    type: "datetime",
+    noupdate: true,
+    noinsert: true,
+  },
 }

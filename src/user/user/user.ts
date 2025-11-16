@@ -1,91 +1,223 @@
-import { Attributes, Filter, Result, SearchResult, Tracking } from "onecore"
+import { Attributes, DateRange, Filter, SearchResult } from "onecore"
 
-export interface UserFilter extends Filter {
+export interface User {
   id: string
   username: string
-  email: string
-  displayName: string
-  status: string[]
-}
-export interface User extends Tracking {
-  id: string
-  username: string
-  email: string
-  displayName: string
-  imageURL?: string
-  status: string
   gender?: string
+  email?: string
   phone?: string
+  dateOfBirth?: Date
+  displayName?: string
+  givenName?: string
+  familyName?: string
+  middleName?: string
+  status?: string
   title?: string
-  position?: string
-  roles?: string[]
+  //image?: UploadSize[]
+  imageURL?: string
+  coverURL?: string
+  bio?: string
+  website?: string
+  occupation?: string
+  company?: string
+  location?: string
+  interests: string[]
+  skills: Skill[]
+  achievements: Achievement[]
+  works: Work[]
+  educations: Education[]
+  settings?: UserSettings
+}
+export interface UserSettings {
+  language: string
+  dateFormat: string
+  dateTimeFormat: string
+  timeFormat: string
+  notification: boolean
+
+  searchEnginesLinksToMyProfile: boolean
+  emailFeedUpdates: boolean
+  notifyFeedUpdates: boolean
+  emailPostMentions: boolean
+  notifyPostMentions: boolean
+  emailCommentsOfYourPosts: boolean
+  notifyCommentsOfYourPosts: boolean
+  emailEventInvitations: boolean
+  notifyEventInvitations: boolean
+  emailWhenNewEventsAround: boolean
+  notifyWhenNewEventsAround: boolean
+  followingListPublicOnMyProfile: boolean
+  showMyProfileInSpacesAroundMe: boolean
+  showAroundMeResultsInMemberFeed: boolean
+}
+
+export interface Skill {
+  skill: string
+  hirable: boolean
+}
+export interface Achievement {
+  subject: string
+  description: string
+}
+export interface Work {
+  name: string
+  position: string
+  description: string
+  item: string[]
+  from: string
+  to: string
+} // End of Work
+export interface Education {
+  school: string
+  degree: string
+  major: string
+  title: string
+  from: string
+  to: string
+} // Education
+export interface UserFilter extends Filter {
+  id?: string
+  username?: string
+  email?: string
+  phone?: string
+  dateOfBirth?: DateRange
+  interests?: string[]
+  skills?: Skill[]
 }
 
 export interface UserService {
   search(filter: UserFilter, limit: number, page?: number | string, fields?: string[], ctx?: any): Promise<SearchResult<User>>
   load(id: string): Promise<User | null>
-  create(user: User): Promise<Result<User>>
-  update(user: User): Promise<Result<User>>
-  patch(user: Partial<User>): Promise<Result<User>>
-  delete(id: string): Promise<number>
+  follow(id: string): Promise<number>
+  unfollow(id: string): Promise<number>
 }
 
+export const skillsModel: Attributes = {
+  skill: {
+    required: true,
+  },
+  hirable: {
+    type: "boolean",
+  },
+}
+export const achievementsModel: Attributes = {
+  description: {},
+  highlight: {
+    type: "boolean",
+  },
+  subject: {},
+}
+export const educationsModel: Attributes = {
+  from: {
+    type: "string",
+  },
+  to: {
+    type: "boolean",
+  },
+  major: {
+    type: "string",
+  },
+  title: {
+    type: "string",
+  },
+  degree: {
+    type: "string",
+  },
+  school: {
+    type: "string",
+  },
+}
+export const userSettingsModel: Attributes = {
+  language: {},
+  dateFormat: {},
+  dateTimeFormat: {},
+  timeFormat: {},
+  notification: {
+    type: "boolean",
+  },
+}
 export const userModel: Attributes = {
   id: {
-    length: 40,
-    required: true,
     key: true,
+    match: "equal",
   },
-  username: {
-    length: 100,
+  username: {},
+  email: {
+    format: "email",
     required: true,
-    q: true,
+    match: "prefix",
+  },
+  phone: {
+    format: "phone",
+  },
+  dateOfBirth: {
+    column: "date_of_birth",
+    type: "datetime",
   },
   displayName: {
     column: "display_name",
     length: 100,
-    required: true,
-    q: true,
+  },
+  givenName: {
+    column: "given_name",
+    length: 100,
+  },
+  familyName: {
+    column: "family_name",
+    length: 100,
+  },
+  middleName: {
+    column: "middle_name",
+    length: 100,
+  },
+  status: {
+    match: "equal",
+    length: 1,
+  },
+  title: {
+    length: 20,
+  },
+  position: {
+    length: 20,
   },
   imageURL: {
     column: "image_url",
     length: 255,
   },
-  gender: {
-    length: 10,
+  coverURL: {
+    column: "cover_url",
+    length: 255,
   },
-  title: {
-    length: 20,
-    q: true,
+  bio: {
+    length: 255,
   },
-  position: {
-    length: 20,
-  },
-  phone: {
-    format: "phone",
-    length: 14,
-  },
-  email: {
+  website: {},
+  occupation: {
     length: 100,
-    q: true,
   },
-  status: {
-    length: 1,
+  company: {
+    length: 100,
   },
-  createdBy: {
-    column: "created_by",
-    length: 40,
+  location: {
+    length: 100,
   },
-  createdAt: {
-    column: "created_at",
-    type: "datetime",
+  interests: {
+    type: "strings",
   },
-  updatedBy: {
-    column: "updated_by",
-    length: 40,
+  skills: {
+    type: "array",
+    typeof: skillsModel,
   },
-  updatedAt: {
-    column: "updated_at",
-    type: "datetime",
+  achievements: {
+    type: "array",
+    typeof: achievementsModel,
+  },
+  educations: {
+    type: "array",
+    typeof: educationsModel,
+  },
+  settings: {
+    type: "object",
+    typeof: userSettingsModel,
   },
 }

@@ -1,6 +1,6 @@
 import { Item } from "onecore"
-import { ChangeEvent, useEffect, useRef } from "react"
-import { checked, OnClick, Search, SearchComponentState, useSearch, value } from "react-hook-core"
+import { useEffect, useRef } from "react"
+import { OnClick, Search, SearchComponentState, useSearch, value } from "react-hook-core"
 import { useNavigate } from "react-router"
 import { Link } from "react-router-dom"
 import { Pagination } from "reactx-pagination"
@@ -16,9 +16,7 @@ const userFilter: UserFilter = {
   limit: 24,
   id: "",
   username: "",
-  displayName: "",
   email: "",
-  status: ["A"],
   q: "",
 }
 export const UsersForm = () => {
@@ -32,7 +30,7 @@ export const UsersForm = () => {
   const resource = useResource()
   const navigate = useNavigate()
   const refForm = useRef<HTMLFormElement>(null)
-  const { state, component, updateState, doSearch, search, sort, toggleFilter, clearQ, changeView, pageChanged, pageSizeChanged } = useSearch<
+  const { state, component, updateState, search, sort, toggleFilter, clearQ, changeView, pageChanged, pageSizeChanged } = useSearch<
     User,
     UserFilter,
     UserSearch
@@ -48,12 +46,6 @@ export const UsersForm = () => {
   const view = (e: OnClick, id: string) => {
     e.preventDefault()
     navigate(`${id}/view`)
-  }
-  const checkboxOnChange = (event: ChangeEvent<HTMLInputElement>) => {
-    updateState(event, (newState) => {
-      component.page = 1
-      doSearch({ ...component, ...newState.filter })
-    })
   }
   const { list } = state
   const filter = value(state.filter)
@@ -105,31 +97,6 @@ export const UsersForm = () => {
                 maxLength={255}
                 placeholder={resource.username}
               />
-            </label>
-            <label className="col s12 m4 l4">
-              {resource.display_name}
-              <input
-                type="text"
-                id="displayName"
-                name="displayName"
-                value={filter.displayName || ""}
-                onChange={updateState}
-                maxLength={255}
-                placeholder={resource.display_name}
-              />
-            </label>
-            <label className="col s12 m4 l4 checkbox-section">
-              {resource.status}
-              <section className="checkbox-group">
-                <label>
-                  <input type="checkbox" id="A" name="status" value="A" checked={checked(filter.status, "A")} onChange={checkboxOnChange} />
-                  {resource.active}
-                </label>
-                <label>
-                  <input type="checkbox" id="I" name="status" value="I" checked={checked(filter.status, "I")} onChange={checkboxOnChange} />
-                  {resource.inactive}
-                </label>
-              </section>
             </label>
           </section>
         </form>

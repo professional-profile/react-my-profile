@@ -39,7 +39,7 @@ export const MySettingsForm = () => {
   }
 
   return (
-    <form id="mySettingsForm" name="mySettingsForm" className="form" model-name="settings">
+    <form id="settingsForm" name="settingsForm" className="form" model-name="settings">
       <header>
         <h2>{resource.my_settings}</h2>
       </header>
