@@ -25,6 +25,7 @@ export const UserView = () => {
             if (newUser.followingCount == null) {
               newUser.followingCount = 0
             }
+            console.log("followingAt at " + newUser.followingAt)
             setUser(newUser)
           }
         })
@@ -38,10 +39,8 @@ export const UserView = () => {
     service.follow(user.id).then((res) => {
       if (res > 0) {
         debugger
-        user.followedAt = new Date()
-        if (user.followerCount) {
-          user.followerCount = user.followerCount + 1
-        }
+        user.followingAt = new Date()
+        user.followerCount = (user.followerCount | 0) + 1
         setUser(user)
         toast("Follow successfully")
       } else {
@@ -54,10 +53,8 @@ export const UserView = () => {
     service.unfollow(user.id).then((res) => {
       if (res > 0) {
         debugger
-        user.followedAt = undefined
-        if (user.followerCount) {
-          user.followerCount = user.followerCount - 1
-        }
+        user.followingAt = undefined
+        user.followerCount = (user.followerCount | 0) - 1
         setUser(user)
         toast("Unfollow successfully")
       } else {
@@ -76,7 +73,7 @@ export const UserView = () => {
               <button id="btnPhone" name="btnPhone" className="btn-phone" />
               <button id="btnEmail" name="btnEmail" className="btn-email" />
             </div>
-            {account && account.id !== user.id && user.followedAt && (
+            {account && account.id !== user.id && !user.followingAt && (
               <button
                 type="button"
                 id="btnFollow"
@@ -89,11 +86,11 @@ export const UserView = () => {
                 Follow
               </button>
             )}
-            {account && account.id !== user.id && !user.followedAt && (
+            {account && account.id !== user.id && user.followingAt && (
               <button
                 type="button"
-                id="btnFollow"
-                name="btnFollow"
+                id="btnUnfollow"
+                name="btnUnfollow"
                 className="btn-follow"
                 onClick={(e) => {
                   unfollow(e, user)
