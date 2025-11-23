@@ -18,6 +18,7 @@ export const ArticleForm = () => {
   const dateFormat = getDateFormat().toUpperCase()
   const resource = useResource()
   const navigate = useNavigate()
+  const service = getArticleService()
   const [state, setState] = useState<InternalState>(initialState)
   const { id } = useParams()
 
@@ -26,7 +27,7 @@ export const ArticleForm = () => {
       navigate(-1)
     } else {
       showLoading()
-      getArticleService()
+      service
         .load(id)
         .then((article) => {
           if (!article) {
@@ -42,33 +43,29 @@ export const ArticleForm = () => {
 
   const saveArticle = (e: React.MouseEvent<HTMLElement, MouseEvent>, article: Article) => {
     e.preventDefault()
-    getArticleService()
-      .save(article.id)
-      .then((res) => {
-        if (res > 0) {
-          article.savedAt = new Date()
-          setState({ article })
-          toast("Save article successfully")
-        } else if (res === 0) {
-          toast("No change. You already saved this article before.")
-        } else {
-          alertWarning("You reach the maximum of saved articles: 200. Remove some articles to have more slots to save.")
-        }
-      })
+    service.save(article.id).then((res) => {
+      if (res > 0) {
+        article.savedAt = new Date()
+        setState({ article })
+        toast("Save article successfully")
+      } else if (res === 0) {
+        toast("No change. You already saved this article before.")
+      } else {
+        alertWarning("You reach the maximum of saved articles: 200. Remove some articles to have more slots to save.")
+      }
+    })
   }
   const removeArticle = (e: React.MouseEvent<HTMLElement, MouseEvent>, article: Article) => {
     e.preventDefault()
-    getArticleService()
-      .remove(article.id)
-      .then((res) => {
-        if (res > 0) {
-          article.savedAt = undefined
-          setState({ article })
-          toast("Remove article successfully")
-        } else {
-          toast("No change. You already removed this article before.")
-        }
-      })
+    service.remove(article.id).then((res) => {
+      if (res > 0) {
+        article.savedAt = undefined
+        setState({ article })
+        toast("Remove article successfully")
+      } else {
+        toast("No change. You already removed this article before.")
+      }
+    })
   }
 
   const article = state.article

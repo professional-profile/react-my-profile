@@ -4,7 +4,7 @@ import { OnClick, Search, SearchComponentState, useSearch, value } from "react-h
 import { useNavigate } from "react-router"
 import { Link } from "react-router-dom"
 import { Pagination } from "reactx-pagination"
-import { getStatusName, hasPermission, inputSearch, Permission, useResource } from "uione"
+import { getStatusName, inputSearch, useResource } from "uione"
 import femaleIcon from "../assets/images/female.png"
 import maleIcon from "../assets/images/male.png"
 import { getUserService, User, UserFilter } from "./service"
@@ -19,14 +19,13 @@ const userFilter: UserFilter = {
   email: "",
   q: "",
 }
+const initialState: UserSearch = {
+  limit: 24,
+  statusList: [],
+  list: [],
+  filter: userFilter,
+}
 export const UsersForm = () => {
-  const canWrite = hasPermission(Permission.write)
-  const initialState: UserSearch = {
-    limit: 24,
-    statusList: [],
-    list: [],
-    filter: userFilter,
-  }
   const resource = useResource()
   const navigate = useNavigate()
   const refForm = useRef<HTMLFormElement>(null)
@@ -39,13 +38,9 @@ export const UsersForm = () => {
   useEffect(() => {
     search() // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
-  const edit = (e: OnClick, id: string) => {
-    e.preventDefault()
-    navigate(`${id}`)
-  }
   const view = (e: OnClick, id: string) => {
     e.preventDefault()
-    navigate(`${id}/view`)
+    navigate(`${id}`)
   }
   const { list } = state
   const filter = value(state.filter)
@@ -58,7 +53,6 @@ export const UsersForm = () => {
           {component.view === "table" && (
             <button type="button" id="btnListView" name="btnListView" className="btn-list" data-view="listview" onClick={changeView} />
           )}
-          {canWrite && <Link id="btnNew" className="btn-new" to="new" />}
         </div>
       </header>
       <div>
@@ -131,7 +125,6 @@ export const UsersForm = () => {
                       {resource.status}
                     </button>
                   </th>
-                  <th className="action">{resource.action}</th>
                 </tr>
               </thead>
               <tbody>
@@ -139,7 +132,7 @@ export const UsersForm = () => {
                   list.length > 0 &&
                   list.map((user, i) => {
                     return (
-                      <tr key={i} onClick={(e) => edit(e, user.id)}>
+                      <tr key={i} onClick={(e) => view(e, user.id)}>
                         <td className="text-right">{(user as any).sequenceNo}</td>
                         <td>{user.id}</td>
                         <td>
@@ -148,12 +141,6 @@ export const UsersForm = () => {
                         <td>{user.email}</td>
                         <td>{user.displayName}</td>
                         <td>{getStatusName(user.status, resource)}</td>
-                        <td>
-                          <div className="btn-group">
-                            <button type="button" className="btn-edit" onClick={(e) => edit(e, user.id)}></button>
-                            <button type="button" className="btn-history" onClick={(e) => view(e, user.id)}></button>
-                          </div>
-                        </td>
                       </tr>
                     )
                   })}
@@ -167,13 +154,13 @@ export const UsersForm = () => {
               list.length > 0 &&
               list.map((user, i) => {
                 return (
-                  <li key={i} className="col s12 m6 l4 xl3 img-item" onClick={(e) => edit(e, user.id)}>
+                  <li key={i} className="col s12 m6 l4 xl3 img-item" onClick={(e) => view(e, user.username)}>
                     <img
                       src={user.imageURL && user.imageURL.length > 0 ? user.imageURL : user.gender === "F" ? femaleIcon : maleIcon}
                       alt="user"
                       className="round-border"
                     />
-                    <Link to={`${user.id}`}>{user.displayName}</Link>
+                    <Link to={`${user.username}`}>{user.displayName}</Link>
                     <button className="btn-detail" />
                     <p>{user.email}</p>
                   </li>

@@ -1,29 +1,71 @@
 import { useLayoutEffect, useState } from "react"
 import { useParams } from "react-router-dom"
 import { hideLoading, showLoading } from "ui-loading"
-import { handleError, useResource } from "uione"
+import { toast } from "ui-toast"
+import { user as getUser, handleError, useResource } from "uione"
 import imageOnline from "../assets/images/online.svg"
 import { Achievement, getUserService, Skill, User } from "./service"
 
 const newUser = {} as any
 export const UserView = () => {
   const resource = useResource()
+  const service = getUserService()
   const [user, setUser] = useState<User>(newUser)
   const { id } = useParams()
   useLayoutEffect(() => {
     if (id) {
       showLoading()
-      getUserService()
+      service
         .load(id)
-        .then((tmpUser) => {
-          if (tmpUser) {
-            setUser(tmpUser)
+        .then((newUser) => {
+          if (newUser) {
+            if (newUser.followerCount == null) {
+              newUser.followerCount = 0
+            }
+            if (newUser.followingCount == null) {
+              newUser.followingCount = 0
+            }
+            setUser(newUser)
           }
         })
         .catch(handleError)
         .finally(hideLoading)
     }
-  }, [id])
+  }, [id, service])
+
+  const follow = (e: React.MouseEvent<HTMLElement, MouseEvent>, user: User) => {
+    e.preventDefault()
+    service.follow(user.id).then((res) => {
+      if (res > 0) {
+        debugger
+        user.followedAt = new Date()
+        if (user.followerCount) {
+          user.followerCount = user.followerCount + 1
+        }
+        setUser(user)
+        toast("Follow successfully")
+      } else {
+        toast("No change. You already follow this user before.")
+      }
+    })
+  }
+  const unfollow = (e: React.MouseEvent<HTMLElement, MouseEvent>, user: User) => {
+    e.preventDefault()
+    service.unfollow(user.id).then((res) => {
+      if (res > 0) {
+        debugger
+        user.followedAt = undefined
+        if (user.followerCount) {
+          user.followerCount = user.followerCount - 1
+        }
+        setUser(user)
+        toast("Unfollow successfully")
+      } else {
+        toast("No change. You already unfollow this user before.")
+      }
+    })
+  }
+  const account = getUser()
   return (
     <div className="profile view-container">
       <form id="userForm" name="userForm">
@@ -34,9 +76,32 @@ export const UserView = () => {
               <button id="btnPhone" name="btnPhone" className="btn-phone" />
               <button id="btnEmail" name="btnEmail" className="btn-email" />
             </div>
-            <button id="btnFollow" name="btnFollow" className="btn-follow">
-              Follow
-            </button>
+            {account && account.id !== user.id && user.followedAt && (
+              <button
+                type="button"
+                id="btnFollow"
+                name="btnFollow"
+                className="btn-follow"
+                onClick={(e) => {
+                  follow(e, user)
+                }}
+              >
+                Follow
+              </button>
+            )}
+            {account && account.id !== user.id && !user.followedAt && (
+              <button
+                type="button"
+                id="btnFollow"
+                name="btnFollow"
+                className="btn-follow"
+                onClick={(e) => {
+                  unfollow(e, user)
+                }}
+              >
+                Unfollow
+              </button>
+            )}
           </div>
           <button id="btnCamera" name="btnCamera" className="btn-camera" />
           <div className="avatar-wrapper">
@@ -44,15 +109,18 @@ export const UserView = () => {
             <img className="profile-status" src={imageOnline} alt="status" />
           </div>
           <div className="profile-title">
-            <h4>{user.displayName}</h4>
+            <h4>
+              {user.displayName}
+              {user.followingAt && user.followedAt && <i className="material-icons highlight">group</i>}
+            </h4>
             <p>{user.headline}</p>
           </div>
           <div className="profile-followers">
             <p>
-              <i className="material-icons highlight">group</i>
+              <i className="material-icons highlight">group</i> {user.followerCount} followers
             </p>
             <p>
-              <i className="material-icons highlight">group_add</i>
+              <i className="material-icons highlight">group_add</i> {user.followingCount} followings
             </p>
           </div>
         </header>

@@ -28,7 +28,7 @@ import { Pagination } from "reactx-pagination"
 import { hideLoading, showLoading } from "ui-loading"
 import { addSeconds, createDate, formatDateTime } from "ui-plus"
 import { toast } from "ui-toast"
-import { getDateFormat, handleError, hasPermission, Permission, useResource } from "uione"
+import { getDateFormat, handleError, useResource } from "uione"
 import { Article, ArticleFilter, getArticleService } from "./service"
 
 interface ArticleSearch extends Sortable {
@@ -52,15 +52,14 @@ const articleFilter: ArticleFilter = {
 }
 
 const sizes = pageSizes
+const initialState: ArticleSearch = {
+  statusList: [],
+  list: [],
+  filter: articleFilter,
+  hideFilter: true,
+}
 export const ArticlesForm = () => {
-  const canWrite = hasPermission(Permission.write)
   const dateFormat = getDateFormat().toUpperCase()
-  const initialState: ArticleSearch = {
-    statusList: [],
-    list: [],
-    filter: articleFilter,
-    hideFilter: true,
-  }
   const resource = useResource()
   const navigate = useNavigate()
   const refForm = useRef<HTMLFormElement>(null)
@@ -144,7 +143,7 @@ export const ArticlesForm = () => {
           {state.view !== "table" && (
             <button type="button" id="btnTable" name="btnTable" className="btn-table" onClick={(e) => setState({ ...state, view: "table" })} />
           )}
-          {canWrite && <Link id="btnNew" className="btn-new" to="new" />}
+          <Link id="btnNew" className="btn-new" to="new" />
         </div>
       </header>
       <div>

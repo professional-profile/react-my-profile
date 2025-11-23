@@ -28,7 +28,7 @@ import { Pagination } from "reactx-pagination"
 import { hideLoading, showLoading } from "ui-loading"
 import { addSeconds, createDate, formatDateTime } from "ui-plus"
 import { toast } from "ui-toast"
-import { getDateFormat, handleError, hasPermission, Permission, useResource } from "uione"
+import { getDateFormat, handleError, useResource } from "uione"
 import { getJobService, Job, JobFilter } from "./service"
 
 interface JobSearch extends Sortable {
@@ -53,7 +53,6 @@ const jobFilter: JobFilter = {
 
 const sizes = pageSizes
 export const JobsForm = () => {
-  const canWrite = hasPermission(Permission.write)
   const dateFormat = getDateFormat().toUpperCase()
   const initialState: JobSearch = {
     statusList: [],
@@ -144,7 +143,6 @@ export const JobsForm = () => {
           {state.view !== "table" && (
             <button type="button" id="btnListView" name="btnListView" className="btn-list" onClick={(e) => setState({ ...state, view: "table" })} />
           )}
-          {canWrite && <Link id="btnNew" className="btn-new" to="new" />}
         </div>
       </header>
       <div>
@@ -305,7 +303,6 @@ export const JobsForm = () => {
                       {resource.location}
                     </button>
                   </th>
-                  <th className="action">{resource.action}</th>
                 </tr>
               </thead>
               <tbody>
@@ -323,12 +320,6 @@ export const JobsForm = () => {
                         <td>{item.position}</td>
                         <td className="text-right">{item.quantity}</td>
                         <td>{item.location}</td>
-                        <td>
-                          <div className="btn-group">
-                            <button type="button" className="btn-edit" onClick={(e) => edit(e, item.id)}></button>
-                            <button type="button" className="btn-history" onClick={(e) => edit(e, item.id)}></button>
-                          </div>
-                        </td>
                       </tr>
                     )
                   })}

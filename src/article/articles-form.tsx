@@ -28,7 +28,7 @@ import { alertWarning } from "ui-alert"
 import { hideLoading, showLoading } from "ui-loading"
 import { addSeconds, createDate, formatDateTime } from "ui-plus"
 import { toast } from "ui-toast"
-import { getDateFormat, handleError, hasPermission, Permission, user, useResource } from "uione"
+import { getDateFormat, handleError, user, useResource } from "uione"
 import { Article, ArticleFilter, getArticleService } from "./service"
 
 interface ArticleSearch extends Sortable {
@@ -51,18 +51,18 @@ const articleFilter: ArticleFilter = {
 }
 
 const sizes = pageSizes
+const initialState: ArticleSearch = {
+  statusList: [],
+  list: [],
+  filter: articleFilter,
+  hideFilter: true,
+}
 export const ArticlesForm = () => {
-  const canWrite = hasPermission(Permission.write)
   const dateFormat = getDateFormat().toUpperCase()
-  const initialState: ArticleSearch = {
-    statusList: [],
-    list: [],
-    filter: articleFilter,
-    hideFilter: true,
-  }
   const resource = useResource()
   const navigate = useNavigate()
   const refForm = useRef<HTMLFormElement>(null)
+  const service = getArticleService()
   const [state, setState] = useState<ArticleSearch>(initialState)
 
   useEffect(() => {
@@ -104,7 +104,7 @@ export const ArticlesForm = () => {
     const filter = buildSortFilter(state.filter, state)
     addParametersIntoUrl(filter, isFirstLoad)
     const fields = getFields(refForm.current, state.fields)
-    getArticleService()
+    service
       .search(filter, limit, page, fields)
       .then((res) => {
         setState({ ...state, filter: state.filter, list: res.list, total: res.total, fields })
@@ -121,33 +121,29 @@ export const ArticlesForm = () => {
   const { list } = state
   const saveArticle = (e: React.MouseEvent<HTMLElement, MouseEvent>, article: Article) => {
     e.preventDefault()
-    getArticleService()
-      .save(article.id)
-      .then((res) => {
-        if (res > 0) {
-          article.savedAt = new Date()
-          setState({ ...state, list })
-          toast("Save article successfully")
-        } else if (res === 0) {
-          toast("No change. You already saved this article before.")
-        } else {
-          alertWarning("You reach the maximum of saved articles: 200. Remove some articles to have more slots to save.")
-        }
-      })
+    service.save(article.id).then((res) => {
+      if (res > 0) {
+        article.savedAt = new Date()
+        setState({ ...state, list })
+        toast("Save article successfully")
+      } else if (res === 0) {
+        toast("No change. You already saved this article before.")
+      } else {
+        alertWarning("You reach the maximum of saved articles: 200. Remove some articles to have more slots to save.")
+      }
+    })
   }
   const removeArticle = (e: React.MouseEvent<HTMLElement, MouseEvent>, article: Article) => {
     e.preventDefault()
-    getArticleService()
-      .remove(article.id)
-      .then((res) => {
-        if (res > 0) {
-          article.savedAt = undefined
-          setState({ ...state, list })
-          toast("Remove article successfully")
-        } else {
-          toast("No change. You already removed this article before.")
-        }
-      })
+    service.remove(article.id).then((res) => {
+      if (res > 0) {
+        article.savedAt = undefined
+        setState({ ...state, list })
+        toast("Remove article successfully")
+      } else {
+        toast("No change. You already removed this article before.")
+      }
+    })
   }
 
   const filter = value(state.filter)
@@ -165,7 +161,6 @@ export const ArticlesForm = () => {
           {state.view !== "table" && (
             <button type="button" id="btnTable" name="btnTable" className="btn-table" onClick={(e) => setState({ ...state, view: "table" })} />
           )}
-          {canWrite && <Link id="btnNew" className="btn-new" to="new" />}
         </div>
       </header>
       <div>
@@ -303,7 +298,6 @@ export const ArticlesForm = () => {
                       {resource.description}
                     </button>
                   </th>
-                  <th className="action">{resource.action}</th>
                 </tr>
               </thead>
               <tbody>
@@ -319,12 +313,6 @@ export const ArticlesForm = () => {
                         </td>
                         <td>{formatDateTime(item.publishedAt, dateFormat)}</td>
                         <td>{item.description}</td>
-                        <td>
-                          <div className="btn-group">
-                            <button type="button" className="btn-edit" onClick={(e) => view(e, item.slug)}></button>
-                            <button type="button" className="btn-history" onClick={(e) => view(e, item.id)}></button>
-                          </div>
-                        </td>
                       </tr>
                     )
                   })}

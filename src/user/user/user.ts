@@ -28,8 +28,8 @@ export interface User {
   works: Work[]
   educations: Education[]
   settings?: UserSettings
-  followerCount?: number
-  followingCount?: number
+  followerCount: number
+  followingCount: number
   followingAt?: Date
   followedAt?: Date
 }
@@ -225,5 +225,29 @@ export const userModel: Attributes = {
   settings: {
     type: "object",
     typeof: userSettingsModel,
+  },
+  followerCount: {
+    column: "follower_count",
+    type: "integer",
+    noinsert: true,
+    noupdate: true,
+  },
+  followingCount: {
+    column: "following_count",
+    type: "integer",
+    noinsert: true,
+    noupdate: true,
+  },
+  followingAt: {
+    column: "following_at",
+    type: "datetime",
+    noinsert: true,
+    noupdate: true,
+  },
+  followedAt: {
+    column: "followed_at",
+    type: "datetime",
+    noinsert: true,
+    noupdate: true,
   },
 }
