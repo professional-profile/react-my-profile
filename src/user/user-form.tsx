@@ -6,27 +6,25 @@ import { user as getUser, handleError, useResource } from "uione"
 import imageOnline from "../assets/images/online.svg"
 import { Achievement, getUserService, Skill, User } from "./service"
 
-const newUser = {} as any
+interface InternalState {
+  user: User
+}
+const initialState: InternalState = {
+  user: {} as User,
+}
 export const UserView = () => {
   const resource = useResource()
   const service = getUserService()
-  const [user, setUser] = useState<User>(newUser)
+  const [state, setState] = useState<InternalState>(initialState)
   const { id } = useParams()
   useLayoutEffect(() => {
     if (id) {
       showLoading()
       service
         .load(id)
-        .then((newUser) => {
-          if (newUser) {
-            if (newUser.followerCount == null) {
-              newUser.followerCount = 0
-            }
-            if (newUser.followingCount == null) {
-              newUser.followingCount = 0
-            }
-            console.log("followingAt at " + newUser.followingAt)
-            setUser(newUser)
+        .then((user) => {
+          if (user) {
+            setState({ user })
           }
         })
         .catch(handleError)
@@ -41,7 +39,7 @@ export const UserView = () => {
         debugger
         user.followingAt = new Date()
         user.followerCount = (user.followerCount | 0) + 1
-        setUser(user)
+        setState({ user })
         toast("Follow successfully")
       } else {
         toast("No change. You already follow this user before.")
@@ -55,7 +53,7 @@ export const UserView = () => {
         debugger
         user.followingAt = undefined
         user.followerCount = (user.followerCount | 0) - 1
-        setUser(user)
+        setState({ user })
         toast("Unfollow successfully")
       } else {
         toast("No change. You already unfollow this user before.")
@@ -63,6 +61,7 @@ export const UserView = () => {
     })
   }
   const account = getUser()
+  const user = state.user
   return (
     <div className="profile view-container">
       <form id="userForm" name="userForm">
@@ -114,10 +113,10 @@ export const UserView = () => {
           </div>
           <div className="profile-followers">
             <p>
-              <i className="material-icons highlight">group</i> {user.followerCount} followers
+              <i className="material-icons highlight">group</i> {user.followerCount | 0} followers
             </p>
             <p>
-              <i className="material-icons highlight">group_add</i> {user.followingCount} followings
+              <i className="material-icons highlight">group_add</i> {user.followingCount | 0} followings
             </p>
           </div>
         </header>

@@ -52,14 +52,14 @@ const jobFilter: JobFilter = {
 }
 
 const sizes = pageSizes
+const initialState: JobSearch = {
+  statusList: [],
+  list: [],
+  filter: jobFilter,
+  hideFilter: true,
+}
 export const JobsForm = () => {
   const dateFormat = getDateFormat().toUpperCase()
-  const initialState: JobSearch = {
-    statusList: [],
-    list: [],
-    filter: jobFilter,
-    hideFilter: true,
-  }
   const resource = useResource()
   const navigate = useNavigate()
   const refForm = useRef<HTMLFormElement>(null)
