@@ -62,9 +62,8 @@ export const ArticlesForm = () => {
   const resource = useResource()
   const navigate = useNavigate()
   const refForm = useRef<HTMLFormElement>(null)
-  const service = getArticleService()
   const [state, setState] = useState<ArticleSearch>(initialState)
-
+  const service = getArticleService()
   useEffect(() => {
     const filter = mergeFilter(buildFromUrl<ArticleFilter>(), state.filter, sizes, ["status"])
     setSort(state, filter.sort)

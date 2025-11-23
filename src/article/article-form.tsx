@@ -18,10 +18,9 @@ export const ArticleForm = () => {
   const dateFormat = getDateFormat().toUpperCase()
   const resource = useResource()
   const navigate = useNavigate()
-  const service = getArticleService()
   const [state, setState] = useState<InternalState>(initialState)
   const { id } = useParams()
-
+  const service = getArticleService()
   useEffect(() => {
     if (!id) {
       navigate(-1)

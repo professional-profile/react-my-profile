@@ -17,14 +17,13 @@ import {
   removeSortStatus,
   setSort,
   Sortable,
-  value,
 } from "react-hook-core"
 import { useNavigate } from "react-router"
 import { Link } from "react-router-dom"
 import { Pagination } from "reactx-pagination"
 import { hideLoading, showLoading } from "ui-loading"
 import { toast } from "ui-toast"
-import { getStatusName, handleError, useResource } from "uione"
+import { getStatusName, handleError, user, useResource } from "uione"
 import femaleIcon from "../assets/images/female.png"
 import maleIcon from "../assets/images/male.png"
 import { getUserService, User, UserFilter } from "./service"
@@ -56,7 +55,7 @@ export const UsersForm = () => {
   const navigate = useNavigate()
   const refForm = useRef<HTMLFormElement>(null)
   const [state, setState] = useState<UserSearch>(initialState)
-
+  const service = getUserService()
   useEffect(() => {
     const filter = mergeFilter(buildFromUrl<UserFilter>(), state.filter, sizes, ["status", "userType"])
     setSort(state, filter.sort)
@@ -100,7 +99,7 @@ export const UsersForm = () => {
     const filter = buildSortFilter(state.filter, state)
     addParametersIntoUrl(filter, isFirstLoad)
     const fields = getFields(refForm.current, state.fields)
-    getUserService()
+    service
       .search(filter, limit, page, fields)
       .then((res) => {
         setState({ ...state, filter: state.filter, list: res.list, total: res.total, fields })
@@ -109,8 +108,36 @@ export const UsersForm = () => {
       .catch(handleError)
       .finally(hideLoading)
   }
+
   const { list } = state
-  const filter = value(state.filter)
+  const follow = (e: React.MouseEvent<HTMLElement, MouseEvent>, user: User) => {
+    e.preventDefault()
+    service.follow(user.id).then((res) => {
+      if (res > 0) {
+        user.followingAt = new Date()
+        user.followerCount = (user.followerCount | 0) + 1
+        setState({ ...state, list })
+        toast("Follow successfully")
+      } else {
+        toast("No change. You already follow this user before.")
+      }
+    })
+  }
+  const unfollow = (e: React.MouseEvent<HTMLElement, MouseEvent>, user: User) => {
+    e.preventDefault()
+    service.unfollow(user.id).then((res) => {
+      if (res > 0) {
+        user.followingAt = undefined
+        user.followerCount = (user.followerCount | 0) - 1
+        setState({ ...state, list })
+        toast("Unfollow successfully")
+      } else {
+        toast("No change. You already unfollow this user before.")
+      }
+    })
+  }
+  const filter = state.filter
+  const account = user()
   return (
     <div>
       <header>
@@ -249,7 +276,7 @@ export const UsersForm = () => {
               list.length > 0 &&
               list.map((user, i) => {
                 return (
-                  <li key={i} className="col s12 m6 l4 xl3 img-item" onClick={(e) => view(e, user.username)}>
+                  <li key={i} className="col s12 m6 l4 xl3 img-item">
                     <img
                       src={user.imageURL && user.imageURL.length > 0 ? user.imageURL : user.gender === "F" ? femaleIcon : maleIcon}
                       alt="user"
@@ -257,7 +284,19 @@ export const UsersForm = () => {
                     />
                     <Link to={`${user.username}`}>{user.displayName}</Link>
                     <button className="btn-detail" />
-                    <p>{user.email}</p>
+                    <p>
+                      {user.email}
+                      {account && !user.followingAt && (
+                        <button type="button" onClick={(e) => follow(e, user)}>
+                          Follow
+                        </button>
+                      )}
+                      {account && user.followingAt && (
+                        <button type="button" onClick={(e) => unfollow(e, user)}>
+                          Unfollow
+                        </button>
+                      )}
+                    </p>
                   </li>
                 )
               })}

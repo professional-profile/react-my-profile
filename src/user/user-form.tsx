@@ -14,9 +14,9 @@ const initialState: InternalState = {
 }
 export const UserView = () => {
   const resource = useResource()
-  const service = getUserService()
   const [state, setState] = useState<InternalState>(initialState)
   const { id } = useParams()
+  const service = getUserService()
   useLayoutEffect(() => {
     if (id) {
       showLoading()
@@ -36,7 +36,6 @@ export const UserView = () => {
     e.preventDefault()
     service.follow(user.id).then((res) => {
       if (res > 0) {
-        debugger
         user.followingAt = new Date()
         user.followerCount = (user.followerCount | 0) + 1
         setState({ user })
@@ -50,7 +49,6 @@ export const UserView = () => {
     e.preventDefault()
     service.unfollow(user.id).then((res) => {
       if (res > 0) {
-        debugger
         user.followingAt = undefined
         user.followerCount = (user.followerCount | 0) - 1
         setState({ user })
