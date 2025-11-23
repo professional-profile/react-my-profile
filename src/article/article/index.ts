@@ -16,8 +16,8 @@ export class ArticleClient extends SearchClient<Article, string, ArticleFilter> 
     const url = `${this.serviceUrl}/${id}`
     return this.http
       .patch<number>(url, {})
-      .then((result) => {
-        return result
+      .then((res) => {
+        return res
       })
       .catch((err) => {
         if (err) {
@@ -35,8 +35,8 @@ export class ArticleClient extends SearchClient<Article, string, ArticleFilter> 
     const url = `${this.serviceUrl}/${id}`
     return this.http
       .delete<number>(url)
-      .then((result) => {
-        return result
+      .then((res) => {
+        return res
       })
       .catch((err) => {
         if (err) {

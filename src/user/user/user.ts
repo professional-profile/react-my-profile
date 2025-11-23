@@ -16,6 +16,7 @@ export interface User {
   //image?: UploadSize[]
   imageURL?: string
   coverURL?: string
+  headline?: string
   bio?: string
   website?: string
   occupation?: string
@@ -27,6 +28,10 @@ export interface User {
   works: Work[]
   educations: Education[]
   settings?: UserSettings
+  followerCount?: number
+  followingCount?: number
+  followingAt?: Date
+  followedAt?: Date
 }
 export interface UserSettings {
   language: string
@@ -58,6 +63,7 @@ export interface Skill {
 export interface Achievement {
   subject: string
   description: string
+  highlight: boolean
 }
 export interface Work {
   name: string

@@ -24,6 +24,7 @@ import {
 import { useNavigate } from "react-router"
 import { Link } from "react-router-dom"
 import { Pagination } from "reactx-pagination"
+import { alertWarning } from "ui-alert"
 import { hideLoading, showLoading } from "ui-loading"
 import { addSeconds, createDate, formatDateTime } from "ui-plus"
 import { toast } from "ui-toast"
@@ -116,7 +117,39 @@ export const ArticlesForm = () => {
     e.preventDefault()
     navigate(`${id}`)
   }
+
   const { list } = state
+  const saveArticle = (e: React.MouseEvent<HTMLElement, MouseEvent>, article: Article) => {
+    e.preventDefault()
+    getArticleService()
+      .save(article.id)
+      .then((res) => {
+        if (res > 0) {
+          article.savedAt = new Date()
+          setState({ ...state, list })
+          toast("Save article successfully")
+        } else if (res === 0) {
+          toast("No change. You already saved this article before.")
+        } else {
+          alertWarning("You reach the maximum of saved articles: 200. Remove some articles to have more slots to save.")
+        }
+      })
+  }
+  const removeArticle = (e: React.MouseEvent<HTMLElement, MouseEvent>, article: Article) => {
+    e.preventDefault()
+    getArticleService()
+      .remove(article.id)
+      .then((res) => {
+        if (res > 0) {
+          article.savedAt = undefined
+          setState({ ...state, list })
+          toast("Remove article successfully")
+        } else {
+          toast("No change. You already removed this article before.")
+        }
+      })
+  }
+
   const filter = value(state.filter)
   const offset = getOffset(limit, page)
   const account = user()
@@ -305,14 +338,22 @@ export const ArticlesForm = () => {
               state.list.length > 0 &&
               state.list.map((item, i) => {
                 return (
-                  <li key={i} className="col s12 m6 l4 xl3 card" onClick={(e) => view(e, item.slug)}>
+                  <li key={i} className="col s12 m6 l4 xl3 card">
                     <section>
                       <div className="cover" style={{ backgroundImage: `url('${item.thumbnail}')` }}></div>
                       <Link to={`${item.slug}`}>{item.title}</Link>
                       <p className="article-meta">
                         {formatDateTime(item.publishedAt, dateFormat)}
-                        {account && item.savedAt && <i className="material-icons">bookmark</i>}
-                        {account && !item.savedAt && <i className="material-icons">bookmark_border</i>}
+                        {account && item.savedAt && (
+                          <i className="material-icons" onClick={(e) => removeArticle(e, item)}>
+                            bookmark
+                          </i>
+                        )}
+                        {account && !item.savedAt && (
+                          <i className="material-icons" onClick={(e) => saveArticle(e, item)}>
+                            bookmark_border
+                          </i>
+                        )}
                       </p>
                       <p>{item.description}</p>
                     </section>
