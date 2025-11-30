@@ -284,7 +284,7 @@ export const UsersForm = () => {
                     />
                     <Link to={`${user.username}`}>{user.displayName}</Link>
                     <button className="btn-detail" />
-                    <p className="article-meta">
+                    <p className="center-align-items">
                       {user.email}
                       {account && !user.followingAt && (
                         <i className="material-icons" onClick={(e) => follow(e, user)}>

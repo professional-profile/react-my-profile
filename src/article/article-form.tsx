@@ -78,7 +78,7 @@ export const ArticleForm = () => {
       </header>
       <div className="article-body">
         <h4 className="article-description">{article.description}</h4>
-        <h4 className="article-meta">
+        <h4 className="article-meta center-align-items">
           {formatDateTime(article.publishedAt, dateFormat)}
           {account && article.savedAt && (
             <i className="material-icons" onClick={(e) => removeArticle(e, article)}>

@@ -329,7 +329,7 @@ export const ArticlesForm = () => {
                     <section>
                       <div className="cover" style={{ backgroundImage: `url('${item.thumbnail}')` }}></div>
                       <Link to={`${item.slug}`}>{item.title}</Link>
-                      <p className="article-meta">
+                      <p className="article-meta center-align-items">
                         {formatDateTime(item.publishedAt, dateFormat)}
                         {account && item.savedAt && (
                           <i className="material-icons" onClick={(e) => removeArticle(e, item)}>
