@@ -355,7 +355,7 @@ export const MyProfileForm = () => {
   return (
     <div className="profile view-container">
       <form id="userForm" name="userForm">
-        <header className="border-bottom-highlight">
+        <header className="profile-header border-bottom-highlight">
           <div className="cover-image">
             <img src={user.coverURL} alt="cover" />
             <div className="contact-group">
