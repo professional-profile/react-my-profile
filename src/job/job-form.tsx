@@ -6,31 +6,22 @@ import { formatDateTime } from "ui-plus"
 import { getDateFormat, handleError, useResource } from "uione"
 import { getJobService, Job } from "./service"
 
-interface InternalState {
-  job: Job
-}
-const initialState: InternalState = {
-  job: {} as Job,
-}
-
 export const JobForm = () => {
   const dateFormat = getDateFormat().toUpperCase()
   const resource = useResource()
   const navigate = useNavigate()
-  const [state, setState] = useState<InternalState>(initialState)
+  const [job, setJob] = useState<Job>({} as Job)
   const { id } = useParams()
   useEffect(() => {
-    if (!id) {
-      navigate(-1)
-    } else {
+    if (id) {
       showLoading()
       getJobService()
         .load(id)
-        .then((job) => {
-          if (!job) {
+        .then((obj) => {
+          if (!obj) {
             alertError(resource.error_404, () => navigate(-1))
           } else {
-            setState({ job })
+            setJob(obj)
           }
         })
         .catch(handleError)
@@ -38,7 +29,6 @@ export const JobForm = () => {
     }
   }, [id]) // eslint-disable-line react-hooks/exhaustive-deps
 
-  const job = state.job
   return (
     <article className="article">
       <header>
