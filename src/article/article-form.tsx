@@ -7,18 +7,11 @@ import { toast } from "ui-toast"
 import { getDateFormat, handleError, user, useResource } from "uione"
 import { Article, getArticleService } from "./service"
 
-interface InternalState {
-  article: Article
-}
-const initialState: InternalState = {
-  article: {} as Article,
-}
-
 export const ArticleForm = () => {
   const dateFormat = getDateFormat().toUpperCase()
   const resource = useResource()
   const navigate = useNavigate()
-  const [state, setState] = useState<InternalState>(initialState)
+  const [article, setArticle] = useState<Article>({} as Article)
   const { id } = useParams()
   const service = getArticleService()
   useEffect(() => {
@@ -28,48 +21,46 @@ export const ArticleForm = () => {
       showLoading()
       service
         .load(id)
-        .then((article) => {
-          if (!article) {
+        .then((obj) => {
+          if (!obj) {
             alertError(resource.error_404, () => navigate(-1))
           } else {
-            setState({ article })
+            setArticle(obj)
           }
         })
         .catch(handleError)
         .finally(hideLoading)
     }
-  }, [id]) // eslint-disable-line react-hooks/exhaustive-deps
+  }, [id, service]) // eslint-disable-line react-hooks/exhaustive-deps
 
-  const saveArticle = (e: React.MouseEvent<HTMLElement, MouseEvent>, article: Article) => {
+  const saveArticle = (e: React.MouseEvent<HTMLElement, MouseEvent>, item: Article) => {
     e.preventDefault()
-    service.save(article.id).then((res) => {
+    service.save(item.id).then((res) => {
       if (res > 0) {
-        article.savedAt = new Date()
-        setState({ article })
-        toast("Save article successfully")
+        item.savedAt = new Date()
+        setArticle({ ...item })
+        toast(resource.article_save_success)
       } else if (res === 0) {
-        toast("No change. You already saved this article before.")
+        toast(resource.article_save_conflict)
       } else {
-        alertWarning("You reach the maximum of saved articles: 200. Remove some articles to have more slots to save.")
+        alertWarning(resource.article_save_fail)
       }
     })
   }
-  const removeArticle = (e: React.MouseEvent<HTMLElement, MouseEvent>, article: Article) => {
+  const removeArticle = (e: React.MouseEvent<HTMLElement, MouseEvent>, item: Article) => {
     e.preventDefault()
     service.remove(article.id).then((res) => {
       if (res > 0) {
-        article.savedAt = undefined
-        setState({ article })
-        toast("Remove article successfully")
+        item.savedAt = undefined
+        setArticle({ ...item })
+        toast(resource.article_unsave_success)
       } else {
-        toast("No change. You already removed this article before.")
+        toast(resource.article_unsave_conflict)
       }
     })
   }
 
-  const article = state.article
   const account = user()
-
   return (
     <article className="article">
       <header className="article-header">

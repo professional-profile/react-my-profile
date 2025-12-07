@@ -117,9 +117,9 @@ export const UsersForm = () => {
         user.followingAt = new Date()
         user.followerCount = (user.followerCount | 0) + 1
         setState({ ...state, list })
-        toast("Follow successfully")
+        toast(resource.user_profile_follow_success)
       } else {
-        toast("No change. You already follow this user before.")
+        toast(resource.user_profile_follow_conflict)
       }
     })
   }
@@ -130,9 +130,9 @@ export const UsersForm = () => {
         user.followingAt = undefined
         user.followerCount = (user.followerCount | 0) - 1
         setState({ ...state, list })
-        toast("Unfollow successfully")
+        toast(resource.user_profile_unfollow_success)
       } else {
-        toast("No change. You already unfollow this user before.")
+        toast(resource.user_profile_unfollow_conflict)
       }
     })
   }

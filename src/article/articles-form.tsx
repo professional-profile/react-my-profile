@@ -124,11 +124,11 @@ export const ArticlesForm = () => {
       if (res > 0) {
         article.savedAt = new Date()
         setState({ ...state, list })
-        toast("Save article successfully")
+        toast(resource.article_save_success)
       } else if (res === 0) {
-        toast("No change. You already saved this article before.")
+        toast(resource.article_save_conflict)
       } else {
-        alertWarning("You reach the maximum of saved articles: 200. Remove some articles to have more slots to save.")
+        alertWarning(resource.article_save_fail)
       }
     })
   }
@@ -138,9 +138,9 @@ export const ArticlesForm = () => {
       if (res > 0) {
         article.savedAt = undefined
         setState({ ...state, list })
-        toast("Remove article successfully")
+        toast(resource.article_unsave_success)
       } else {
-        toast("No change. You already removed this article before.")
+        toast(resource.article_unsave_conflict)
       }
     })
   }

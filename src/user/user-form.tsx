@@ -6,15 +6,9 @@ import { user as getUser, handleError, useResource } from "uione"
 import imageOnline from "../assets/images/online.svg"
 import { Achievement, getUserService, Skill, User } from "./service"
 
-interface InternalState {
-  user: User
-}
-const initialState: InternalState = {
-  user: {} as User,
-}
 export const UserView = () => {
   const resource = useResource()
-  const [state, setState] = useState<InternalState>(initialState)
+  const [user, setUser] = useState<User>({} as User)
   const { id } = useParams()
   const service = getUserService()
   useLayoutEffect(() => {
@@ -22,9 +16,9 @@ export const UserView = () => {
       showLoading()
       service
         .load(id)
-        .then((user) => {
-          if (user) {
-            setState({ user })
+        .then((obj) => {
+          if (obj) {
+            setUser(obj)
           }
         })
         .catch(handleError)
@@ -32,34 +26,34 @@ export const UserView = () => {
     }
   }, [id, service])
 
-  const follow = (e: React.MouseEvent<HTMLElement, MouseEvent>, user: User) => {
+  const follow = (e: React.MouseEvent<HTMLElement, MouseEvent>, item: User) => {
     e.preventDefault()
-    service.follow(user.id).then((res) => {
+    service.follow(item.id).then((res) => {
       if (res > 0) {
-        user.followingAt = new Date()
-        user.followerCount = (user.followerCount | 0) + 1
-        setState({ user })
-        toast("Follow successfully")
+        item.followingAt = new Date()
+        item.followerCount = (item.followerCount | 0) + 1
+        setUser({ ...item })
+        toast(resource.user_profile_follow_success)
       } else {
-        toast("No change. You already follow this user before.")
+        toast(resource.user_profile_follow_conflict)
       }
     })
   }
-  const unfollow = (e: React.MouseEvent<HTMLElement, MouseEvent>, user: User) => {
+  const unfollow = (e: React.MouseEvent<HTMLElement, MouseEvent>, item: User) => {
     e.preventDefault()
-    service.unfollow(user.id).then((res) => {
+    service.unfollow(item.id).then((res) => {
       if (res > 0) {
-        user.followingAt = undefined
-        user.followerCount = (user.followerCount | 0) - 1
-        setState({ user })
-        toast("Unfollow successfully")
+        item.followingAt = undefined
+        item.followerCount = (item.followerCount | 0) - 1
+        setUser({ ...item })
+        toast(resource.user_profile_unfollow_success)
       } else {
-        toast("No change. You already unfollow this user before.")
+        toast(resource.user_profile_unfollow_conflict)
       }
     })
   }
+
   const account = getUser()
-  const user = state.user
   return (
     <div className="profile view-container">
       <form id="userForm" name="userForm">
