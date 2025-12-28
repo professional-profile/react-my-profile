@@ -449,7 +449,6 @@ export const MyProfileForm = () => {
                   <hr />
                   <p className="icon-text">
                     <i className="star highlight" />
-                    Hirable skill
                     {resource.user_profile_hirable_skill}
                   </p>
                 </section>
@@ -772,10 +771,10 @@ export const MyProfileForm = () => {
                 user.achievements.map((achievement: Achievement, index: number) => {
                   return (
                     <section key={index}>
-                      <h3>
+                      <h4>
                         {achievement.subject}
                         {achievement.highlight && <i className="star highlight float-right" />}
-                      </h3>
+                      </h4>
                       <p className="description">{achievement.description}</p>
                       <hr />
                     </section>
@@ -785,10 +784,10 @@ export const MyProfileForm = () => {
                 user.achievements &&
                 user.achievements.map((achievement: Achievement, index: number) => (
                   <section key={index}>
-                    <h3>
+                    <h4>
                       {achievement.subject}
                       {achievement.highlight && <i className="star highlight" />}
-                    </h3>
+                    </h4>
                     <p className="description">{achievement.description}</p>
                     <button type="button" className="btn-remove" onClick={(e) => removeAchievement(e, achievement.subject)} />
                     <hr />

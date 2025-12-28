@@ -292,6 +292,10 @@ header.nav > .profile-followers {
   margin-bottom: 4px;
 }
 
+.profile .card p.description {
+  line-height: 20px;
+}
+
 .profile .row span.col {
   margin-top: 4px;
   margin-bottom: 4px;
@@ -308,8 +312,9 @@ header.nav > .profile-followers {
   margin-bottom: unset;
   flex-direction: unset;
 }
-.profile .card > section > h3 {
-  font-size: 15px;
+.profile .card > section > h4 {
+  font-size: 16px;
+  font-weight: 400;
   padding-top: unset;
   margin-bottom: 0.5rem;
   line-height: 1.2;
@@ -336,6 +341,7 @@ header.nav > .profile-followers {
 
 .profile .card > section > label.checkbox-container > input[type="checkbox"]:not(.modal-trigger):not(.toggle):not(#alert-check):not([id*="lightbox-"]) {
   left: 0;
+  top: 16px;
 }
 .profile .btn-group {
   display: inline-flex;
@@ -355,8 +361,8 @@ header.nav > .profile-followers {
   font-size: 23px;
   font-weight: 100;
   content: "\2B";
-  top: -7px;
-  left: 3px;
+  top: -4px;
+  left: 4px;
 }
 
 .profile .card > div {

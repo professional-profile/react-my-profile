@@ -135,6 +135,7 @@ header > .btn-group > button,
   }
 }
 
+.card > section > p.description,
 label,
 .diff .row .col p > span,
 .data-list dt,

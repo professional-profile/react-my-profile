@@ -354,6 +354,7 @@ ul.list > li > section:first-child > div > p {
   font-size: 20px;
 }
 .card > section > h3,
+.card > section > h4,
 .card > section > a,
 .card > section > p,
 .video > section > p {
