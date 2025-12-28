@@ -40,6 +40,8 @@ export const en = {
   yes: "Yes",
   no: "No",
 
+  button_follow: "Follow",
+  button_unfollow: "Unfollow",
   button_ok: "OK",
   button_yes: "Yes",
   button_no: "No",

@@ -358,21 +358,14 @@ export const MyProfileForm = () => {
         <header className="profile-header border-bottom-highlight">
           <div className="cover-image">
             <img src={user.coverURL} alt="cover" />
-            <div className="contact-group">
-              <button id="btnPhone" name="btnPhone" className="btn-phone" />
-              <button id="btnEmail" name="btnEmail" className="btn-email" />
-            </div>
-            <button id="btnFollow" name="btnFollow" className="btn-follow">
-              Follow
-            </button>
           </div>
-          <button id="btnCamera" name="btnCamera" className="btn-camera" />
+          <button type="button" id="btnCamera" name="btnCamera" className="btn-camera" />
           <div className="avatar-wrapper">
             <img className="avatar" src={user.imageURL || "https://avatars.githubusercontent.com/u/37324393?v=4"} alt="avatar" />
             <img className="profile-status" src={imageOnline} alt="status" />
           </div>
           <div className="profile-title">
-            <h4>{user.displayName}</h4>
+            <h3>{user.displayName}</h3>
             <p>{user.headline}</p>
           </div>
           <div className="profile-followers">
@@ -502,7 +495,7 @@ export const MyProfileForm = () => {
                   </p>
                 </section>
                 <footer>
-                  <button type="button" id="btnSaveSkill" name="btnSaveSkill" onClick={saveChanges}>
+                  <button type="submit" id="btnSaveSkill" name="btnSaveSkill" onClick={saveChanges}>
                     {resource.save}
                   </button>
                 </footer>
@@ -564,7 +557,7 @@ export const MyProfileForm = () => {
                   </label>
                 </section>
                 <footer>
-                  <button type="button" id="btnSaveLookingFor" name="btnSaveLookingFor" onClick={saveChanges}>
+                  <button type="submit" id="btnSaveLookingFor" name="btnSaveLookingFor" onClick={saveChanges}>
                     {resource.save}
                   </button>
                 </footer>
@@ -682,7 +675,7 @@ export const MyProfileForm = () => {
               {isEditingBio && (
                 <footer>
                   <button
-                    type="button"
+                    type="submit"
                     id="btnSaveBio"
                     name="btnSaveBio"
                     onClick={(e) => {
@@ -746,7 +739,7 @@ export const MyProfileForm = () => {
               )}
               {isEditingInterest && (
                 <footer>
-                  <button type="button" id="btnSaveInterest" name="btnSaveInterest" onClick={saveChanges}>
+                  <button type="submit" id="btnSaveInterest" name="btnSaveInterest" onClick={saveChanges}>
                     {resource.save}
                   </button>
                 </footer>
@@ -829,7 +822,7 @@ export const MyProfileForm = () => {
               )}
               {isEditingAchievement && (
                 <footer>
-                  <button type="button" id="btnSaveAchievement" name="btnSaveAchievement" onClick={saveChanges}>
+                  <button type="submit" id="btnSaveAchievement" name="btnSaveAchievement" onClick={saveChanges}>
                     {resource.save}
                   </button>
                 </footer>

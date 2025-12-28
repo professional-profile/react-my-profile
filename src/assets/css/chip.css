@@ -31,6 +31,14 @@
   color: #f44336;
 }
 
+.chip-input-container > span {
+  white-space: nowrap;
+  margin-top: 16px;
+  margin-left: 8px;
+}
+.chip-input-container > input[type="checkbox"] {
+  margin-top: 16px;
+}
 .chip-input-container .btn-add {
   width: 34px;
   height: 34px;
@@ -63,83 +71,35 @@
   font-weight: 100;
 }
 
-.chips {
-  border: none;
-  border-bottom: 1px solid #9e9e9e;
-  -webkit-box-shadow: none;
-  box-shadow: none;
-  margin: 0 0 8px 0;
-  min-height: 45px;
-  outline: none;
-  -webkit-transition: all 0.3s;
-  transition: all 0.3s;
-}
-
-.chips:hover {
-  cursor: text;
-}
-
-.chips .input {
-  background: none;
-  border: 0;
-  color: rgba(0, 0, 0, 0.6);
-  display: inline-block;
-  font-size: 16px;
-  height: 3rem;
-  line-height: 32px;
-  outline: 0;
-  margin: 0;
-  padding: 0 !important;
-  width: 120px !important;
-}
-
-.chips .input:focus {
-  border: 0 !important;
-  -webkit-box-shadow: none !important;
-  box-shadow: none !important;
-}
-
-.chips .autocomplete-content {
-  margin-top: 0;
-  margin-bottom: 0;
-}
-
-.prefix ~ .chips {
-  margin-left: 3rem;
-  width: 92%;
-  width: calc(100% - 3rem);
-}
-
-.chips:empty ~ label {
-  font-size: 0.8rem;
-  -webkit-transform: translateY(-140%);
-  transform: translateY(-140%);
+.star {
+  position: relative;
+  right: 10px;
 }
 
 .star::before {
+  position: absolute;
+  top: -4px;
+  left: 15px;
   content: "\2606";
   font-size: 16px;
   font-style: normal;
   font-weight: 100;
 }
 .chip .star {
-  position: relative;
   margin-right: 18px;
-  right: 10px;
 }
 .chip .star::before {
-  position: absolute;
   top: -12px;
-  left: 15px;
-}
-.icon-text .star {
-  position: relative;
 }
 h4 > .star.float-right {
   margin-left: 0;
 }
 h4 > .star::before {
   font-size: 20px;
+}
+p.description > .star {
+  top: 0;
+  left: 0;
 }
 
 .text-ellipsis {
