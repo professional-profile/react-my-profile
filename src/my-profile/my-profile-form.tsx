@@ -465,34 +465,34 @@ export const MyProfileForm = () => {
                         </div>
                       )
                     })}
-                  <section>
-                    <div className="form-group">
-                      <input
-                        type="text"
-                        name="skill"
-                        className="form-control"
-                        value={state.edit.skill}
-                        onChange={updateState}
-                        placeholder={resource.placeholder_user_profile_skill}
-                        maxLength={50}
-                        required={true}
-                      />
-                    </div>
-                    <div className="btn-group">
-                      <button type="button" id="btnAddAchievement" name="btnAddAchievement" className="btn-add" onClick={addSkill} />
-                      {resource.button_add_achievement}
-                    </div>
-                  </section>
+                </section>
+                <hr />
+                <p className="description">
+                  <i className="star highlight" />
+                  {resource.user_profile_hirable_skill}
+                </p>
+                <hr />
+                <section className="item">
+                  <div className="form-group">
+                    <input
+                      type="text"
+                      name="skill"
+                      className="form-control"
+                      value={state.edit.skill}
+                      onChange={updateState}
+                      placeholder={resource.placeholder_user_profile_skill}
+                      maxLength={50}
+                      required={true}
+                    />
+                  </div>
                   <label className="checkbox-container">
                     <input type="checkbox" id="hirable" name="hirable" checked={state.edit.hirable} onChange={updateState} />
                     {resource.user_profile_hirable_skill}
                   </label>
-                  <hr />
-                  <p className="icon-text">
-                    <i className="star highlight" />
-                    Hirable skill
-                    {resource.user_profile_hirable_skill}
-                  </p>
+                  <div className="btn-group">
+                    <button type="button" id="btnAddAchievement" name="btnAddAchievement" className="btn-add" onClick={addSkill} />
+                    {resource.button_add_achievement}
+                  </div>
                 </section>
                 <footer>
                   <button type="submit" id="btnSaveSkill" name="btnSaveSkill" onClick={saveChanges}>

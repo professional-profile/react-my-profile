@@ -294,7 +294,7 @@ export const ArticlesForm = () => {
           </div>
         )}
         {state.view !== "table" && (
-          <ul className="row list">
+          <ul className="row list card-grid">
             {state.list &&
               state.list.length > 0 &&
               state.list.map((item, i) => {

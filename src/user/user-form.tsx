@@ -281,7 +281,7 @@ export const UserView = () => {
               {user.achievements &&
                 user.achievements.map((achievement: Achievement, index: number) => {
                   return (
-                    <section key={index}>
+                    <section key={index} className="item">
                       <h4>
                         {achievement.subject}
                         {achievement.highlight && <i className="star highlight float-right" />}
