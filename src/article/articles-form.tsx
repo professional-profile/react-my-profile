@@ -164,7 +164,7 @@ export const ArticlesForm = () => {
       </header>
       <div>
         <form id="articlesForm" name="articlesForm" className="form" noValidate={true} ref={refForm as any}>
-          <section className="row search-group section">
+          <section className="row search-group">
             <label className="col s12 m6 search-input">
               <select id="limit" name="limit" onChange={pageSizeChanged} defaultValue={filter.limit}>
                 {sizes.map((item, i) => {
@@ -320,7 +320,7 @@ export const ArticlesForm = () => {
           </div>
         )}
         {state.view !== "table" && (
-          <ul className="row list">
+          <ul className="row list card-grid">
             {state.list &&
               state.list.length > 0 &&
               state.list.map((item, i) => {

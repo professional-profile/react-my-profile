@@ -172,12 +172,12 @@ export const UserView = () => {
                       </div>
                     )
                   })}
-                <hr />
-                <p className="icon-text">
-                  <i className="star highlight" />
-                  {resource.user_profile_hirable_skill}
-                </p>
               </section>
+              <hr />
+              <p className="description">
+                <i className="star highlight" />
+                {resource.user_profile_hirable_skill}
+              </p>
             </div>
             <div className="card">
               <header>

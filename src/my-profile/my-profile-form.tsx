@@ -439,12 +439,12 @@ export const MyProfileForm = () => {
                         </div>
                       )
                     })}
-                  <hr />
-                  <p className="icon-text">
-                    <i className="star highlight" />
-                    {resource.user_profile_hirable_skill}
-                  </p>
                 </section>
+                <hr />
+                <p>
+                  <i className="star highlight" />
+                  {resource.user_profile_hirable_skill}
+                </p>
               </div>
             )}
             {isEditingSkill && (
@@ -721,7 +721,7 @@ export const MyProfileForm = () => {
                 user.achievements &&
                 user.achievements.map((achievement: Achievement, index: number) => {
                   return (
-                    <section key={index}>
+                    <section key={index} className="item">
                       <h4>
                         {achievement.subject}
                         {achievement.highlight && <i className="star highlight float-right" />}
@@ -734,7 +734,7 @@ export const MyProfileForm = () => {
               {isEditingAchievement &&
                 user.achievements &&
                 user.achievements.map((achievement: Achievement, index: number) => (
-                  <section key={index}>
+                  <section key={index} className="item">
                     <h4>
                       {achievement.subject}
                       {achievement.highlight && <i className="star highlight" />}
@@ -745,7 +745,7 @@ export const MyProfileForm = () => {
                   </section>
                 ))}
               {isEditingAchievement && (
-                <section>
+                <section className="item">
                   <div className="form-group">
                     <input
                       type="text"

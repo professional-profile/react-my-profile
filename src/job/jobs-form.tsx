@@ -147,7 +147,7 @@ export const JobsForm = () => {
       </header>
       <div>
         <form id="jobsForm" name="jobsForm" className="form" noValidate={true} ref={refForm as any}>
-          <section className="row search-group section">
+          <section className="row search-group">
             <label className="col s12 m6 search-input">
               <select id="limit" name="limit" onChange={pageSizeChanged} defaultValue={filter.limit}>
                 {sizes.map((item, i) => {

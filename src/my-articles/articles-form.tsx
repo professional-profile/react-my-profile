@@ -148,7 +148,7 @@ export const ArticlesForm = () => {
       </header>
       <div>
         <form id="articlesForm" name="articlesForm" className="form" noValidate={true} ref={refForm as any}>
-          <section className="row search-group section">
+          <section className="row search-group">
             <label className="col s12 m6 l4 search-input">
               <select id="limit" name="limit" onChange={pageSizeChanged} defaultValue={filter.limit}>
                 {sizes.map((item, i) => {
