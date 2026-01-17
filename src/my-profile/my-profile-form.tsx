@@ -612,6 +612,27 @@ export const MyProfileForm = () => {
                   duc-nguyen-437240239
                 </a>
               </p>
+              <p className="icon-text">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 16 16"
+                  width="16"
+                  height="16"
+                  role="img"
+                  aria-labelledby="ao03sn9p5pr8jedn0s5ax9eggkuvp7cn"
+                  className="octicon"
+                >
+                  <title id="ao03sn9p5pr8jedn0s5ax9eggkuvp7cn">X</title>
+                  <path
+                    fill="currentColor"
+                    d="M9.332 6.925 14.544 1h-1.235L8.783 6.145 5.17 1H1l5.466 7.78L1 14.993h1.235l4.78-5.433 3.816 5.433H15L9.332 6.925ZM7.64 8.848l-.554-.775L2.68 1.91h1.897l3.556 4.975.554.775 4.622 6.466h-1.897L7.64 8.848Z"
+                  ></path>
+                </svg>
+                <a href="https://x.com/minhduc1405" title="X" target="_blank" rel="noreferrer">
+                  minhduc1405
+                </a>
+              </p>
             </div>
           </div>
           <div className="col m12 l8">
