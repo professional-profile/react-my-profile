@@ -145,7 +145,7 @@ export const JobsForm = () => {
           )}
         </div>
       </header>
-      <div>
+      <div className="search-body">
         <form id="jobsForm" name="jobsForm" className="form" noValidate={true} ref={refForm as any}>
           <section className="row search-group">
             <label className="col s12 m6 search-input">

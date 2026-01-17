@@ -142,7 +142,6 @@ export const UsersForm = () => {
     <div>
       <header>
         <h2>{resource.users}</h2>
-        <h2>{resource.users}</h2>
         <div className="btn-group">
           {state.view === "table" && (
             <button type="button" id="btnTable" name="btnTable" className="btn-table" onClick={(e) => setState({ ...state, view: "" })} />
@@ -152,7 +151,7 @@ export const UsersForm = () => {
           )}
         </div>
       </header>
-      <div>
+      <div className="search-body">
         <form id="usersForm" name="usersForm" className="form" noValidate={true} ref={refForm as any}>
           <section className="row search-group">
             <label className="col s12 m6 search-input">

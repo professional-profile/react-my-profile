@@ -146,7 +146,7 @@ export const ArticlesForm = () => {
           <Link id="btnNew" className="btn-new" to="new" />
         </div>
       </header>
-      <div>
+      <div className="search-body">
         <form id="articlesForm" name="articlesForm" className="form" noValidate={true} ref={refForm as any}>
           <section className="row search-group">
             <label className="col s12 m6 l4 search-input">

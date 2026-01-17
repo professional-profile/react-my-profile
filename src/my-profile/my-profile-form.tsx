@@ -353,7 +353,7 @@ export const MyProfileForm = () => {
   const followers = "7 followers" // StringUtil.format(ResourceManager.getString('user_profile_followers'), user.followerCount || 0);
   const following = "10 following" // StringUtil.format(ResourceManager.getString('user_profile_following'), user.followingCount || 0);
   return (
-    <div className="profile view-container">
+    <div className="profile">
       <header className="profile-header border-bottom-highlight">
         <div className="cover-image">
           <img src={user.coverURL} alt="cover" />
@@ -364,452 +364,454 @@ export const MyProfileForm = () => {
           <img className="profile-status" src={imageOnline} alt="status" />
         </div>
         <div className="profile-title">
-          <h3>{user.displayName}</h3>
+          <h3><a href="">{user.displayName}</a></h3>
           <p>{user.headline}</p>
         </div>
         <div className="profile-followers">
-          <p>
+          <a href="">
             <i className="material-icons highlight">group</i> {followers}
-          </p>
-          <p>
+          </a>
+          <a href="">
             <i className="material-icons highlight">group_add</i> {following}
-          </p>
+          </a>
         </div>
       </header>
-      <form id="userForm" name="userForm">
-        <div className="row list card-grid">
-          <div className="col m12 l4">
-            <div className="card">
-              <header>
-                <i className="material-icons highlight">account_box</i>
-                {resource.user_profile_basic_info}
-                <button type="button" id="btnBasicInfo" name="btnBasicInfo" hidden={isEditing} className="btn-edit" onClick={showPopup} />
-              </header>
-              {user.occupation && (
-                <p className="icon-text">
-                  <i className="material-icons">local_mall</i>
-                  {user.occupation}
-                </p>
-              )}
-              {user.company && (
-                <p className="icon-text">
-                  <i className="material-icons">location_city</i>
-                  {user.company}
-                </p>
-              )}
-              {user.location && (
-                <p className="icon-text">
-                  <i className="material-icons">location_on</i>
-                  {user.location}
-                </p>
-              )}
-              {user.website && (
-                <p className="icon-text">
-                  <i className="material-icons">bookmark</i>
-                  {user.website}
-                </p>
-              )}
-              {user.email && (
-                <p className="icon-text">
-                  <i className="material-icons">email</i>
-                  {user.email}
-                </p>
-              )}
-              {user.phone && (
-                <p className="icon-text">
-                  <i className="material-icons">phone</i>
-                  {user.phone}
-                </p>
-              )}
-            </div>
-            {!isEditingSkill && (
+      <div id="profileBody">
+        <form id="profileForm" name="profileForm">
+          <div className="row list card-grid">
+            <div className="col m12 l4">
               <div className="card">
                 <header>
-                  <i className="material-icons highlight">local_mall</i>
-                  {resource.skills}
-                  <button type="button" id="btnSkill" name="btnSkill" hidden={isEditing} className="btn-edit" onClick={toggleSkill} />
+                  <i className="material-icons highlight">account_box</i>
+                  {resource.user_profile_basic_info}
+                  <button type="button" id="btnBasicInfo" name="btnBasicInfo" hidden={isEditing} className="btn-edit" onClick={showPopup} />
                 </header>
-                <section className="chip-list">
-                  {user.skills &&
-                    user.skills.map((item: Skill, index: number) => {
-                      return (
-                        <div key={index} className="chip">
-                          {item.skill}
-                          {item.hirable === true && <i className="star highlight" />}
-                        </div>
-                      )
-                    })}
-                </section>
-                <hr />
-                <p>
-                  <i className="star highlight" />
-                  {resource.user_profile_hirable_skill}
-                </p>
+                {user.occupation && (
+                  <p className="icon-text">
+                    <i className="material-icons">local_mall</i>
+                    {user.occupation}
+                  </p>
+                )}
+                {user.company && (
+                  <p className="icon-text">
+                    <i className="material-icons">location_city</i>
+                    {user.company}
+                  </p>
+                )}
+                {user.location && (
+                  <p className="icon-text">
+                    <i className="material-icons">location_on</i>
+                    {user.location}
+                  </p>
+                )}
+                {user.website && (
+                  <p className="icon-text">
+                    <i className="material-icons">bookmark</i>
+                    {user.website}
+                  </p>
+                )}
+                {user.email && (
+                  <p className="icon-text">
+                    <i className="material-icons">email</i>
+                    {user.email}
+                  </p>
+                )}
+                {user.phone && (
+                  <p className="icon-text">
+                    <i className="material-icons">phone</i>
+                    {user.phone}
+                  </p>
+                )}
               </div>
-            )}
-            {isEditingSkill && (
-              <div className="card">
-                <header>
-                  <i className="material-icons highlight">local_mall</i>
-                  {resource.skills}
-                  <button type="button" id="btnSkill" name="btnSkill" className="btn-close" onClick={toggleSkill} />
-                </header>
-                <section className="chip-list">
-                  {user.skills &&
-                    user.skills.map((item: Skill, index: number) => {
-                      return (
-                        <div key={index} className="chip">
-                          {item.skill}
-                          {item.hirable === true && <i className="star highlight" />}
-                          <span className="close" onClick={(e) => removeSkill(e, item.skill)} />
-                        </div>
-                      )
-                    })}
-                </section>
-                <hr />
-                <p className="description">
-                  <i className="star highlight" />
-                  {resource.user_profile_hirable_skill}
-                </p>
-                <hr />
-                <section className="item">
-                  <div className="form-group">
-                    <input
-                      type="text"
-                      name="skill"
-                      className="form-control"
-                      value={state.edit.skill}
-                      onChange={updateState}
-                      placeholder={resource.placeholder_user_profile_skill}
-                      maxLength={50}
-                      required={true}
-                    />
-                  </div>
-                  <label className="checkbox-container">
-                    <input type="checkbox" id="hirable" name="hirable" checked={state.edit.hirable} onChange={updateState} />
+              {!isEditingSkill && (
+                <div className="card">
+                  <header>
+                    <i className="material-icons highlight">local_mall</i>
+                    {resource.skills}
+                    <button type="button" id="btnSkill" name="btnSkill" hidden={isEditing} className="btn-edit" onClick={toggleSkill} />
+                  </header>
+                  <section className="chip-list">
+                    {user.skills &&
+                      user.skills.map((item: Skill, index: number) => {
+                        return (
+                          <div key={index} className="chip">
+                            {item.skill}
+                            {item.hirable === true && <i className="star highlight" />}
+                          </div>
+                        )
+                      })}
+                  </section>
+                  <hr />
+                  <p>
+                    <i className="star highlight" />
                     {resource.user_profile_hirable_skill}
-                  </label>
-                  <div className="btn-group">
-                    <button type="button" id="btnAddAchievement" name="btnAddAchievement" className="btn-add" onClick={addSkill} />
-                    {resource.button_add_achievement}
-                  </div>
-                </section>
-                <footer>
-                  <button type="submit" id="btnSaveSkill" name="btnSaveSkill" onClick={saveChanges}>
-                    {resource.save}
-                  </button>
-                </footer>
-              </div>
-            )}
-            {!isEditingLookingFor && (
-              <div className="card">
-                <header>
-                  <i className="material-icons highlight">find_in_page</i>
-                  {resource.user_profile_looking_for}
-                  <button
-                    type="button"
-                    id="btnLookingFor"
-                    name="btnLookingFor"
-                    hidden={isEditing && !isEditingLookingFor}
-                    className="btn-edit"
-                    onClick={toggleLookingFor}
-                  />
-                </header>
-                <section className="chip-list">
-                  {user.lookingFor &&
-                    user.lookingFor.map((item: string, index: number) => {
-                      return (
-                        <div key={index} className="chip" tabIndex={index}>
-                          {item}
-                        </div>
-                      )
-                    })}
-                </section>
-              </div>
-            )}
-            {isEditingLookingFor && (
-              <div className="card">
-                <header>
-                  <i className="material-icons highlight">find_in_page</i>
-                  {resource.user_profile_looking_for}
-                  <button type="button" id="btnLookingFor" name="btnLookingFor" className="btn-close" onClick={toggleLookingFor} />
-                </header>
-                <section className="chip-list">
-                  {user.lookingFor &&
-                    user.lookingFor.map((item: string, index: number) => {
-                      return (
-                        <div key={index} className="chip" tabIndex={index}>
-                          {item}
-                          <span className="close" onClick={(e) => removeLookingFor(e, item)} />
-                        </div>
-                      )
-                    })}
-                  <label className="form-group inline-input">
-                    <input
-                      name="lookingFor"
-                      className="form-control"
-                      value={state.edit.lookingFor}
-                      onChange={updateState}
-                      placeholder={resource.placeholder_user_profile_looking_for}
-                      maxLength={100}
+                  </p>
+                </div>
+              )}
+              {isEditingSkill && (
+                <div className="card">
+                  <header>
+                    <i className="material-icons highlight">local_mall</i>
+                    {resource.skills}
+                    <button type="button" id="btnSkill" name="btnSkill" className="btn-close" onClick={toggleSkill} />
+                  </header>
+                  <section className="chip-list">
+                    {user.skills &&
+                      user.skills.map((item: Skill, index: number) => {
+                        return (
+                          <div key={index} className="chip">
+                            {item.skill}
+                            {item.hirable === true && <i className="star highlight" />}
+                            <span className="close" onClick={(e) => removeSkill(e, item.skill)} />
+                          </div>
+                        )
+                      })}
+                  </section>
+                  <hr />
+                  <p className="description">
+                    <i className="star highlight" />
+                    {resource.user_profile_hirable_skill}
+                  </p>
+                  <hr />
+                  <section className="item">
+                    <div className="form-group">
+                      <input
+                        type="text"
+                        name="skill"
+                        className="form-control"
+                        value={state.edit.skill}
+                        onChange={updateState}
+                        placeholder={resource.placeholder_user_profile_skill}
+                        maxLength={50}
+                        required={true}
+                      />
+                    </div>
+                    <label className="checkbox-container">
+                      <input type="checkbox" id="hirable" name="hirable" checked={state.edit.hirable} onChange={updateState} />
+                      {resource.user_profile_hirable_skill}
+                    </label>
+                    <div className="btn-group">
+                      <button type="button" id="btnAddAchievement" name="btnAddAchievement" className="btn-add" onClick={addSkill} />
+                      {resource.button_add_achievement}
+                    </div>
+                  </section>
+                  <footer>
+                    <button type="submit" id="btnSaveSkill" name="btnSaveSkill" onClick={saveChanges}>
+                      {resource.save}
+                    </button>
+                  </footer>
+                </div>
+              )}
+              {!isEditingLookingFor && (
+                <div className="card">
+                  <header>
+                    <i className="material-icons highlight">find_in_page</i>
+                    {resource.user_profile_looking_for}
+                    <button
+                      type="button"
+                      id="btnLookingFor"
+                      name="btnLookingFor"
+                      hidden={isEditing && !isEditingLookingFor}
+                      className="btn-edit"
+                      onClick={toggleLookingFor}
                     />
-                    <button type="button" id="btnAddLookingFor" name="btnAddLookingFor" className="btn-add" onClick={addLookingFor} />
-                  </label>
-                </section>
-                <footer>
-                  <button type="submit" id="btnSaveLookingFor" name="btnSaveLookingFor" onClick={saveChanges}>
-                    {resource.save}
-                  </button>
-                </footer>
-              </div>
-            )}
-            <div className="card">
-              <header>
-                <i className="material-icons highlight">chat</i>
-                {resource.user_profile_social}
-                <button type="button" id="btnSocial" name="btnSocial" hidden={isEditing} className="btn-edit" onClick={showPopup} />
-              </header>
-              <p className="icon-text">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 15.3 15.4"
-                  role="img"
-                  aria-labelledby="aeaiy4p0y15j8vy4fq2tp21o9gluhm1g"
-                  className="octicon"
-                  width="18"
-                  height="18"
-                >
-                  <title id="aeaiy4p0y15j8vy4fq2tp21o9gluhm1g">Facebook</title>
-                  <path
-                    d="M14.5 0H.8a.88.88 0 0 0-.8.9v13.6a.88.88 0 0 0 .8.9h7.3v-6h-2V7.1h2V5.4a2.87 2.87 0 0 1 2.5-3.1h.5a10.87 10.87 0 0 1 1.8.1v2.1h-1.3c-1 0-1.1.5-1.1 1.1v1.5h2.3l-.3 2.3h-2v5.9h3.9a.88.88 0 0 0 .9-.8V.8a.86.86 0 0 0-.8-.8z"
-                    fill="currentColor"
-                  ></path>
-                </svg>
-                <a href="https://facebook.com/minhduc1405" title="facebook" target="_blank" rel="noreferrer">
-                  minhduc1405
-                </a>
-              </p>
-              <p className="icon-text">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="18"
-                  height="18"
-                  viewBox="0 0 16 16"
-                  fill="none"
-                  role="img"
-                  aria-labelledby="acebck4n0ndpuwfypjm9vui6fy7auzbz"
-                  className="octicon"
-                >
-                  <title id="acebck4n0ndpuwfypjm9vui6fy7auzbz">LinkedIn</title>
-                  <g clipPath="url(#clip0_202_91845)">
+                  </header>
+                  <section className="chip-list">
+                    {user.lookingFor &&
+                      user.lookingFor.map((item: string, index: number) => {
+                        return (
+                          <div key={index} className="chip" tabIndex={index}>
+                            {item}
+                          </div>
+                        )
+                      })}
+                  </section>
+                </div>
+              )}
+              {isEditingLookingFor && (
+                <div className="card">
+                  <header>
+                    <i className="material-icons highlight">find_in_page</i>
+                    {resource.user_profile_looking_for}
+                    <button type="button" id="btnLookingFor" name="btnLookingFor" className="btn-close" onClick={toggleLookingFor} />
+                  </header>
+                  <section className="chip-list">
+                    {user.lookingFor &&
+                      user.lookingFor.map((item: string, index: number) => {
+                        return (
+                          <div key={index} className="chip" tabIndex={index}>
+                            {item}
+                            <span className="close" onClick={(e) => removeLookingFor(e, item)} />
+                          </div>
+                        )
+                      })}
+                    <label className="form-group inline-input">
+                      <input
+                        name="lookingFor"
+                        className="form-control"
+                        value={state.edit.lookingFor}
+                        onChange={updateState}
+                        placeholder={resource.placeholder_user_profile_looking_for}
+                        maxLength={100}
+                      />
+                      <button type="button" id="btnAddLookingFor" name="btnAddLookingFor" className="btn-add" onClick={addLookingFor} />
+                    </label>
+                  </section>
+                  <footer>
+                    <button type="submit" id="btnSaveLookingFor" name="btnSaveLookingFor" onClick={saveChanges}>
+                      {resource.save}
+                    </button>
+                  </footer>
+                </div>
+              )}
+              <div className="card">
+                <header>
+                  <i className="material-icons highlight">chat</i>
+                  {resource.user_profile_social}
+                  <button type="button" id="btnSocial" name="btnSocial" hidden={isEditing} className="btn-edit" onClick={showPopup} />
+                </header>
+                <p className="icon-text">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 15.3 15.4"
+                    role="img"
+                    aria-labelledby="aeaiy4p0y15j8vy4fq2tp21o9gluhm1g"
+                    className="octicon"
+                    width="18"
+                    height="18"
+                  >
+                    <title id="aeaiy4p0y15j8vy4fq2tp21o9gluhm1g">Facebook</title>
                     <path
-                      d="M14.5455 0H1.45455C0.650909 0 0 0.650909 0 1.45455V14.5455C0 15.3491 0.650909 16 1.45455 16H14.5455C15.3491 16 16 15.3491 16 14.5455V1.45455C16 0.650909 15.3491 0 14.5455 0ZM5.05746 13.0909H2.912V6.18764H5.05746V13.0909ZM3.96291 5.20073C3.27127 5.20073 2.712 4.64 2.712 3.94982C2.712 3.25964 3.272 2.69964 3.96291 2.69964C4.65236 2.69964 5.21309 3.26036 5.21309 3.94982C5.21309 4.64 4.65236 5.20073 3.96291 5.20073ZM13.0938 13.0909H10.9498V9.73382C10.9498 8.93309 10.9353 7.90327 9.83491 7.90327C8.71855 7.90327 8.54691 8.77527 8.54691 9.67564V13.0909H6.40291V6.18764H8.46109V7.13091H8.49018C8.77673 6.58836 9.47636 6.016 10.52 6.016C12.6924 6.016 13.0938 7.44582 13.0938 9.30473V13.0909V13.0909Z"
+                      d="M14.5 0H.8a.88.88 0 0 0-.8.9v13.6a.88.88 0 0 0 .8.9h7.3v-6h-2V7.1h2V5.4a2.87 2.87 0 0 1 2.5-3.1h.5a10.87 10.87 0 0 1 1.8.1v2.1h-1.3c-1 0-1.1.5-1.1 1.1v1.5h2.3l-.3 2.3h-2v5.9h3.9a.88.88 0 0 0 .9-.8V.8a.86.86 0 0 0-.8-.8z"
                       fill="currentColor"
                     ></path>
-                  </g>
-                </svg>
-                <a href="https://www.linkedin.com/in/duc-nguyen-437240239/" title="Linked in" target="_blank" rel="noreferrer">
-                  duc-nguyen-437240239
-                </a>
-              </p>
-              <p className="icon-text">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 16 16"
-                  width="16"
-                  height="16"
-                  role="img"
-                  aria-labelledby="ao03sn9p5pr8jedn0s5ax9eggkuvp7cn"
-                  className="octicon"
-                >
-                  <title id="ao03sn9p5pr8jedn0s5ax9eggkuvp7cn">X</title>
-                  <path
-                    fill="currentColor"
-                    d="M9.332 6.925 14.544 1h-1.235L8.783 6.145 5.17 1H1l5.466 7.78L1 14.993h1.235l4.78-5.433 3.816 5.433H15L9.332 6.925ZM7.64 8.848l-.554-.775L2.68 1.91h1.897l3.556 4.975.554.775 4.622 6.466h-1.897L7.64 8.848Z"
-                  ></path>
-                </svg>
-                <a href="https://x.com/minhduc1405" title="X" target="_blank" rel="noreferrer">
-                  minhduc1405
-                </a>
-              </p>
-            </div>
-          </div>
-          <div className="col m12 l8">
-            <div className="card border-bottom-highlight">
-              <header>
-                <i className="material-icons highlight">person</i>
-                {resource.user_profile_bio}
-                <button
-                  type="button"
-                  id="btnBio"
-                  name="btnBio"
-                  hidden={isEditing && !isEditingBio}
-                  className={!isEditingBio ? "btn-edit" : "btn-close"}
-                  onClick={toggleBio}
-                />
-              </header>
-              {!isEditingBio && <p>{user.bio}</p>}
-              {isEditingBio && <textarea name="bio" value={user.bio} onChange={editBio} />}
-              {isEditingBio && (
-                <footer>
-                  <button
-                    type="submit"
-                    id="btnSaveBio"
-                    name="btnSaveBio"
-                    onClick={(e) => {
-                      saveChanges(e)
-                      setBio(user.bio || "")
-                    }}
+                  </svg>
+                  <a href="https://facebook.com/minhduc1405" title="facebook" target="_blank" rel="noreferrer">
+                    minhduc1405
+                  </a>
+                </p>
+                <p className="icon-text">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="18"
+                    height="18"
+                    viewBox="0 0 16 16"
+                    fill="none"
+                    role="img"
+                    aria-labelledby="acebck4n0ndpuwfypjm9vui6fy7auzbz"
+                    className="octicon"
                   >
-                    {resource.save}
-                  </button>
-                </footer>
-              )}
+                    <title id="acebck4n0ndpuwfypjm9vui6fy7auzbz">LinkedIn</title>
+                    <g clipPath="url(#clip0_202_91845)">
+                      <path
+                        d="M14.5455 0H1.45455C0.650909 0 0 0.650909 0 1.45455V14.5455C0 15.3491 0.650909 16 1.45455 16H14.5455C15.3491 16 16 15.3491 16 14.5455V1.45455C16 0.650909 15.3491 0 14.5455 0ZM5.05746 13.0909H2.912V6.18764H5.05746V13.0909ZM3.96291 5.20073C3.27127 5.20073 2.712 4.64 2.712 3.94982C2.712 3.25964 3.272 2.69964 3.96291 2.69964C4.65236 2.69964 5.21309 3.26036 5.21309 3.94982C5.21309 4.64 4.65236 5.20073 3.96291 5.20073ZM13.0938 13.0909H10.9498V9.73382C10.9498 8.93309 10.9353 7.90327 9.83491 7.90327C8.71855 7.90327 8.54691 8.77527 8.54691 9.67564V13.0909H6.40291V6.18764H8.46109V7.13091H8.49018C8.77673 6.58836 9.47636 6.016 10.52 6.016C12.6924 6.016 13.0938 7.44582 13.0938 9.30473V13.0909V13.0909Z"
+                        fill="currentColor"
+                      ></path>
+                    </g>
+                  </svg>
+                  <a href="https://www.linkedin.com/in/duc-nguyen-437240239/" title="Linked in" target="_blank" rel="noreferrer">
+                    duc-nguyen-437240239
+                  </a>
+                </p>
+                <p className="icon-text">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 16 16"
+                    width="16"
+                    height="16"
+                    role="img"
+                    aria-labelledby="ao03sn9p5pr8jedn0s5ax9eggkuvp7cn"
+                    className="octicon"
+                  >
+                    <title id="ao03sn9p5pr8jedn0s5ax9eggkuvp7cn">X</title>
+                    <path
+                      fill="currentColor"
+                      d="M9.332 6.925 14.544 1h-1.235L8.783 6.145 5.17 1H1l5.466 7.78L1 14.993h1.235l4.78-5.433 3.816 5.433H15L9.332 6.925ZM7.64 8.848l-.554-.775L2.68 1.91h1.897l3.556 4.975.554.775 4.622 6.466h-1.897L7.64 8.848Z"
+                    ></path>
+                  </svg>
+                  <a href="https://x.com/minhduc1405" title="X" target="_blank" rel="noreferrer">
+                    minhduc1405
+                  </a>
+                </p>
+              </div>
             </div>
-            <div className="card border-bottom-highlight">
-              <header>
-                <i className="material-icons highlight">flash_on</i>
-                {resource.interests}
-                <button
-                  type="button"
-                  id="btnInterest"
-                  name="btnInterest"
-                  hidden={isEditing && !isEditingInterest}
-                  className={!isEditingInterest ? "btn-edit" : "btn-close"}
-                  onClick={toggleInterest}
-                />
-              </header>
-              {!isEditingInterest && (
-                <section className="chip-list">
-                  {user.interests &&
-                    user.interests.map((item: string, index: number) => {
-                      return (
-                        <div key={index} className="chip" tabIndex={index}>
-                          {item}
-                        </div>
-                      )
-                    })}
-                </section>
-              )}
-              {isEditingInterest && (
-                <section className="chip-list">
-                  {user.interests &&
-                    user.interests.map((item: string, index: number) => {
-                      return (
-                        <div key={index} className="chip" tabIndex={index}>
-                          {item}
-                          <span className="close" onClick={(e) => removeInterest(e, item)} />
-                        </div>
-                      )
-                    })}
-                  <label className="col s12 inline-input">
-                    <input
-                      type="text"
-                      name="interest"
-                      onChange={updateState}
-                      placeholder={resource.placeholder_user_profile_interest}
-                      value={state.edit.interest}
-                      maxLength={100}
-                    />
-                    <button type="button" id="btnAddInterest" name="btnAddInterest" className="btn-add" onClick={addInterest} />
-                  </label>
-                </section>
-              )}
-              {isEditingInterest && (
-                <footer>
-                  <button type="submit" id="btnSaveInterest" name="btnSaveInterest" onClick={saveChanges}>
-                    {resource.save}
-                  </button>
-                </footer>
-              )}
-            </div>
+            <div className="col m12 l8">
+              <div className="card border-bottom-highlight">
+                <header>
+                  <i className="material-icons highlight">person</i>
+                  {resource.user_profile_bio}
+                  <button
+                    type="button"
+                    id="btnBio"
+                    name="btnBio"
+                    hidden={isEditing && !isEditingBio}
+                    className={!isEditingBio ? "btn-edit" : "btn-close"}
+                    onClick={toggleBio}
+                  />
+                </header>
+                {!isEditingBio && <p>{user.bio}</p>}
+                {isEditingBio && <textarea name="bio" value={user.bio} onChange={editBio} />}
+                {isEditingBio && (
+                  <footer>
+                    <button
+                      type="submit"
+                      id="btnSaveBio"
+                      name="btnSaveBio"
+                      onClick={(e) => {
+                        saveChanges(e)
+                        setBio(user.bio || "")
+                      }}
+                    >
+                      {resource.save}
+                    </button>
+                  </footer>
+                )}
+              </div>
+              <div className="card border-bottom-highlight">
+                <header>
+                  <i className="material-icons highlight">flash_on</i>
+                  {resource.interests}
+                  <button
+                    type="button"
+                    id="btnInterest"
+                    name="btnInterest"
+                    hidden={isEditing && !isEditingInterest}
+                    className={!isEditingInterest ? "btn-edit" : "btn-close"}
+                    onClick={toggleInterest}
+                  />
+                </header>
+                {!isEditingInterest && (
+                  <section className="chip-list">
+                    {user.interests &&
+                      user.interests.map((item: string, index: number) => {
+                        return (
+                          <div key={index} className="chip" tabIndex={index}>
+                            {item}
+                          </div>
+                        )
+                      })}
+                  </section>
+                )}
+                {isEditingInterest && (
+                  <section className="chip-list">
+                    {user.interests &&
+                      user.interests.map((item: string, index: number) => {
+                        return (
+                          <div key={index} className="chip" tabIndex={index}>
+                            {item}
+                            <span className="close" onClick={(e) => removeInterest(e, item)} />
+                          </div>
+                        )
+                      })}
+                    <label className="col s12 inline-input">
+                      <input
+                        type="text"
+                        name="interest"
+                        onChange={updateState}
+                        placeholder={resource.placeholder_user_profile_interest}
+                        value={state.edit.interest}
+                        maxLength={100}
+                      />
+                      <button type="button" id="btnAddInterest" name="btnAddInterest" className="btn-add" onClick={addInterest} />
+                    </label>
+                  </section>
+                )}
+                {isEditingInterest && (
+                  <footer>
+                    <button type="submit" id="btnSaveInterest" name="btnSaveInterest" onClick={saveChanges}>
+                      {resource.save}
+                    </button>
+                  </footer>
+                )}
+              </div>
 
-            <div className="card border-bottom-highlight">
-              <header>
-                <i className="material-icons highlight">beenhere</i>
-                {resource.achievements}
-                <button
-                  type="button"
-                  id="btnAchievement"
-                  name="btnAchievement"
-                  hidden={isEditing && !isEditingAchievement}
-                  className={!isEditingAchievement ? "btn-edit" : "btn-close"}
-                  onClick={toggleAchievement}
-                />
-              </header>
-              {!isEditingAchievement &&
-                user.achievements &&
-                user.achievements.map((achievement: Achievement, index: number) => {
-                  return (
+              <div className="card border-bottom-highlight">
+                <header>
+                  <i className="material-icons highlight">beenhere</i>
+                  {resource.achievements}
+                  <button
+                    type="button"
+                    id="btnAchievement"
+                    name="btnAchievement"
+                    hidden={isEditing && !isEditingAchievement}
+                    className={!isEditingAchievement ? "btn-edit" : "btn-close"}
+                    onClick={toggleAchievement}
+                  />
+                </header>
+                {!isEditingAchievement &&
+                  user.achievements &&
+                  user.achievements.map((achievement: Achievement, index: number) => {
+                    return (
+                      <section key={index} className="item">
+                        <h4>
+                          {achievement.subject}
+                          {achievement.highlight && <i className="star highlight float-right" />}
+                        </h4>
+                        <p className="description">{achievement.description}</p>
+                        <hr />
+                      </section>
+                    )
+                  })}
+                {isEditingAchievement &&
+                  user.achievements &&
+                  user.achievements.map((achievement: Achievement, index: number) => (
                     <section key={index} className="item">
                       <h4>
                         {achievement.subject}
-                        {achievement.highlight && <i className="star highlight float-right" />}
+                        {achievement.highlight && <i className="star highlight" />}
                       </h4>
                       <p className="description">{achievement.description}</p>
+                      <button type="button" className="btn-remove" onClick={(e) => removeAchievement(e, achievement.subject)} />
                       <hr />
                     </section>
-                  )
-                })}
-              {isEditingAchievement &&
-                user.achievements &&
-                user.achievements.map((achievement: Achievement, index: number) => (
-                  <section key={index} className="item">
-                    <h4>
-                      {achievement.subject}
-                      {achievement.highlight && <i className="star highlight" />}
-                    </h4>
-                    <p className="description">{achievement.description}</p>
-                    <button type="button" className="btn-remove" onClick={(e) => removeAchievement(e, achievement.subject)} />
-                    <hr />
+                  ))}
+                {isEditingAchievement && (
+                  <section className="item">
+                    <div className="form-group">
+                      <input
+                        type="text"
+                        name="subject"
+                        className="form-control"
+                        value={state.edit.subject}
+                        onChange={updateState}
+                        placeholder={resource.placeholder_user_profile_achievement_subject}
+                        maxLength={50}
+                        required={true}
+                      />
+                      <input
+                        type="text"
+                        name="description"
+                        className="form-control"
+                        value={state.edit.description}
+                        onChange={updateState}
+                        placeholder={resource.placeholder_user_profile_achievement_description}
+                        maxLength={100}
+                        required={true}
+                      />
+                    </div>
+                    <label className="checkbox-container">
+                      <input type="checkbox" id="highlight" name="highlight" checked={state.edit.highlight} onChange={updateState} />
+                      {resource.user_profile_highlight_achievement}
+                    </label>
+                    <div className="btn-group">
+                      <button type="button" id="btnAddAchievement" name="btnAddAchievement" className="btn-add" onClick={addAchievement} />
+                      {resource.button_add_achievement}
+                    </div>
                   </section>
-                ))}
-              {isEditingAchievement && (
-                <section className="item">
-                  <div className="form-group">
-                    <input
-                      type="text"
-                      name="subject"
-                      className="form-control"
-                      value={state.edit.subject}
-                      onChange={updateState}
-                      placeholder={resource.placeholder_user_profile_achievement_subject}
-                      maxLength={50}
-                      required={true}
-                    />
-                    <input
-                      type="text"
-                      name="description"
-                      className="form-control"
-                      value={state.edit.description}
-                      onChange={updateState}
-                      placeholder={resource.placeholder_user_profile_achievement_description}
-                      maxLength={100}
-                      required={true}
-                    />
-                  </div>
-                  <label className="checkbox-container">
-                    <input type="checkbox" id="highlight" name="highlight" checked={state.edit.highlight} onChange={updateState} />
-                    {resource.user_profile_highlight_achievement}
-                  </label>
-                  <div className="btn-group">
-                    <button type="button" id="btnAddAchievement" name="btnAddAchievement" className="btn-add" onClick={addAchievement} />
-                    {resource.button_add_achievement}
-                  </div>
-                </section>
-              )}
-              {isEditingAchievement && (
-                <footer>
-                  <button type="submit" id="btnSaveAchievement" name="btnSaveAchievement" onClick={saveChanges}>
-                    {resource.save}
-                  </button>
-                </footer>
-              )}
+                )}
+                {isEditingAchievement && (
+                  <footer>
+                    <button type="submit" id="btnSaveAchievement" name="btnSaveAchievement" onClick={saveChanges}>
+                      {resource.save}
+                    </button>
+                  </footer>
+                )}
+              </div>
             </div>
           </div>
-        </div>
-      </form>
+        </form>
+      </div>
       <ReactModal
         isOpen={modalIsOpen}
         onRequestClose={closeModal}
