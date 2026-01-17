@@ -292,14 +292,14 @@ header.nav > .profile-followers {
   flex-direction: unset;
 }
 
-.profile .card > section > label.checkbox-container {
+.card > section > label.checkbox-container {
   margin-left: 16px;
   width: calc(100% - 32px);
   height: 40px;
   padding-left: 22px;
 }
 
-.profile .card > section > label.checkbox-container > input[type="checkbox"]:not(.modal-trigger):not(.toggle):not(#alert-check):not([id*="lightbox-"]) {
+.card > section > label.checkbox-container > input[type="checkbox"]:not(.modal-trigger):not(.toggle):not(#alert-check):not([id*="lightbox-"]) {
   left: 0;
   top: 16px;
 }

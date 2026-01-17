@@ -2,6 +2,7 @@ import axios from "axios"
 import * as csv from "csvtojson"
 import { currency, locale } from "locale-service"
 import { phonecodes } from "phonecodes"
+import { resources as reactResources } from "react-hook-core"
 import { BrowserRouter, Route, Routes } from "react-router-dom"
 import { alertError, confirm, resources as uiplusResources } from "ui-alert"
 import { loading } from "ui-loading"
@@ -75,6 +76,7 @@ export function init() {
     return
   }
   isInit = true
+  reactResources.defaultLimit = 24
   storage.setConfig(config)
   resources.csv = new DefaultCsvService(csv)
   resources.config = {
