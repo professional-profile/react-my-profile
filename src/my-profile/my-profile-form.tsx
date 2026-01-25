@@ -364,7 +364,7 @@ export const MyProfileForm = () => {
           <img className="profile-status" src={imageOnline} alt="status" />
         </div>
         <div className="profile-title">
-          <h3><a href="">{user.displayName}</a></h3>
+          <h2><a href="">{user.displayName}</a></h2>
           <p>{user.headline}</p>
         </div>
         <div className="profile-followers">
@@ -442,7 +442,7 @@ export const MyProfileForm = () => {
                       })}
                   </section>
                   <hr />
-                  <p>
+                  <p className="description">
                     <i className="star highlight" />
                     {resource.user_profile_hirable_skill}
                   </p>
