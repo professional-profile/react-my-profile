@@ -1,4 +1,4 @@
-import { Attributes, DateRange, Filter, Repository, Service } from "onecore"
+import { Attributes, DateRange, Filter, Service } from "onecore"
 
 export interface User {
   userId: string
@@ -96,7 +96,6 @@ export interface UserFilter extends Filter {
   achievements: Achievement[]
   settings: UserSettings
 }
-export interface UserRepository extends Repository<User, string> {}
 export interface UserService extends Service<User, string, UserFilter> {}
 
 export interface MyProfileService {
@@ -131,13 +130,12 @@ export const achievements: Attributes = {
 export const userModel: Attributes = {
   userId: {
     key: true,
-    match: "equal",
+    operator: "="
   },
   username: {},
   email: {
     format: "email",
     required: true,
-    match: "prefix",
   },
   phone: {
     format: "phone",
