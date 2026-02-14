@@ -2,6 +2,7 @@ import { Attributes, Filter, Result, SearchResult, Service, TimeRange } from "on
 
 export interface Job {
   id: string
+  slug: string
   title: string
   description: string
   publishedAt?: Date

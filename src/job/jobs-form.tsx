@@ -14,15 +14,13 @@ import {
   handleSort,
   handleToggle,
   mergeFilter,
-  OnClick,
   PageChange,
   pageSizes,
   removeSortStatus,
   setSort,
   Sortable,
-  value,
+  value
 } from "react-hook-core"
-import { useNavigate } from "react-router"
 import { Link } from "react-router-dom"
 import { Pagination } from "reactx-pagination"
 import { hideLoading, showLoading } from "ui-loading"
@@ -61,7 +59,6 @@ const initialState: JobSearch = {
 export const JobsForm = () => {
   const dateFormat = getDateFormat().toUpperCase()
   const resource = useResource()
-  const navigate = useNavigate()
   const refForm = useRef<HTMLFormElement>(null)
   const [state, setState] = useState<JobSearch>(initialState)
 
@@ -112,10 +109,6 @@ export const JobsForm = () => {
       })
       .catch(handleError)
       .finally(hideLoading)
-  }
-  const edit = (e: OnClick, id: string) => {
-    e.preventDefault()
-    navigate(`${id}`)
   }
   const checkboxOnChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { filter } = state
@@ -310,11 +303,11 @@ export const JobsForm = () => {
                   list.length > 0 &&
                   list.map((item, i) => {
                     return (
-                      <tr key={i} onClick={(e) => edit(e, item.id)}>
+                      <tr key={i}>
                         <td className="text-right">{offset + i + 1}</td>
                         <td>{item.id}</td>
                         <td>
-                          <Link to={`${item.id}`}>{item.title}</Link>
+                          <Link to={`${item.slug}`}>{item.title}</Link>
                         </td>
                         <td>{formatDateTime(item.publishedAt, dateFormat)}</td>
                         <td>{item.position}</td>
@@ -333,8 +326,8 @@ export const JobsForm = () => {
               state.list.length > 0 &&
               state.list.map((item, i) => {
                 return (
-                  <li key={i} className="col s12 m6 l4 xl3 list-item" onClick={(e) => edit(e, item.id)}>
-                    <Link to={`${item.id}`}>{item.title}</Link>
+                  <li key={i} className="col s12 m6 l4 xl3 list-item">
+                    <Link to={`${item.slug}`}>{item.title}</Link>
                     <p>
                       {item.location} {item.quantity}
                       <span>{formatDateTime(item.publishedAt, dateFormat)}</span>

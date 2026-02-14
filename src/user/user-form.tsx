@@ -95,10 +95,10 @@ export const UserView = () => {
           <img className="profile-status" src={imageOnline} alt="status" />
         </div>
         <div className="profile-title">
-          <h3>
+          <h2>
             <a href="">{user.displayName}</a>
             {user.followingAt && user.followedAt && <i className="material-icons highlight">group</i>}
-          </h3>
+          </h2>
           <p>{user.headline}</p>
         </div>
         <div className="profile-followers">
