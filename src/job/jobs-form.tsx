@@ -57,7 +57,7 @@ const initialState: JobSearch = {
   hideFilter: true,
 }
 export const JobsForm = () => {
-  const dateFormat = getDateFormat().toUpperCase()
+  const dateFormat = getDateFormat()
   const resource = useResource()
   const refForm = useRef<HTMLFormElement>(null)
   const [state, setState] = useState<JobSearch>(initialState)

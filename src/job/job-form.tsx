@@ -7,7 +7,7 @@ import { getDateFormat, handleError, useResource } from "uione"
 import { getJobService, Job } from "./service"
 
 export const JobForm = () => {
-  const dateFormat = getDateFormat().toUpperCase()
+  const dateFormat = getDateFormat()
   const resource = useResource()
   const navigate = useNavigate()
   const [job, setJob] = useState<Job>({} as Job)

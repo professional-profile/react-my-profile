@@ -59,7 +59,7 @@ const initialState: ArticleSearch = {
   hideFilter: true,
 }
 export const ArticlesForm = () => {
-  const dateFormat = getDateFormat().toUpperCase()
+  const dateFormat = getDateFormat()
   const resource = useResource()
   const navigate = useNavigate()
   const refForm = useRef<HTMLFormElement>(null)

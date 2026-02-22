@@ -8,7 +8,7 @@ import { getDateFormat, handleError, user, useResource } from "uione"
 import { Article, getArticleService } from "./service"
 
 export const ArticleForm = () => {
-  const dateFormat = getDateFormat().toUpperCase()
+  const dateFormat = getDateFormat()
   const resource = useResource()
   const navigate = useNavigate()
   const [article, setArticle] = useState<Article>({} as Article)
