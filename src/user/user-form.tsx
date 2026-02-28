@@ -1,14 +1,20 @@
 import { useLayoutEffect, useState } from "react"
-import { useParams } from "react-router-dom"
+import { Link, useLocation, useParams } from "react-router-dom"
 import { hideLoading, showLoading } from "ui-loading"
 import { toast } from "ui-toast"
 import { user as getUser, handleError, useResource } from "uione"
 import imageOnline from "../assets/images/online.svg"
+import { Followers } from "./followers"
+import { Following } from "./following"
 import { Overview } from "./overview"
+import { Rating } from "./rating"
 import { getUserService, User } from "./service"
 
 export const UserView = () => {
   const resource = useResource()
+  const locationPath = useLocation().pathname;
+  console.log("location " + locationPath)
+  const count = locationPath.split("/").length
   const [user, setUser] = useState<User>({} as User)
   const { id } = useParams()
   const service = getUserService()
@@ -103,16 +109,25 @@ export const UserView = () => {
           <p>{user.headline}</p>
         </div>
         <div className="profile-followers">
-          <a href="">
-            <i className="material-icons highlight">group</i> {user.followerCount | 0} followers
-          </a>
-          <a href="">
-            <i className="material-icons highlight">group_add</i> {user.followingCount | 0} followings
-          </a>
+          <Link to={`/profiles/${id}/followers`}><i className="material-icons highlight">group</i> {user.followerCount | 0} followers</Link>
+          <Link to={`/profiles/${id}/following`}><i className="material-icons highlight">group_add</i> {user.followingCount | 0} followings</Link>
         </div>
+        <nav className="menu">
+          <ul>
+            <li>
+              <Link to={`/profiles/${id}`}>Overview</Link>
+            </li>
+            <li>
+              <Link to={`/profiles/${id}/review`}>Review</Link>
+            </li>
+          </ul>
+        </nav>
       </header>
       <div id="userBody">
-        <Overview user={user} resource={resource} />
+        {count === 3 && <Overview user={user} resource={resource} />}
+        {locationPath.endsWith("/followers") && <Followers />}
+        {locationPath.endsWith("/following") && <Following />}
+        {locationPath.endsWith("/review") && <Rating />}
       </div>
     </div>
   )

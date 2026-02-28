@@ -57,6 +57,7 @@ import "./assets/css/dark.css"
 import "./assets/css/grey.css"
 import "./assets/css/badge.css"
 import "./assets/css/profile.css"
+import "./assets/css/rate.css"
 
 axios.defaults.withCredentials = true
 
@@ -126,7 +127,7 @@ function App() {
           <Route path="/settings" element={<SettingsForm />} />
           <Route path="profiles/*" element={<UsersRoute />} />
           <Route path="news/*" element={<ArticlesRoute />} />
-          <Route path="careers/*" element={<JobsRoute />} />
+          <Route path="jobs/*" element={<JobsRoute />} />
           <Route path="my-profile/*" element={<MyProfileRoute />} />
           <Route path="my-articles/*" element={<MyArticlesRoute />} />
         </Route>

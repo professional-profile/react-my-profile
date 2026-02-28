@@ -283,4 +283,6 @@ export const vi = {
   contacted_by: "Contacted By",
   contacted_at: "Contacted At",
   message: "Message",
+
+  ratings_and_reviews: "Ratings and Reviews"
 }

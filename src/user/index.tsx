@@ -7,6 +7,9 @@ export default function UsersRoute() {
     <Routes>
       <Route path="" element={<UsersForm />} />
       <Route path="/:id" element={<UserView />} />
+      <Route path="/:id/followers" element={<UserView />} />
+      <Route path="/:id/following" element={<UserView />} />
+      <Route path="/:id/review" element={<UserView />} />
     </Routes>
   )
 }

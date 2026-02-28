@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react"
-import { useNavigate, useParams } from "react-router-dom"
+import { Link, useNavigate, useParams } from "react-router-dom"
 import { alertError, alertWarning } from "ui-alert"
 import { hideLoading, showLoading } from "ui-loading"
 import { formatDateTime } from "ui-plus"
 import { toast } from "ui-toast"
 import { getDateFormat, handleError, user, useResource } from "uione"
+import { RatingSummary } from "../components/rating-summary"
 import { Article, getArticleService } from "./service"
 
 export const ArticleForm = () => {
@@ -82,6 +83,8 @@ export const ArticleForm = () => {
             </i>
           )}
         </h4>
+        <h4 className="rating-title"><Link to={`/news/${article.slug}/review`}>{resource.ratings_and_reviews}</Link></h4>
+        <RatingSummary />
         <div className="article-content" dangerouslySetInnerHTML={{ __html: article.content }}></div>
       </div>
     </article>
