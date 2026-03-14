@@ -1,130 +1,98 @@
 import { Item } from "onecore"
-import { ChangeEvent, useEffect, useRef, useState } from "react"
+import { ChangeEvent, MouseEvent, useEffect, useRef, useState } from "react"
 import {
   addParametersIntoUrl,
   buildFromUrl,
   buildMessage,
   buildSortFilter,
-  checked,
   datetimeToString,
   getFields,
-  getNumber,
   getOffset,
-  getSortElement,
-  handleSort,
-  handleToggle,
   mergeFilter,
+  onClearQ,
+  onPageChanged,
+  onPageSizeChanged,
+  onSearch,
+  onSort,
+  onToggleSearch,
   PageChange,
   pageSizes,
-  removeSortStatus,
+  PageSizeSelect,
   setSort,
   Sortable,
-  value
+  updateState
 } from "react-hook-core"
 import { Link } from "react-router-dom"
 import { Pagination } from "reactx-pagination"
 import { hideLoading, showLoading } from "ui-loading"
-import { addSeconds, createDate, formatDateTime } from "ui-plus"
+import { addSeconds, formatDateTime } from "ui-plus"
 import { toast } from "ui-toast"
 import { getDateFormat, handleError, useResource } from "uione"
 import { getJobService, Job, JobFilter } from "./service"
 
 interface JobSearch extends Sortable {
   statusList: Item[]
-  filter: JobFilter
-  list: Job[]
   total?: number
   view?: string
-  hideFilter?: boolean
   fields?: string[]
 }
 
-const now = new Date()
-const jobFilter: JobFilter = {
-  limit: 24,
-  status: ["A"],
-  q: "",
-  publishedAt: {
-    max: addSeconds(now, 300),
-  },
-}
-
-const sizes = pageSizes
-const initialState: JobSearch = {
-  statusList: [],
-  list: [],
-  filter: jobFilter,
-  hideFilter: true,
-}
 export const JobsForm = () => {
+  const now = new Date()
+  const jobFilter: JobFilter = {
+    limit: 24,
+    status: ["A"],
+    q: "",
+    publishedAt: {
+      max: addSeconds(now, 300),
+    },
+  }
+  const initialState: JobSearch = {
+    statusList: [],
+  }
+
   const dateFormat = getDateFormat()
   const resource = useResource()
   const refForm = useRef<HTMLFormElement>(null)
+  const [showFilter, setShowFilter] = useState(false)
+  const [list, setList] = useState<Job[]>([])
   const [state, setState] = useState<JobSearch>(initialState)
+  const [filter, setFilter] = useState<JobFilter>(jobFilter)
+  const onChange = (e: ChangeEvent<HTMLInputElement>) => updateState(e, filter, setFilter)
 
   useEffect(() => {
-    const filter = mergeFilter(buildFromUrl<JobFilter>(), state.filter, sizes, ["status", "jobType"])
-    setSort(state, filter.sort)
-    search() // eslint-disable-next-line react-hooks/exhaustive-deps
+    const initFilter = mergeFilter(buildFromUrl<JobFilter>(), filter, pageSizes, ["status"])
+    setSort(state, initFilter.sort)
+    setFilter(initFilter)
+    search(true) // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
-  const sort = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    const target = getSortElement(event.target as HTMLElement)
-    const sort = handleSort(target, state.sortTarget, state.sortField, state.sortType)
-    state.sortField = sort.field
-    state.sortType = sort.type
-    state.sortTarget = target
-    search()
-  }
-  const pageSizeChanged = (event: ChangeEvent<HTMLSelectElement>) => {
-    state.filter.page = 1
-    state.filter.limit = getNumber(event)
-    search()
-  }
-  const pageChanged = (data: PageChange) => {
-    const { page, size } = data
-    state.filter.page = page
-    state.filter.limit = size
-    search()
-  }
-  const searchOnClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>): void => {
-    event.preventDefault()
-    removeSortStatus(state.sortTarget)
-    state.filter.page = 1
-    state.sortTarget = undefined
-    state.sortField = undefined
-    search()
-  }
-  const limit = state.filter.limit
-  const page = state.filter.page
+
+  const clearQ = (e: MouseEvent<HTMLButtonElement>) => onClearQ(filter, setFilter)
+  const toggleSearch = (e: MouseEvent<HTMLButtonElement>) => onToggleSearch(e, showFilter, setShowFilter)
+  const sort = (e: MouseEvent<HTMLButtonElement>) => onSort(e, search, state)
+  const pageSizeChanged = (e: ChangeEvent<HTMLSelectElement>) => onPageSizeChanged(e, search, filter, setFilter)
+  const pageChanged = (data: PageChange) => onPageChanged(data, search, filter, setFilter)
+  const searchOnClick = (e: MouseEvent<HTMLButtonElement>) => onSearch(e, search, filter, state, setFilter, setState)
+
   const search = (isFirstLoad?: boolean) => {
     showLoading()
-    const filter = buildSortFilter(state.filter, state)
-    addParametersIntoUrl(filter, isFirstLoad)
     const fields = getFields(refForm.current, state.fields)
+    const urlFilter = buildSortFilter(filter, state)
+    addParametersIntoUrl(urlFilter, isFirstLoad)
+    setFilter(filter)
+    const { limit, page } = filter
     getJobService()
-      .search(filter, limit, page, fields)
+      .search({ ...filter }, limit, page, fields)
       .then((res) => {
-        setState({ ...state, filter: state.filter, list: res.list, total: res.total, fields })
+        setState({ ...state, total: res.total, fields })
+        setList(res.list)
         toast(buildMessage(resource, res.list, limit, page, res.total))
       })
       .catch(handleError)
       .finally(hideLoading)
   }
-  const checkboxOnChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const { filter } = state
-    const value = event.target.value
-    if (event.target.checked) {
-      filter.status.push(value)
-    } else {
-      filter.status = filter.status.filter((i) => i !== value)
-    }
-    filter.page = 1
-    setState({ ...state, filter })
-    search()
-  }
-  const { list } = state
-  const filter = value(state.filter)
-  const offset = getOffset(limit, page)
+
+  const offset = getOffset(filter.limit, filter.page)
   return (
     <div>
       <header>
@@ -142,49 +110,15 @@ export const JobsForm = () => {
         <form id="jobsForm" name="jobsForm" className="form" noValidate={true} ref={refForm as any}>
           <section className="row search-group">
             <label className="col s12 m6 search-input">
-              <select id="limit" name="limit" onChange={pageSizeChanged} defaultValue={filter.limit}>
-                {sizes.map((item, i) => {
-                  return (
-                    <option key={i} value={item}>
-                      {item}
-                    </option>
-                  )
-                })}
-              </select>
-              <input
-                type="text"
-                id="q"
-                name="q"
-                value={filter.q || ""}
-                maxLength={255}
-                onChange={(e) => {
-                  filter.q = e.target.value
-                  setState({ ...state, filter })
-                }}
-                placeholder={resource.keyword}
-              />
-              <button
-                type="button"
-                hidden={!filter.q}
-                className="btn-remove-text"
-                onClick={(e) => {
-                  filter.q = ""
-                  setState({ ...state, filter })
-                }}
-              />
-              <button
-                type="button"
-                className="btn-filter"
-                onClick={(e) => {
-                  const hideFilter = handleToggle(e.target as HTMLElement, state.hideFilter)
-                  setState({ ...state, hideFilter })
-                }}
-              />
-              <button type="submit" className="btn-search" onClick={searchOnClick} />
+              <PageSizeSelect id="limit" name="limit" size={filter.limit} sizes={pageSizes} onChange={pageSizeChanged} />
+              <input type="text" id="q" name="q" value={filter.q} maxLength={80} onChange={onChange} placeholder={resource.keyword} />
+              <button type="button" id="btnClearQ" hidden={!filter.q} className="btn-remove-text" onClick={clearQ} />
+              <button type="button" id="btnToggleSearch" className="btn-filter" onClick={toggleSearch} />
+              <button type="submit" id="btnSearch" className="btn-search" onClick={searchOnClick} />
             </label>
-            <Pagination className="col s12 m6" total={state.total} size={state.filter.limit} max={7} page={state.filter.page} onChange={pageChanged} />
+            <Pagination className="col s12 m6" total={state.total} size={filter.limit} max={7} page={filter.page} onChange={pageChanged} />
           </section>
-          <section className="row search-group inline" hidden={state.hideFilter}>
+          <section className="row search-group inline" hidden={!showFilter}>
             <label className="col s12 m6">
               {resource.published_at_from}
               <input
@@ -194,10 +128,7 @@ export const JobsForm = () => {
                 name="publishedAt_min"
                 data-field="publishedAt.min"
                 value={datetimeToString(filter.publishedAt?.min)}
-                onChange={(e) => {
-                  filter.publishedAt.min = createDate(e.target.value)
-                  setState({ ...state, filter })
-                }}
+                onChange={onChange}
               />
             </label>
             <label className="col s12 m6">
@@ -209,25 +140,7 @@ export const JobsForm = () => {
                 name="publishedAt_max"
                 data-field="publishedAt.max"
                 value={datetimeToString(filter.publishedAt?.max)}
-                onChange={(e) => {
-                  filter.publishedAt.max = createDate(e.target.value)
-                  setState({ ...state, filter })
-                }}
-              />
-            </label>
-            <label className="col s12 m4 l4">
-              {resource.title}
-              <input
-                type="text"
-                id="title"
-                name="title"
-                value={filter.title || ""}
-                onChange={(e) => {
-                  filter.title = e.target.value
-                  setState({ ...state, filter })
-                }}
-                maxLength={255}
-                placeholder={resource.title}
+                onChange={onChange}
               />
             </label>
             <label className="col s12 m4 l4">
@@ -236,27 +149,11 @@ export const JobsForm = () => {
                 type="text"
                 id="position"
                 name="position"
-                value={filter.position || ""}
-                onChange={(e) => {
-                  filter.position = e.target.value
-                  setState({ ...state, filter })
-                }}
-                maxLength={255}
+                value={filter.position}
+                onChange={onChange}
+                maxLength={40}
                 placeholder={resource.position}
               />
-            </label>
-            <label className="col s12 m4 l4 checkbox-section">
-              {resource.status}
-              <section className="checkbox-group">
-                <label>
-                  <input type="checkbox" id="A" name="status" value="A" checked={checked(filter.status, "A")} onChange={checkboxOnChange} />
-                  {resource.active}
-                </label>
-                <label>
-                  <input type="checkbox" id="I" name="status" value="I" checked={checked(filter.status, "I")} onChange={checkboxOnChange} />
-                  {resource.inactive}
-                </label>
-              </section>
             </label>
           </section>
         </form>
@@ -299,42 +196,38 @@ export const JobsForm = () => {
                 </tr>
               </thead>
               <tbody>
-                {list &&
-                  list.length > 0 &&
-                  list.map((item, i) => {
-                    return (
-                      <tr key={i}>
-                        <td className="text-right">{offset + i + 1}</td>
-                        <td>{item.id}</td>
-                        <td>
-                          <Link to={`${item.slug}`}>{item.title}</Link>
-                        </td>
-                        <td>{formatDateTime(item.publishedAt, dateFormat)}</td>
-                        <td>{item.position}</td>
-                        <td className="text-right">{item.quantity}</td>
-                        <td>{item.location}</td>
-                      </tr>
-                    )
-                  })}
+                {list.map((item, i) => {
+                  return (
+                    <tr key={i}>
+                      <td className="text-right">{offset + i + 1}</td>
+                      <td>{item.id}</td>
+                      <td>
+                        <Link to={`${item.slug}`}>{item.title}</Link>
+                      </td>
+                      <td>{formatDateTime(item.publishedAt, dateFormat)}</td>
+                      <td>{item.position}</td>
+                      <td className="text-right">{item.quantity}</td>
+                      <td>{item.location}</td>
+                    </tr>
+                  )
+                })}
               </tbody>
             </table>
           </div>
         )}
         {state.view !== "table" && (
           <ul className="row list">
-            {state.list &&
-              state.list.length > 0 &&
-              state.list.map((item, i) => {
-                return (
-                  <li key={i} className="col s12 m6 l4 xl3 list-item">
-                    <Link to={`${item.slug}`}>{item.title}</Link>
-                    <p>
-                      {item.location} {item.quantity}
-                      <span>{formatDateTime(item.publishedAt, dateFormat)}</span>
-                    </p>
-                  </li>
-                )
-              })}
+            {list.map((item, i) => {
+              return (
+                <li key={i} className="col s12 m6 l4 xl3 list-item">
+                  <Link to={`${item.slug}`}>{item.title}</Link>
+                  <p>
+                    {item.location} {item.quantity}
+                    <span>{formatDateTime(item.publishedAt, dateFormat)}</span>
+                  </p>
+                </li>
+              )
+            })}
           </ul>
         )}
       </div>

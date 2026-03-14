@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import { useNavigate, useParams } from "react-router-dom"
 import { alertError } from "ui-alert"
 import { hideLoading, showLoading } from "ui-loading"
-import { handleError, user, useResource } from "uione"
+import { getUser, handleError, useResource } from "uione"
 import { RatingSummary } from "../components/rating-summary"
 import { Article, getArticleService } from "./service"
 
@@ -31,7 +31,7 @@ export const Review = () => {
     }
   }, [id, service]) // eslint-disable-line react-hooks/exhaustive-deps
 
-  const account = user()
+  const account = getUser()
   return (
     <article className="article">
       <header className="article-header">

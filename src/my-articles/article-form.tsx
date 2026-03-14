@@ -131,7 +131,7 @@ export const ArticleForm = () => {
             id="id"
             name="id"
             className="form-control"
-            value={article.id || ""}
+            value={article.id}
             readOnly={!newMode}
             onChange={(e) => {
               article.id = e.target.value
@@ -148,7 +148,7 @@ export const ArticleForm = () => {
             type="url"
             id="thumbnail"
             name="thumbnail"
-            value={article.thumbnail || ""}
+            value={article.thumbnail}
             onChange={(e) => {
               article.thumbnail = e.target.value
               setState({ ...state, article })
@@ -192,7 +192,7 @@ export const ArticleForm = () => {
             type="text"
             id="title"
             name="title"
-            value={article.title || ""}
+            value={article.title}
             onChange={(e) => {
               article.title = e.target.value
               setState({ ...state, article })
@@ -209,7 +209,7 @@ export const ArticleForm = () => {
             id="description"
             name="description"
             rows={4}
-            value={article.description || ""}
+            value={article.description}
             onChange={(e) => {
               article.description = e.target.value
               setState({ ...state, article })
@@ -226,7 +226,7 @@ export const ArticleForm = () => {
             id="content"
             name="content"
             rows={80}
-            value={article.content || ""}
+            value={article.content}
             onChange={(e) => {
               article.content = e.target.value
               setState({ ...state, article })

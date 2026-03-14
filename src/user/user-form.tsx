@@ -12,8 +12,7 @@ import { getUserService, User } from "./service"
 
 export const UserView = () => {
   const resource = useResource()
-  const locationPath = useLocation().pathname;
-  console.log("location " + locationPath)
+  const locationPath = useLocation().pathname
   const count = locationPath.split("/").length
   const [user, setUser] = useState<User>({} as User)
   const { id } = useParams()
@@ -103,7 +102,7 @@ export const UserView = () => {
         </div>
         <div className="profile-title">
           <h2>
-            <a href="">{user.displayName}</a>
+            <Link to={`/profiles/${id}`}>{user.displayName}</Link>
             {user.followingAt && user.followedAt && <i className="material-icons highlight">group</i>}
           </h2>
           <p>{user.headline}</p>
@@ -112,16 +111,6 @@ export const UserView = () => {
           <Link to={`/profiles/${id}/followers`}><i className="material-icons highlight">group</i> {user.followerCount | 0} followers</Link>
           <Link to={`/profiles/${id}/following`}><i className="material-icons highlight">group_add</i> {user.followingCount | 0} followings</Link>
         </div>
-        <nav className="menu">
-          <ul>
-            <li>
-              <Link to={`/profiles/${id}`}>Overview</Link>
-            </li>
-            <li>
-              <Link to={`/profiles/${id}/review`}>Review</Link>
-            </li>
-          </ul>
-        </nav>
       </header>
       <div id="userBody">
         {count === 3 && <Overview user={user} resource={resource} />}
