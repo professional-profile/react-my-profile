@@ -31,7 +31,7 @@ export const JobForm = () => {
     !job ? (
       <div>
         <header>
-          <button type="button" id="btnBack" name="btnBack" className="btn-back" onClick={() => navigate(-1)}></button>
+          <button type="button" id="backBtn" name="backBtn" className="btn-back" onClick={() => navigate(-1)}></button>
           <h2>{resource.error_404_title}</h2>
         </header>
         <div className="error-body">
@@ -41,7 +41,7 @@ export const JobForm = () => {
     ) : (
       <article className="article">
         <header>
-          <button type="button" id="btnBack" name="btnBack" className="btn-back" onClick={() => navigate(-1)} />
+          <button type="button" id="backBtn" name="backBtn" className="btn-back" onClick={() => navigate(-1)} />
           <h2>{job.title}</h2>
         </header>
         <div className="article-body">

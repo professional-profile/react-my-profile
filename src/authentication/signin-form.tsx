@@ -175,16 +175,16 @@ export const SigninForm = () => {
             <input type="checkbox" id="remember" name="remember" checked={state.remember ? true : false} onChange={updateRemember} />
             {resource.signin_remember_me}
           </label>
-          <button type="submit" id="btnSignin" name="btnSignin" onClick={signin}>
+          <button type="submit" id="signinBtn" name="signinBtn" onClick={signin}>
             {resource.button_signin}
           </button>
-          <Link id="btnForgotPassword" to="/forgot-password">
+          <Link id="forgotPasswordBtn" to="/forgot-password">
             {resource.button_forgot_password}
           </Link>
-          <Link id="btnSignup" to="/signup">
+          <Link id="signupBtn" to="/signup">
             {resource.button_signup}
           </Link>
-          <Link id="btnHome" to="/">
+          <Link id="homeBtn" to="/">
             {resource.button_home}
           </Link>
         </div>

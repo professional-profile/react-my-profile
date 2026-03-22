@@ -152,10 +152,10 @@ export const SignupForm = () => {
           <div style={{ marginTop: "10px" }}>
             <ReCAPTCHA sitekey="6LetDbQUAAAAAEqIqVnSKgrI644y8w7O8mk89ijV" onChange={onChange} />
           </div>
-          <button type="submit" id="btnSignup" name="btnSignup" onClick={signup}>
+          <button type="submit" id="signupBtn" name="signupBtn" onClick={signup}>
             {resource.button_signup}
           </button>
-          <Link id="btnSignin" to="/signin">
+          <Link id="signinBtn" to="/signin">
             {resource.button_signin}
           </Link>
         </div>

@@ -3,7 +3,10 @@ export const RatingSummary = () => {
     <div className="rating-summary">
       <div className="score">
         <div className="value">4.6</div>
-        <div className="stars">★★★★★</div>
+        <div className="stars-container">
+          <div className="stars">★★★★★</div>
+          <div className="stars-full">★★★★★</div>
+        </div>
         <span>120K Ratings</span>
       </div>
       <div className="bars">

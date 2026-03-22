@@ -64,7 +64,7 @@ export const ArticleForm = () => {
     !article ? (
       <div>
         <header>
-          <button type="button" id="btnBack" name="btnBack" className="btn-back" onClick={() => navigate(-1)}></button>
+          <button type="button" id="backBtn" name="backBtn" className="btn-back" onClick={() => navigate(-1)}></button>
           <h2>{resource.error_404_title}</h2>
         </header>
         <div className="view-body">
@@ -74,7 +74,7 @@ export const ArticleForm = () => {
     ) : (
       <article className="article">
         <header className="article-header">
-          <button type="button" id="btnBack" name="btnBack" className="btn-back" onClick={() => navigate(-1)} />
+          <button type="button" id="backBtn" name="backBtn" className="btn-back" onClick={() => navigate(-1)} />
           <h2>{article.title}</h2>
         </header>
         <div className="article-body">

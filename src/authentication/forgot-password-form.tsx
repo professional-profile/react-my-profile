@@ -75,13 +75,13 @@ export const ForgotPasswordForm = () => {
               required={true}
             />
           </label>
-          <button type="submit" id="btnForgotPassword" name="btnForgotPassword" onClick={forgotPassword}>
+          <button type="submit" id="forgotPasswordBtn" name="forgotPasswordBtn" onClick={forgotPassword}>
             {resource.button_send_code_to_reset_password}
           </button>
-          <Link id="btnSignin" to="/signin">
+          <Link id="signinBtn" to="/signin">
             {resource.button_signin}
           </Link>
-          <Link id="btnResetPassword" to="/reset-password">
+          <Link id="resetPasswordBtn" to="/reset-password">
             {resource.button_reset_password}
           </Link>
         </div>

@@ -121,10 +121,10 @@ export const ResetPasswordForm = () => {
               required={true}
             />
           </label>
-          <button type="submit" id="btnResetPassword" name="btnResetPassword" onClick={onResetPassword}>
+          <button type="submit" id="resetPasswordBtn" name="resetPasswordBtn" onClick={onResetPassword}>
             {resource.button_reset_password}
           </button>
-          <Link id="btnSignin" to="/signin">
+          <Link id="signinBtn" to="/signin">
             {resource.button_signin}
           </Link>
         </div>

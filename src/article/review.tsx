@@ -35,7 +35,7 @@ export const Review = () => {
   return (
     <article className="article">
       <header className="article-header">
-        <button type="button" id="btnBack" name="btnBack" className="btn-back" onClick={() => navigate(-1)} />
+        <button type="button" id="backBtn" name="backBtn" className="btn-back" onClick={() => navigate(-1)} />
         <h2>{resource.ratings_and_reviews}</h2>
       </header>
       <div className="article-body">

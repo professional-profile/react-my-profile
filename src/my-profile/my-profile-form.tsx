@@ -358,7 +358,7 @@ export const MyProfileForm = () => {
         <div className="cover-image">
           <img src={user.coverURL} alt="cover" />
         </div>
-        <button type="button" id="btnCamera" name="btnCamera" className="btn-camera" />
+        <button type="button" id="cameraBtn" name="cameraBtn" className="btn-camera" />
         <div className="avatar-wrapper">
           <img className="avatar" src={user.imageURL || "https://avatars.githubusercontent.com/u/37324393?v=4"} alt="avatar" />
           <img className="profile-status" src={imageOnline} alt="status" />
@@ -384,7 +384,7 @@ export const MyProfileForm = () => {
                 <header>
                   <i className="material-icons highlight">account_box</i>
                   {resource.user_profile_basic_info}
-                  <button type="button" id="btnBasicInfo" name="btnBasicInfo" hidden={isEditing} className="btn-edit" onClick={showPopup} />
+                  <button type="button" id="basicInfoBtn" name="basicInfoBtn" hidden={isEditing} className="btn-edit" onClick={showPopup} />
                 </header>
                 {user.occupation && (
                   <p className="icon-text">
@@ -428,7 +428,7 @@ export const MyProfileForm = () => {
                   <header>
                     <i className="material-icons highlight">local_mall</i>
                     {resource.skills}
-                    <button type="button" id="btnSkill" name="btnSkill" hidden={isEditing} className="btn-edit" onClick={toggleSkill} />
+                    <button type="button" id="skillBtn" name="skillBtn" hidden={isEditing} className="btn-edit" onClick={toggleSkill} />
                   </header>
                   <section className="chip-list">
                     {user.skills &&
@@ -453,7 +453,7 @@ export const MyProfileForm = () => {
                   <header>
                     <i className="material-icons highlight">local_mall</i>
                     {resource.skills}
-                    <button type="button" id="btnSkill" name="btnSkill" className="btn-close" onClick={toggleSkill} />
+                    <button type="button" id="skillBtn" name="skillBtn" className="btn-close" onClick={toggleSkill} />
                   </header>
                   <section className="chip-list">
                     {user.skills &&
@@ -491,12 +491,12 @@ export const MyProfileForm = () => {
                       {resource.user_profile_hirable_skill}
                     </label>
                     <div className="btn-group">
-                      <button type="button" id="btnAddAchievement" name="btnAddAchievement" className="btn-add" onClick={addSkill} />
+                      <button type="button" id="addAchievementBtn" name="addAchievementBtn" className="btn-add" onClick={addSkill} />
                       {resource.button_add_achievement}
                     </div>
                   </section>
                   <footer>
-                    <button type="submit" id="btnSaveSkill" name="btnSaveSkill" onClick={saveChanges}>
+                    <button type="submit" id="saveSkillBtn" name="saveSkillBtn" onClick={saveChanges}>
                       {resource.save}
                     </button>
                   </footer>
@@ -509,8 +509,8 @@ export const MyProfileForm = () => {
                     {resource.user_profile_looking_for}
                     <button
                       type="button"
-                      id="btnLookingFor"
-                      name="btnLookingFor"
+                      id="lookingForBtn"
+                      name="lookingForBtn"
                       hidden={isEditing && !isEditingLookingFor}
                       className="btn-edit"
                       onClick={toggleLookingFor}
@@ -533,7 +533,7 @@ export const MyProfileForm = () => {
                   <header>
                     <i className="material-icons highlight">find_in_page</i>
                     {resource.user_profile_looking_for}
-                    <button type="button" id="btnLookingFor" name="btnLookingFor" className="btn-close" onClick={toggleLookingFor} />
+                    <button type="button" id="lookingForBtn" name="lookingForBtn" className="btn-close" onClick={toggleLookingFor} />
                   </header>
                   <section className="chip-list">
                     {user.lookingFor &&
@@ -554,11 +554,11 @@ export const MyProfileForm = () => {
                         placeholder={resource.placeholder_user_profile_looking_for}
                         maxLength={100}
                       />
-                      <button type="button" id="btnAddLookingFor" name="btnAddLookingFor" className="btn-add" onClick={addLookingFor} />
+                      <button type="button" id="addLookingForBtn" name="addLookingForBtn" className="btn-add" onClick={addLookingFor} />
                     </label>
                   </section>
                   <footer>
-                    <button type="submit" id="btnSaveLookingFor" name="btnSaveLookingFor" onClick={saveChanges}>
+                    <button type="submit" id="saveLookingForBtn" name="saveLookingForBtn" onClick={saveChanges}>
                       {resource.save}
                     </button>
                   </footer>
@@ -568,7 +568,7 @@ export const MyProfileForm = () => {
                 <header>
                   <i className="material-icons highlight">chat</i>
                   {resource.user_profile_social}
-                  <button type="button" id="btnSocial" name="btnSocial" hidden={isEditing} className="btn-edit" onClick={showPopup} />
+                  <button type="button" id="socialBtn" name="socialBtn" hidden={isEditing} className="btn-edit" onClick={showPopup} />
                 </header>
                 <p className="icon-text">
                   <svg
@@ -643,8 +643,8 @@ export const MyProfileForm = () => {
                   {resource.user_profile_bio}
                   <button
                     type="button"
-                    id="btnBio"
-                    name="btnBio"
+                    id="bioBtn"
+                    name="bioBtn"
                     hidden={isEditing && !isEditingBio}
                     className={!isEditingBio ? "btn-edit" : "btn-close"}
                     onClick={toggleBio}
@@ -656,8 +656,8 @@ export const MyProfileForm = () => {
                   <footer>
                     <button
                       type="submit"
-                      id="btnSaveBio"
-                      name="btnSaveBio"
+                      id="saveBioBtn"
+                      name="saveBioBtn"
                       onClick={(e) => {
                         saveChanges(e)
                         setBio(user.bio || "")
@@ -674,8 +674,8 @@ export const MyProfileForm = () => {
                   {resource.interests}
                   <button
                     type="button"
-                    id="btnInterest"
-                    name="btnInterest"
+                    id="interestBtn"
+                    name="interestBtn"
                     hidden={isEditing && !isEditingInterest}
                     className={!isEditingInterest ? "btn-edit" : "btn-close"}
                     onClick={toggleInterest}
@@ -713,13 +713,13 @@ export const MyProfileForm = () => {
                         value={state.edit.interest}
                         maxLength={100}
                       />
-                      <button type="button" id="btnAddInterest" name="btnAddInterest" className="btn-add" onClick={addInterest} />
+                      <button type="button" id="addInterestBtn" name="addInterestBtn" className="btn-add" onClick={addInterest} />
                     </label>
                   </section>
                 )}
                 {isEditingInterest && (
                   <footer>
-                    <button type="submit" id="btnSaveInterest" name="btnSaveInterest" onClick={saveChanges}>
+                    <button type="submit" id="saveInterestBtn" name="saveInterestBtn" onClick={saveChanges}>
                       {resource.save}
                     </button>
                   </footer>
@@ -732,8 +732,8 @@ export const MyProfileForm = () => {
                   {resource.achievements}
                   <button
                     type="button"
-                    id="btnAchievement"
-                    name="btnAchievement"
+                    id="achievementBtn"
+                    name="achievementBtn"
                     hidden={isEditing && !isEditingAchievement}
                     className={!isEditingAchievement ? "btn-edit" : "btn-close"}
                     onClick={toggleAchievement}
@@ -795,14 +795,14 @@ export const MyProfileForm = () => {
                       {resource.user_profile_highlight_achievement}
                     </label>
                     <div className="btn-group">
-                      <button type="button" id="btnAddAchievement" name="btnAddAchievement" className="btn-add" onClick={addAchievement} />
+                      <button type="button" id="addAchievementBtn" name="addAchievementBtn" className="btn-add" onClick={addAchievement} />
                       {resource.button_add_achievement}
                     </div>
                   </section>
                 )}
                 {isEditingAchievement && (
                   <footer>
-                    <button type="submit" id="btnSaveAchievement" name="btnSaveAchievement" onClick={saveChanges}>
+                    <button type="submit" id="saveAchievementBtn" name="saveAchievementBtn" onClick={saveChanges}>
                       {resource.save}
                     </button>
                   </footer>
@@ -836,7 +836,7 @@ export const MyProfileForm = () => {
           <form model-name="data">
             <header>
               <h2>{resource.user_profile_general_info}</h2>
-              <button type="button" id="btnClose" name="btnClose" className="btn-close" onClick={closeModalConfirm} />
+              <button type="button" id="closeBtn" name="closeBtn" className="btn-close" onClick={closeModalConfirm} />
             </header>
             <div>
               <section className="row">
@@ -845,7 +845,7 @@ export const MyProfileForm = () => {
             </div>
 
             <footer>
-              <button type="button" id="btnSave" name="btnSave" onClick={revertBioChages}>
+              <button type="button" id="saveBtn" name="saveBtn" onClick={revertBioChages}>
                 OK
               </button>
             </footer>

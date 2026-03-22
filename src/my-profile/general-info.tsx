@@ -42,7 +42,7 @@ export const GeneralInfo = ({ resource, user, close, saveEmit }: Props) => {
       <form model-name="data">
         <header>
           <h2>{resource.user_profile_general_info}</h2>
-          <button type="button" id="btnClose" name="btnClose" className="btn-close" onClick={closeModal} />
+          <button type="button" id="closeBtn" name="closeBtn" className="btn-close" onClick={closeModal} />
         </header>
         <div>
           <section className="row">
@@ -175,7 +175,7 @@ export const GeneralInfo = ({ resource, user, close, saveEmit }: Props) => {
           </section>
         </div>
         <footer>
-          <button type="button" id="btnSave" name="btnSave" onClick={save}>
+          <button type="button" id="saveBtn" name="saveBtn" onClick={save}>
             {resource.save}
           </button>
         </footer>

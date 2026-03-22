@@ -66,14 +66,14 @@ export const UserView = () => {
         <div className="cover-image">
           <img src={user.coverURL} alt="cover" />
           <div className="contact-group">
-            <button type="button" id="btnPhone" name="btnPhone" className="btn-phone" />
-            <button type="button" id="btnEmail" name="btnEmail" className="btn-email" />
+            <button type="button" id="phoneBtn" name="phoneBtn" className="btn-phone" />
+            <button type="button" id="emailBtn" name="emailBtn" className="btn-email" />
           </div>
           {account && account.id !== user.id && !user.followingAt && (
             <button
               type="button"
-              id="btnFollow"
-              name="btnFollow"
+              id="followBtn"
+              name="followBtn"
               className="btn-follow"
               onClick={(e) => {
                 follow(e, user)
@@ -85,8 +85,8 @@ export const UserView = () => {
           {account && account.id !== user.id && user.followingAt && (
             <button
               type="button"
-              id="btnUnfollow"
-              name="btnUnfollow"
+              id="unfollowBtn"
+              name="unfollowBtn"
               className="btn-follow"
               onClick={(e) => {
                 unfollow(e, user)
