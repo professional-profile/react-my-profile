@@ -22,7 +22,7 @@
   border-top: 1px solid var(--border);
 }
 
-.rating-title > a {
+.rating-title>a {
   margin-left: 0;
 }
 
@@ -46,15 +46,51 @@
   font-weight: 700;
   line-height: 1;
 }
-.score span {
+.muted {
+  margin-top: 3px;
   font-size: 14px;
   color: var(--muted);
 }
 
 .stars {
+  display: inline-flex;
+  gap: 2px;
   font-size: 20px;
+  line-height: 1;
+  margin: 10px 0;
+}
+.stars .star {
+  position: relative;
+  width: 20px;
+  height: 20px;
+  display: inline-block;
+  overflow: hidden;
+  font-size: 20px;
+  line-height: 20px;
+  right: unset;
+}
+.stars .star::before {
+  content: "★";
+  position: absolute;
+  font-size: 20px;
+  left: 0;
+  top: 0;
+  color: #ddd;
+  width: 100%;
+}
+.stars .star.full-star::before {
   color: var(--star);
-  margin: 6px 0;
+}
+.stars .star.partial-star::after {
+  content: "★";
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: var(--star);
+  width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+  clip-path: inset(0 calc(100% - var(--w, 0%)) 0 0);
 }
 
 .bars {
@@ -95,6 +131,7 @@
     grid-template-columns: 1fr;
     gap: 20px;
   }
+
   .score .value {
     font-size: 48px;
   }
