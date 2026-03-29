@@ -33,15 +33,17 @@ export const Review = () => {
 
   const account = getUser()
   return (
-    <article className="article">
-      <header className="article-header">
+    <div>
+      <header>
         <button type="button" id="backBtn" name="backBtn" className="btn-back" onClick={() => navigate(-1)} />
         <h2>{resource.ratings_and_reviews}</h2>
       </header>
-      <div className="article-body">
+      <div className="main-body">
         <RatingSummary />
-        <div className="article-content" dangerouslySetInnerHTML={{ __html: article.content }}></div>
+        <div className="rate-header">
+          <button>Write a review</button>
+        </div>
       </div>
-    </article>
+    </div>
   )
 }

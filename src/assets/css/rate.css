@@ -22,7 +22,7 @@
   border-top: 1px solid var(--border);
 }
 
-.rating-title>a {
+.rating-title > a {
   margin-left: 0;
 }
 
@@ -37,7 +37,10 @@
 .article-body .rating-summary {
   max-width: 780px;
 }
-
+.main-body > .rating-summary {
+  margin-left: 16px;
+  margin-right: 16px;
+}
 .score {
   text-align: center;
 }
