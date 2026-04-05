@@ -41,7 +41,7 @@ export const Review = () => {
       <div className="main-body">
         <RatingSummary />
         <div className="rate-header">
-          <button>Write a review</button>
+          <button className="btn-review">Write a review</button>
         </div>
       </div>
     </div>
