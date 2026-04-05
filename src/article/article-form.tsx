@@ -93,7 +93,9 @@ export const ArticleForm = () => {
             )}
           </h4>
           <h4 className="rating-title"><Link to={`/news/${article.slug}/review`}>{resource.ratings_and_reviews}</Link></h4>
-          <RatingSummary />
+          <div id="rateSummaryContainer" className="rating-summary-container">
+            <RatingSummary />
+          </div>
           <div className="article-content" dangerouslySetInnerHTML={{ __html: article.content }}></div>
         </div>
       </article>)

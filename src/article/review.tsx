@@ -39,10 +39,46 @@ export const Review = () => {
         <h2>{resource.ratings_and_reviews}</h2>
       </header>
       <div className="main-body">
-        <RatingSummary />
+        <div id="rateSummaryContainer" className="rating-summary-container">
+          <RatingSummary />
+        </div>
         <div className="rate-header">
           <button className="btn-review">Write a review</button>
         </div>
+        <ul className="row list">
+          <li className="col s12 m6 review-item">
+            <header>
+              <strong>Lam Thi Tien</strong>
+              <div className="review-item-stars" style={{ "--percent": "80%" } as React.CSSProperties}></div>
+            </header>
+            <p className="center-align-items">9/30/2024 16:45</p>
+            <p>Good Good Good Good Good Good Good Good</p>
+          </li>
+          <li className="col s12 m6 review-item">
+            <header>
+              <strong>Duc Nguyen</strong>
+              <span className="review-item-stars" style={{ "--percent": "70%" } as React.CSSProperties}></span>
+            </header>
+            <p className="center-align-items">9/30/2024 16:45</p>
+            <p>Good article</p>
+          </li>
+          <li className="col s12 m6 review-item">
+            <header>
+              <strong>Minh Ha</strong>
+              <span className="review-item-stars" style={{ "--percent": "90%" } as React.CSSProperties}></span>
+            </header>
+            <p className="center-align-items">9/30/2024 16:45</p>
+            <p>Excellent article</p>
+          </li>
+          <li className="col s12 m6 review-item">
+            <header>
+              <strong>Triet Nguyen</strong>
+              <span className="review-item-stars" style={{ "--percent": "90%" } as React.CSSProperties}></span>
+            </header>
+            <p className="center-align-items">9/30/2024 16:45</p>
+            <p>Excellent article</p>
+          </li>
+        </ul>
       </div>
     </div>
   )
