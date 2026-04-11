@@ -66,14 +66,14 @@ export const Overview = ({ user, resource }: Props) => {
                   return (
                     <div key={index} className="chip">
                       {item.skill}
-                      {item.hirable === true && <i className="star highlight" />}
+                      {item.hirable === true && <i className="star" />}
                     </div>
                   )
                 })}
             </section>
             <hr />
             <p className="description">
-              <i className="star highlight" />
+              <i className="star" />
               {resource.user_profile_hirable_skill}
             </p>
           </div>
@@ -182,7 +182,7 @@ export const Overview = ({ user, resource }: Props) => {
                   <section key={index} className="item">
                     <h4>
                       {achievement.subject}
-                      {achievement.highlight && <i className="star highlight float-right" />}
+                      {achievement.highlight && <i className="star float-right" />}
                     </h4>
                     <p className="description">{achievement.description}</p>
                     <hr />

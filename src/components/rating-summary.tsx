@@ -4,11 +4,11 @@ export const RatingSummary = () => {
       <div className="score">
         <div id="avgValue" className="value">4.6</div>
         <div id="avgStars" className="stars">
-          <span className="star full-star"></span>
-          <span className="star full-star"></span>
-          <span className="star full-star"></span>
-          <span className="star partial-star" style={{ "--w": "45%" } as React.CSSProperties} />
           <span className="star"></span>
+          <span className="star"></span>
+          <span className="star"></span>
+          <span className="star partial-star" style={{ "--w": "45%" } as React.CSSProperties} />
+          <span className="star empty-star"></span>
         </div>
         <div id="count" className="muted">120K Ratings</div>
       </div>

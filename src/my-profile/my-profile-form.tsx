@@ -436,14 +436,14 @@ export const MyProfileForm = () => {
                         return (
                           <div key={index} className="chip">
                             {item.skill}
-                            {item.hirable === true && <i className="star highlight" />}
+                            {item.hirable === true && <i className="star" />}
                           </div>
                         )
                       })}
                   </section>
                   <hr />
                   <p className="description">
-                    <i className="star highlight" />
+                    <i className="star" />
                     {resource.user_profile_hirable_skill}
                   </p>
                 </div>
@@ -461,7 +461,7 @@ export const MyProfileForm = () => {
                         return (
                           <div key={index} className="chip">
                             {item.skill}
-                            {item.hirable === true && <i className="star highlight" />}
+                            {item.hirable === true && <i className="star" />}
                             <span className="close" onClick={(e) => removeSkill(e, item.skill)} />
                           </div>
                         )
@@ -469,7 +469,7 @@ export const MyProfileForm = () => {
                   </section>
                   <hr />
                   <p className="description">
-                    <i className="star highlight" />
+                    <i className="star" />
                     {resource.user_profile_hirable_skill}
                   </p>
                   <hr />
@@ -746,7 +746,7 @@ export const MyProfileForm = () => {
                       <section key={index} className="item">
                         <h4>
                           {achievement.subject}
-                          {achievement.highlight && <i className="star highlight float-right" />}
+                          {achievement.highlight && <i className="star float-right" />}
                         </h4>
                         <p className="description">{achievement.description}</p>
                         <hr />
@@ -759,7 +759,7 @@ export const MyProfileForm = () => {
                     <section key={index} className="item">
                       <h4>
                         {achievement.subject}
-                        {achievement.highlight && <i className="star highlight" />}
+                        {achievement.highlight && <i className="star" />}
                       </h4>
                       <p className="description">{achievement.description}</p>
                       <button type="button" className="btn-remove" onClick={(e) => removeAchievement(e, achievement.subject)} />

@@ -16,6 +16,20 @@
   }
 }
 
+.star-picker span.active,
+.review-item-stars::after,
+.star,
+.bar,
+.fill {
+  color: #ffcc00;
+}
+
+.partial-star::before,
+.empty-star,
+.review-item-stars::before {
+  color: #ddd;
+}
+
 body,
 .page-container,
 .alert-wrapper .alert,
