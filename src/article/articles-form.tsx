@@ -55,6 +55,7 @@ export const ArticlesForm = () => {
 
   const resource = useResource()
   const refForm = useRef<HTMLFormElement>(null)
+  const [showSort, setShowSort] = useState(false)
   const [showFilter, setShowFilter] = useState(false)
   const [list, setList] = useState<Article[]>([])
   const [state, setState] = useState<ArticleSearch>(initialState)
@@ -68,6 +69,10 @@ export const ArticlesForm = () => {
     setFilter(initFilter)
     search(true) // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
+
+  const toggleSort = (e: MouseEvent<HTMLButtonElement>) => {
+    setShowSort(showSort)
+  }
 
   const clearQ = (e: MouseEvent<HTMLButtonElement>) => onClearQ(filter, setFilter)
   const toggleSearch = (e: MouseEvent<HTMLButtonElement>) => onToggleSearch(e, showFilter, setShowFilter)
@@ -139,14 +144,22 @@ export const ArticlesForm = () => {
       <div className="main-body">
         <form id="articlesForm" name="articlesForm" className="form" noValidate={true} ref={refForm as any}>
           <section className="row search-group">
-            <label className="col s12 m6 search-input">
+            <label className="col s12 m6 l4 xl6 search-input">
               <PageSizeSelect id="limit" name="limit" size={filter.limit} sizes={pageSizes} onChange={pageSizeChanged} />
               <input type="text" id="q" name="q" value={filter.q} maxLength={80} onChange={onChange} placeholder={resource.keyword} />
               <button type="button" id="clearQBtn" name="clearQBtn" hidden={!filter.q} className="btn-remove-text" onClick={clearQ} />
               <button type="button" id="toggleSearchBtn" name="toggleSearchBtn" className="btn-filter" onClick={toggleSearch} />
               <button type="submit" id="searchBtn" name="searchBtn" className="btn-search" onClick={searchOnClick} />
             </label>
-            <Pagination className="col s12 m6" total={state.total} size={filter.limit} max={7} page={filter.page} onChange={pageChanged} />
+            <div className="col s12 m6 l4 xl3 sort">
+              <button id="sortBtn" type="button" className="btn-sort">Sort</button>
+              <div id="sortDropdown" className="dropdown">
+                <a href="#" data-sort="recent">Most Recent</a>
+                <a href="#" data-sort="high">Highest Rating</a>
+                <a href="#" data-sort="low">Lowest Rating</a>
+              </div>
+            </div>
+            <Pagination className="col s12 m6 l4 xl3" total={state.total} size={filter.limit} max={7} page={filter.page} onChange={pageChanged} />
           </section>
           <section className="row search-group inline" hidden={!showFilter}>
             <label className="col s12 m6">

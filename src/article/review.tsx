@@ -45,6 +45,18 @@ export const Review = () => {
         <div className="rate-header">
           <button className="btn-review">Write a review</button>
         </div>
+        <form id="reviewsForm" name="reviewsForm" className="form" noValidate data-part="reviewBody">
+          <section className="row search-group">
+            <div className="col s12 m6 sort">
+              <button id="sortBtn" type="button" className="btn-sort">Sort</button>
+              <div id="sortDropdown" className="dropdown">
+                <a href="#" data-sort="recent">Most Recent</a>
+                <a href="#" data-sort="high">Highest Rating</a>
+                <a href="#" data-sort="low">Lowest Rating</a>
+              </div>
+            </div>
+          </section>
+        </form>
         <ul className="row list">
           <li className="col s12 m6 review-item">
             <header>
