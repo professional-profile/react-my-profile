@@ -65,6 +65,10 @@ export const Review = () => {
             </header>
             <p className="center-align-items">9/30/2024 16:45</p>
             <p>Good Good Good Good Good Good Good Good</p>
+            <footer>
+              <span className="center-align-items">It is helpful <i className="material-icons" >thumb_up</i></span>
+              <span className="center-align-items">20 <i className="material-icons" >thumb_up</i></span>
+            </footer>
           </li>
           <li className="col s12 m6 review-item">
             <header>
@@ -73,6 +77,10 @@ export const Review = () => {
             </header>
             <p className="center-align-items">9/30/2024 16:45</p>
             <p>Good article</p>
+            <footer>
+              <span className="center-align-items">It is helpful <i className="material-icons" >thumb_up</i></span>
+              <span className="center-align-items">20 <i className="material-icons" >thumb_up</i></span>
+            </footer>
           </li>
           <li className="col s12 m6 review-item">
             <header>
@@ -81,6 +89,10 @@ export const Review = () => {
             </header>
             <p className="center-align-items">9/30/2024 16:45</p>
             <p>Excellent article</p>
+            <footer>
+              <span className="center-align-items">It is helpful <i className="material-icons" >thumb_up</i></span>
+              <span className="center-align-items">20 <i className="material-icons" >thumb_up</i></span>
+            </footer>
           </li>
           <li className="col s12 m6 review-item">
             <header>
@@ -89,6 +101,10 @@ export const Review = () => {
             </header>
             <p className="center-align-items">9/30/2024 16:45</p>
             <p>Excellent article</p>
+            <footer>
+              <span className="center-align-items">It is helpful <i className="material-icons" >thumb_up</i></span>
+              <span className="center-align-items">20 <i className="material-icons" >thumb_up</i></span>
+            </footer>
           </li>
         </ul>
       </div>
