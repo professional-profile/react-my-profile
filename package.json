@@ -22,7 +22,7 @@
     "react-modal": "^3.16.3",
     "react-router-dom": "^7.14.2",
     "react-scripts": "5.0.1",
-    "reactx-nav": "^0.2.5",
+    "reactx-nav": "^0.2.7",
     "reactx-pagination": "^0.0.6",
     "signup-client": "^0.1.4",
     "ui-alert": "^0.2.1",

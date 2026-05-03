@@ -62,54 +62,54 @@ export const UserView = () => {
   const account = getUser()
   return (
     <div className="profile">
-      <header className="profile-header border-bottom-highlight">
-        <div className="cover-image">
-          <img src={user.coverURL} alt="cover" />
-          <div className="contact-group">
-            <button type="button" id="phoneBtn" name="phoneBtn" className="btn-phone" />
-            <button type="button" id="emailBtn" name="emailBtn" className="btn-email" />
+      <div className="cover" style={{ backgroundImage: `url(${user.coverURL})` }}>
+        <button type="button" id="cameraBtn" name="cameraBtn" className="btn-camera"></button>
+      </div>
+      <div id="headerTrigger" className="header-trigger"></div>
+      <header className="profile-header">
+        <div className="profile-header-inner">
+          <div className="avatar-wrapper">
+            <div className="avatar" style={{ backgroundImage: `url(${user.imageURL || "https://avatars.githubusercontent.com/u/37324393?v=4"})` }}></div>
+            <img className="profile-status" src={imageOnline} alt="status" />
+            <button type="button" id="cameraBtn" name="cameraBtn" className="btn-camera"></button>
           </div>
-          {account && account.id !== user.id && !user.followingAt && (
-            <button
-              type="button"
-              id="followBtn"
-              name="followBtn"
-              className="btn-follow"
-              onClick={(e) => {
-                follow(e, user)
-              }}
-            >
-              {resource.button_follow}
-            </button>
-          )}
-          {account && account.id !== user.id && user.followingAt && (
-            <button
-              type="button"
-              id="unfollowBtn"
-              name="unfollowBtn"
-              className="btn-follow"
-              onClick={(e) => {
-                unfollow(e, user)
-              }}
-            >
-              {resource.button_unfollow}
-            </button>
-          )}
-        </div>
-        <div className="avatar-wrapper">
-          <img className="avatar" src={user.imageURL || "https://avatars.githubusercontent.com/u/37324393?v=4"} alt="avatar" />
-          <img className="profile-status" src={imageOnline} alt="status" />
-        </div>
-        <div className="profile-title">
-          <h2>
-            <Link to={`/profiles/${id}`}>{user.displayName}</Link>
-            {user.followingAt && user.followedAt && <i className="material-icons highlight">group</i>}
-          </h2>
-          <p>{user.headline}</p>
-        </div>
-        <div className="profile-followers">
-          <Link to={`/profiles/${id}/followers`}><i className="material-icons highlight">group</i> {user.followerCount | 0} followers</Link>
-          <Link to={`/profiles/${id}/following`}><i className="material-icons highlight">group_add</i> {user.followingCount | 0} followings</Link>
+          <div className="profile-info">
+            <h1>
+              <Link to={`/profiles/${id}`}>{user.displayName}</Link>
+              <i className="material-icons highlight">group</i>
+            </h1>
+            <p>{user.headline}</p>
+            <div className="profile-followers">
+              <Link to={`/profiles/${id}/followers`}><i className="material-icons highlight">group</i> {user.followerCount | 0} followers</Link>
+              <Link to={`/profiles/${id}/following`}><i className="material-icons highlight">group_add</i> {user.followingCount | 0} followings</Link>
+            </div>
+            {account && account.id !== user.id && !user.followingAt && (
+              <button
+                type="button"
+                id="followBtn"
+                name="followBtn"
+                className="btn-follow"
+                onClick={(e) => {
+                  follow(e, user)
+                }}
+              >
+                {resource.button_follow}
+              </button>
+            )}
+            {account && account.id !== user.id && user.followingAt && (
+              <button
+                type="button"
+                id="unfollowBtn"
+                name="unfollowBtn"
+                className="btn-follow"
+                onClick={(e) => {
+                  unfollow(e, user)
+                }}
+              >
+                {resource.button_unfollow}
+              </button>
+            )}
+          </div>
         </div>
       </header>
       <div id="userBody">
