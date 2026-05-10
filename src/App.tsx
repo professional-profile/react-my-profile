@@ -18,6 +18,7 @@ import { ResetPasswordForm } from "./authentication/reset-password-form"
 import { SigninForm } from "./authentication/signin-form"
 import { SignupForm } from "./authentication/signup-form"
 import { config } from "./config"
+import CompaniesRoute from "./company"
 import HomePage from "./core/home"
 import LayoutPage from "./core/layout"
 import { resources as locales } from "./core/resources"
@@ -125,6 +126,7 @@ function App() {
         <Route path="" element={<LayoutPage />}>
           <Route path="/home" element={<HomePage />} />
           <Route path="/settings" element={<SettingsForm />} />
+          <Route path="companies/*" element={<CompaniesRoute />} />
           <Route path="profiles/*" element={<UsersRoute />} />
           <Route path="news/*" element={<ArticlesRoute />} />
           <Route path="jobs/*" element={<JobsRoute />} />

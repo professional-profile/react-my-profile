@@ -11,6 +11,11 @@ export interface Company {
   logo?: string
   coverURL?: string
   status: string
+
+  followerCount: number
+  followingCount: number
+  followingAt?: Date
+  followedAt?: Date
 }
 export interface CompanyFilter extends Filter {
   id?: string

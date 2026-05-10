@@ -112,7 +112,7 @@ export const UserView = () => {
           </div>
         </div>
       </header>
-      <div id="userBody">
+      <div id="userBody" className="profile-content">
         {count === 3 && <Overview user={user} resource={resource} />}
         {locationPath.endsWith("/followers") && <Followers />}
         {locationPath.endsWith("/following") && <Following />}

@@ -212,7 +212,7 @@ export const UsersForm = () => {
           <ul className="row list">
             {list.map((user, i) => {
               return (
-                <li key={i} className="col s12 m6 l4 xl3 img-item">
+                <li key={i} className="col s12 m6 l6 xl3 img-item">
                   <img
                     src={user.imageURL && user.imageURL.length > 0 ? user.imageURL : user.gender === "F" ? femaleIcon : maleIcon}
                     alt="user"

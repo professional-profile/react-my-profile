@@ -167,7 +167,8 @@ export const CompaniesForm = () => {
           <ul className="row list">
             {list.map((item, i) => {
               return (
-                <li key={i} className="col s12 m6 l4 xl3 list-item">
+                <li key={i} className="col s12 l6 img-item">
+                  <img src={item.logo} alt="company logo" />
                   <Link to={`${item.slug}`}>{item.companyName}</Link>
                   <p>
                     {item.industry}
