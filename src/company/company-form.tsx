@@ -86,13 +86,13 @@ export const CompanyForm = () => {
             </div>
           </div>
         </header>
-        <div className="tabs">
-          <div className="tab active">Overview</div>
-          <div className="tab">Reviews</div>
-          <div className="tab">Articles</div>
-          <div className="tab">Community</div>
-          <div className="tab">About</div>
-        </div>
+        <nav className="tabs">
+          <a className="tab active">Overview</a>
+          <a className="tab">Reviews</a>
+          <a className="tab">Articles</a>
+          <a className="tab">Community</a>
+          <a className="tab">About</a>
+        </nav>
         <div id="companyBody" className="profile-body">
           <form id="companyForm" name="companyForm">
             <ul className="row list card-grid">

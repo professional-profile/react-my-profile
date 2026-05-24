@@ -1,6 +1,6 @@
 import axios from "axios"
 import * as csv from "csvtojson"
-import { currency, locale } from "locale-service"
+import { getCurrency, getLocale } from "locale-service"
 import { phonecodes } from "phonecodes"
 import { resources as reactResources } from "react-hook-core"
 import { BrowserRouter, Route, Routes } from "react-router-dom"
@@ -17,8 +17,8 @@ import { ForgotPasswordForm } from "./authentication/forgot-password-form"
 import { ResetPasswordForm } from "./authentication/reset-password-form"
 import { SigninForm } from "./authentication/signin-form"
 import { SignupForm } from "./authentication/signup-form"
-import { config } from "./config"
 import CompaniesRoute from "./company"
+import { config } from "./config"
 import HomePage from "./core/home"
 import LayoutPage from "./core/layout"
 import { resources as locales } from "./core/resources"
@@ -90,8 +90,8 @@ export function init() {
   storage.setResources(locales)
   storage.setLoadingService(loading)
   storage.setUIService(new UIService())
-  storage.currency = currency
-  storage.locale = locale
+  storage.currency = getCurrency
+  storage.locale = getLocale
   storage.alert = alertError
   storage.confirm = confirm
   storage.message = toast
@@ -99,7 +99,7 @@ export function init() {
 
   const resource = storage.resource()
   vresources.phonecodes = phonecodes
-  uiresources.currency = currency
+  uiresources.currency = getCurrency
   uiresources.resource = resource
 
   const res = storage.getResource()

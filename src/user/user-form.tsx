@@ -75,12 +75,12 @@ export const UserView = () => {
           </div>
           <div className="profile-info">
             <h1>
-              <Link to={`/profiles/${id}`}>{user.displayName}</Link>
+              <span>{user.displayName}</span>
               <i className="material-icons highlight">group</i>
             </h1>
             <p>{user.headline}</p>
             <div className="profile-followers">
-              <Link to={`/profiles/${id}/followers`}><i className="material-icons highlight">group</i> {user.followerCount | 0} followers</Link>
+              <span><i className="material-icons highlight">group</i> {user.followerCount | 0} followers</span>
               <Link to={`/profiles/${id}/following`}><i className="material-icons highlight">group_add</i> {user.followingCount | 0} followings</Link>
             </div>
             {account && account.id !== user.id && !user.followingAt && (
@@ -112,6 +112,13 @@ export const UserView = () => {
           </div>
         </div>
       </header>
+      <nav className="tabs">
+        <a href="#" className="tab active">Overview</a>
+        <a href="#" className="tab">Followers</a>
+        <a href="#" className="tab">Following</a>
+        <a href="#" className="tab">Articles</a>
+        <a href="#" className="tab">Company</a>
+      </nav>
       <div id="userBody" className="profile-content">
         {count === 3 && <Overview user={user} resource={resource} />}
         {locationPath.endsWith("/followers") && <Followers />}
