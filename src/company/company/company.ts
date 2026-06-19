@@ -3,7 +3,7 @@ import { Attributes, Filter, SearchResult } from "onecore"
 export interface Company {
   id: string
   slug: string
-  companyName: string
+  name: string
   overview: string
   website?: string
   industry?: string
@@ -12,16 +12,16 @@ export interface Company {
   coverURL?: string
   status: string
 
-  followerCount: number
-  followingCount: number
+  followerCount?: number
   followingAt?: Date
   followedAt?: Date
 }
 export interface CompanyFilter extends Filter {
   id?: string
   slug?: string
-  companyName?: string
+  name?: string
   status?: string
+  userId?: string
 }
 
 export interface CompanyRepository {
@@ -42,8 +42,7 @@ export const companyModel: Attributes = {
   slug: {
     length: 150,
   },
-  companyName: {
-    column: "company_name",
+  name: {
     length: 255,
     q: true,
   },

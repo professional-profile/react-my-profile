@@ -51,13 +51,12 @@ export const CompanyForm = () => {
             </div>
             <div className="profile-info">
               <h1>
-                <Link to={`/companies/${slug}`}>{company.companyName}</Link>
+                <Link to={`/companies/${slug}`}>{company.name}</Link>
                 <i className="material-icons highlight">group</i>
               </h1>
               <p>{company.industry}</p>
               <div className="profile-followers">
-                <Link to={`/profiles/${slug}/followers`}><i className="material-icons highlight">group</i> {company.followerCount | 0} followers</Link>
-                <Link to={`/profiles/${slug}/following`}><i className="material-icons highlight">group_add</i> {company.followingCount | 0} followings</Link>
+                <Link to={`/profiles/${slug}/followers`}><i className="material-icons highlight">group</i> {company.followerCount} followers</Link>
               </div>
               {account && account.id !== company.id && !company.followingAt && (
                 <button

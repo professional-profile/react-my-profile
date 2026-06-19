@@ -113,9 +113,9 @@ export const UserView = () => {
         </div>
       </header>
       <nav className="tabs">
-        <a href="#" className="tab active">Overview</a>
-        <a href="#" className="tab">Followers</a>
-        <a href="#" className="tab">Following</a>
+        <Link className="tab active" to={`/profiles/${id}`}>Overview</Link>
+        <Link className="tab" to={`/profiles/${id}/followers`}>Followers</Link>
+        <Link className="tab" to={`/profiles/${id}/following`}>Following</Link>
         <a href="#" className="tab">Articles</a>
         <a href="#" className="tab">Company</a>
       </nav>

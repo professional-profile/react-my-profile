@@ -154,7 +154,7 @@ export const CompaniesForm = () => {
                       <td className="text-right">{offset + i + 1}</td>
                       <td>{item.id}</td>
                       <td>
-                        <Link to={`${item.slug}`}>{item.companyName}</Link>
+                        <Link to={`${item.slug}`}>{item.name}</Link>
                       </td>
                     </tr>
                   )
@@ -169,7 +169,7 @@ export const CompaniesForm = () => {
               return (
                 <li key={i} className="col s12 l6 img-item">
                   <img src={item.logo} alt="company logo" />
-                  <Link to={`${item.slug}`}>{item.companyName}</Link>
+                  <Link to={`${item.slug}`}>{item.name}</Link>
                   <p>
                     {item.industry}
                   </p>
